@@ -1,0 +1,204 @@
+// schema.prisma
+datasource db {
+  provider = "sqlite" // change to "postgresql" or "mysql" if you want
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// ---- CORE ANATOMY GRAPH ----
+// Everything anatomical lives here: regions, groups, muscles, heads/parts.
+// Hierarchy is via parentId -> children. Example:
+//   arms (region)
+//     biceps (group)
+//       biceps_brachii (muscle)
+//         biceps_long_head (part)
+
+model AnatomyNode {
+  id          String        @id                     // e.g. "arms", "biceps_brachii", "biceps_long_head"
+  kind        String                                  // "region" | "group" | "muscle" | "part"
+  name        String
+  slug        String        @unique                  // for URLs, usually same as id
+  parentId    String?
+  parent      AnatomyNode? @relation("AnatomyParentChildren", fields: [parentId], references: [id])
+  children    AnatomyNode[] @relation("AnatomyParentChildren")
+
+  description String?
+  roleSummary String?
+
+  // These hold arrays like ["elbow flexion", "assists shoulder stability", ...]
+  primaryFunctions Json?                             // string[]
+  aestheticNotes  Json?                              // string[]
+
+  // Anything extra (primaryExerciseIds, formulaIds, notes, etc.)
+  meta        Json?
+
+  // Reverse relations
+  exerciseLinks  ExerciseAnatomy[]
+  sectionLinks   SectionAnatomy[]
+  formulaTargets FormulaTarget[]
+  workoutTargets WorkoutBlockTarget[]
+
+  primaryGuides   Guide[]   @relation("GuideRegion")
+  primaryWorkouts Workout[] @relation("WorkoutRegion")
+}
+
+// ---- GUIDES & SECTIONS ----
+
+model Guide {
+  id              String       @id                  // "arms", "back", "chest"
+  slug            String       @unique              // "conceal-and-carry-pythons"
+  title           String
+  author          String?
+  primaryRegionId String?
+  primaryRegion   AnatomyNode? @relation("GuideRegion", fields: [primaryRegionId], references: [id])
+
+  sections        Section[]
+}
+
+model Section {
+  id       String   @id                             // "intro-young-man-muscle"
+  guideId  String
+  guide    Guide    @relation(fields: [guideId], references: [id])
+
+  kind     String                                   // "intro" | "mindset" | "anatomy" | "strength" | "program" | ...
+  title    String
+  order    Int
+  content  String                                   // full Uncle Rommy text (can be long)
+
+  focusAnatomyLinks SectionAnatomy[]
+  exerciseLinks     SectionExercise[]
+}
+
+model SectionAnatomy {
+  sectionId     String
+  anatomyNodeId String
+
+  section Section     @relation(fields: [sectionId], references: [id])
+  anatomy AnatomyNode @relation(fields: [anatomyNodeId], references: [id])
+
+  @@id([sectionId, anatomyNodeId])
+}
+
+model SectionExercise {
+  sectionId  String
+  exerciseId String
+
+  section  Section  @relation(fields: [sectionId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+
+  @@id([sectionId, exerciseId])
+}
+
+// ---- EXERCISES & LINKS TO ANATOMY ----
+
+model Exercise {
+  id              String            @id             // "close_grip_bench_press"
+  name            String
+  type            String                              // "compound" | "isolation"
+  movementPattern String                              // "press" | "curl" | "extension" | "dip" | ...
+  equipment       Json?                               // string[], e.g. ["barbell","bench"]
+  videoUrl        String?
+  cueSummary      String?
+
+  mentionedIn     SectionExercise[]                  // where in the guides this is mentioned
+  formulas        FormulaStep[]
+  workoutBlocks   WorkoutBlockExercise[]
+  anatomyLinks    ExerciseAnatomy[]
+}
+
+model ExerciseAnatomy {
+  exerciseId    String
+  anatomyNodeId String
+  role          String                               // "primary" | "secondary"
+
+  exercise Exercise    @relation(fields: [exerciseId], references: [id])
+  anatomy  AnatomyNode @relation(fields: [anatomyNodeId], references: [id])
+
+  @@id([exerciseId, anatomyNodeId, role])
+}
+
+// ---- FORMULAS (SUPERSets, etc.) ----
+
+model Formula {
+  id          String         @id                    // "triceps_long_head_formula_1"
+  name        String
+  description String?
+  pattern     String                                 // "superset" | "straight_sets" | ...
+
+  steps       FormulaStep[]
+  targets     FormulaTarget[]
+}
+
+model FormulaStep {
+  id          Int      @id @default(autoincrement())
+  formulaId   String
+  order       Int
+  exerciseId  String
+  role        String                                 // "compound" | "isolation"
+  notes       String?
+
+  formula  Formula  @relation(fields: [formulaId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+}
+
+model FormulaTarget {
+  formulaId     String
+  anatomyNodeId String
+
+  formula  Formula     @relation(fields: [formulaId], references: [id])
+  anatomy  AnatomyNode @relation(fields: [anatomyNodeId], references: [id])
+
+  @@id([formulaId, anatomyNodeId])
+}
+
+// ---- WORKOUTS & BLOCKS ----
+
+model Workout {
+  id              String       @id                  // "snipers_arm_day"
+  slug            String       @unique              // "snipers-arm-day"
+  name            String
+  goal            String?
+  priorityRules   String?
+
+  primaryRegionId String?
+  primaryRegion   AnatomyNode? @relation("WorkoutRegion", fields: [primaryRegionId], references: [id])
+
+  blocks          WorkoutBlock[]
+}
+
+model WorkoutBlock {
+  id          String   @id                          // "triceps-strength-block"
+  workoutId   String
+  label       String
+  schemeStyle String                                // "drop_set" | "straight_sets" | ...
+  schemeDesc  String
+  notes       String?
+
+  workout Workout  @relation(fields: [workoutId], references: [id])
+  targets WorkoutBlockTarget[]
+  exercises WorkoutBlockExercise[]
+}
+
+model WorkoutBlockTarget {
+  blockId       String
+  anatomyNodeId String
+
+  block   WorkoutBlock @relation(fields: [blockId], references: [id])
+  anatomy AnatomyNode  @relation(fields: [anatomyNodeId], references: [id])
+
+  @@id([blockId, anatomyNodeId])
+}
+
+model WorkoutBlockExercise {
+  blockId    String
+  exerciseId String
+  kind       String                                 // "option" | "required"
+
+  block    WorkoutBlock @relation(fields: [blockId], references: [id])
+  exercise Exercise     @relation(fields: [exerciseId], references: [id])
+
+  @@id([blockId, exerciseId])
+}

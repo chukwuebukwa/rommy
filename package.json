@@ -1,0 +1,27 @@
+{
+  "name": "ts",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "bun run index.ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:seed": "bun run prisma/seed/seed-arms.ts",
+    "db:reset": "prisma migrate reset && bun run prisma/seed/seed-arms.ts"
+  },
+  "prisma": {
+    "seed": "bun run prisma/seed/seed-arms.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "prisma": "6.8.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@prisma/client": "6.8.0"
+  }
+}
