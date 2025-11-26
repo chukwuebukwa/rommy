@@ -1,10 +1,11 @@
 {
-  "name": "ts",
-  "module": "index.ts",
-  "type": "module",
+  "name": "rommy-visualizer",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "bun run index.ts",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "studio": "prisma studio",
@@ -14,14 +15,19 @@
   "prisma": {
     "seed": "bun run prisma/seed/seed-arms.ts"
   },
+  "dependencies": {
+    "@prisma/client": "6.8.0",
+    "@xyflow/react": "^12.4.4",
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
   "devDependencies": {
     "@types/bun": "latest",
-    "prisma": "6.8.0"
-  },
-  "peerDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "prisma": "6.8.0",
     "typescript": "^5"
-  },
-  "dependencies": {
-    "@prisma/client": "6.8.0"
   }
 }

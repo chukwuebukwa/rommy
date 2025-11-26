@@ -1,6 +1,10 @@
 # dependencies (bun install)
 node_modules
 
+# Next.js
+.next
+.vercel
+
 # output
 out
 dist
