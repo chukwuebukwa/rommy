@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { VideoEmbed } from "@/components/VideoEmbed";
 
 export default async function ExerciseDetailPage({
   params,
@@ -59,7 +60,9 @@ export default async function ExerciseDetailPage({
   }
 
   const equipment = exercise.equipment
-    ? (JSON.parse(exercise.equipment as string) as string[])
+    ? (typeof exercise.equipment === 'string' 
+        ? JSON.parse(exercise.equipment) 
+        : exercise.equipment)
     : [];
 
   const primaryMuscles = exercise.anatomyLinks.filter((link) => link.role === "primary");
@@ -76,57 +79,102 @@ export default async function ExerciseDetailPage({
 
       {/* Header */}
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-          <div className="flex-1">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">{exercise.name}</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">{exercise.name}</h1>
 
-            <div className="flex flex-wrap gap-2 mb-4">
-              <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded font-semibold text-sm uppercase">
-                {exercise.type}
-              </span>
-              <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded font-medium text-sm">
-                {exercise.movementPattern}
-              </span>
-            </div>
-
-            {equipment.length > 0 && (
-              <div className="mb-4">
-                <div className="text-sm text-gray-500 mb-2">Equipment:</div>
-                <div className="flex flex-wrap gap-2">
-                  {equipment.map((item) => (
-                    <span
-                      key={item}
-                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {exercise.cueSummary && (
-              <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
-                <div className="text-sm font-semibold text-blue-900 mb-1">Form Cues:</div>
-                <p className="text-blue-900">{exercise.cueSummary}</p>
-              </div>
-            )}
-          </div>
-
-          {exercise.videoUrl && (
-            <div className="md:w-64">
-              <a
-                href={exercise.videoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block px-4 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-center font-semibold"
-              >
-                📹 Watch Video Tutorial
-              </a>
-            </div>
-          )}
+        <div className="flex flex-wrap gap-2 mb-4">
+          <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded font-semibold text-sm uppercase">
+            {exercise.type}
+          </span>
+          <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded font-medium text-sm">
+            {exercise.movementPattern}
+          </span>
         </div>
+
+        {/* Anatomy Tags */}
+        {primaryMuscles.length > 0 && (
+          <div className="mb-4">
+            <div className="text-sm text-gray-500 mb-2">Primary Muscles:</div>
+            <div className="flex flex-wrap gap-2">
+              {(() => {
+                // Collect all unique anatomy nodes
+                const uniqueParts = new Set<string>();
+                primaryMuscles.forEach((link) => {
+                  const path = [];
+                  if (link.anatomy.parent?.parent) path.push(link.anatomy.parent.parent.name);
+                  if (link.anatomy.parent) path.push(link.anatomy.parent.name);
+                  path.push(link.anatomy.name);
+                  path.forEach(part => uniqueParts.add(part));
+                });
+                return Array.from(uniqueParts).map((part, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1 bg-green-100 text-green-700 rounded text-sm font-medium"
+                  >
+                    {part}
+                  </span>
+                ));
+              })()}
+            </div>
+          </div>
+        )}
+
+        {secondaryMuscles.length > 0 && (
+          <div className="mb-4">
+            <div className="text-sm text-gray-500 mb-2">Secondary Muscles:</div>
+            <div className="flex flex-wrap gap-2">
+              {(() => {
+                // Collect all unique anatomy nodes
+                const uniqueParts = new Set<string>();
+                secondaryMuscles.forEach((link) => {
+                  const path = [];
+                  if (link.anatomy.parent?.parent) path.push(link.anatomy.parent.parent.name);
+                  if (link.anatomy.parent) path.push(link.anatomy.parent.name);
+                  path.push(link.anatomy.name);
+                  path.forEach(part => uniqueParts.add(part));
+                });
+                return Array.from(uniqueParts).map((part, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-sm font-medium"
+                  >
+                    {part}
+                  </span>
+                ));
+              })()}
+            </div>
+          </div>
+        )}
+
+        {equipment.length > 0 && (
+          <div className="mb-4">
+            <div className="text-sm text-gray-500 mb-2">Equipment:</div>
+            <div className="flex flex-wrap gap-2">
+              {equipment.map((item) => (
+                <span
+                  key={item}
+                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {exercise.cueSummary && (
+          <div className="mt-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
+            <div className="text-sm font-semibold text-blue-900 mb-1">Form Cues:</div>
+            <p className="text-blue-900">{exercise.cueSummary}</p>
+          </div>
+        )}
       </div>
+
+      {/* Video Section */}
+      {exercise.videoUrl && (
+        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow">
+          <VideoEmbed videoUrl={exercise.videoUrl} title={exercise.name} />
+        </div>
+      )}
 
       {/* Primary Muscles */}
       {primaryMuscles.length > 0 && (
@@ -135,23 +183,34 @@ export default async function ExerciseDetailPage({
             Primary Muscles ({primaryMuscles.length})
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {primaryMuscles.map((link) => (
-              <Link
-                key={link.anatomyNodeId}
-                href={`/anatomy/${link.anatomy.id}`}
-                className="block p-4 border-2 border-green-200 bg-green-50 rounded hover:border-green-500 hover:shadow-md transition"
-              >
-                <div className="font-semibold text-green-700 text-lg">{link.anatomy.name}</div>
-                {link.anatomy.parent && (
-                  <div className="text-sm text-green-600 mt-1">
-                    {link.anatomy.parent.name}
-                  </div>
-                )}
-                {link.anatomy.description && (
-                  <p className="text-sm text-gray-600 mt-2">{link.anatomy.description}</p>
-                )}
-              </Link>
-            ))}
+            {primaryMuscles.map((link) => {
+              // Build hierarchy path
+              const path = [];
+              if (link.anatomy.parent?.parent) {
+                path.push(link.anatomy.parent.parent.name);
+              }
+              if (link.anatomy.parent) {
+                path.push(link.anatomy.parent.name);
+              }
+              
+              return (
+                <Link
+                  key={link.anatomyNodeId}
+                  href={`/anatomy/${link.anatomy.id}`}
+                  className="block p-4 border-2 border-green-200 bg-green-50 rounded hover:border-green-500 hover:shadow-md transition"
+                >
+                  <div className="font-semibold text-green-700 text-lg">{link.anatomy.name}</div>
+                  {path.length > 0 && (
+                    <div className="text-sm text-green-600 mt-1">
+                      {path.join(" › ")}
+                    </div>
+                  )}
+                  {link.anatomy.description && (
+                    <p className="text-sm text-gray-600 mt-2">{link.anatomy.description}</p>
+                  )}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
@@ -163,20 +222,31 @@ export default async function ExerciseDetailPage({
             Secondary Muscles ({secondaryMuscles.length})
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {secondaryMuscles.map((link) => (
-              <Link
-                key={link.anatomyNodeId}
-                href={`/anatomy/${link.anatomy.id}`}
-                className="block p-4 border border-yellow-200 bg-yellow-50 rounded hover:border-yellow-500 hover:shadow-md transition"
-              >
-                <div className="font-semibold text-yellow-700">{link.anatomy.name}</div>
-                {link.anatomy.parent && (
-                  <div className="text-sm text-yellow-600 mt-1">
-                    {link.anatomy.parent.name}
-                  </div>
-                )}
-              </Link>
-            ))}
+            {secondaryMuscles.map((link) => {
+              // Build hierarchy path
+              const path = [];
+              if (link.anatomy.parent?.parent) {
+                path.push(link.anatomy.parent.parent.name);
+              }
+              if (link.anatomy.parent) {
+                path.push(link.anatomy.parent.name);
+              }
+              
+              return (
+                <Link
+                  key={link.anatomyNodeId}
+                  href={`/anatomy/${link.anatomy.id}`}
+                  className="block p-4 border border-yellow-200 bg-yellow-50 rounded hover:border-yellow-500 hover:shadow-md transition"
+                >
+                  <div className="font-semibold text-yellow-700">{link.anatomy.name}</div>
+                  {path.length > 0 && (
+                    <div className="text-sm text-yellow-600 mt-1">
+                      {path.join(" › ")}
+                    </div>
+                  )}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}

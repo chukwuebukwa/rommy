@@ -16,7 +16,8 @@ async function seedArms() {
       name: 'Arms',
       slug: 'arms',
       description: 'Arm region: biceps, triceps and forearms.',
-      roleSummary: 'The young man muscles that fill out the sleeves and drive pressing/pulling strength.',
+      roleSummary:
+        'The young man muscles that fill out the sleeves and drive pressing/pulling strength.',
       primaryFunctions: null,
       aestheticNotes: null,
       meta: null,
@@ -53,8 +54,10 @@ async function seedArms() {
       kind: 'group',
       name: 'Biceps',
       slug: 'biceps',
-      description: 'Bicep-focused muscles (biceps brachii, brachialis) that flex the elbow.',
-      roleSummary: 'Elbow flexion, forearm supination, and the classic front-arm look.',
+      description:
+        'Bicep-focused muscles (biceps brachii, brachialis) that flex the elbow.',
+      roleSummary:
+        'Elbow flexion, forearm supination, and the classic front-arm look.',
       primaryFunctions: null,
       aestheticNotes: null,
       meta: null,
@@ -77,7 +80,8 @@ async function seedArms() {
       kind: 'group',
       name: 'Forearms',
       slug: 'forearms',
-      description: 'Forearm flexors and extensors; in this guide mainly the brachioradialis.',
+      description:
+        'Forearm flexors and extensors; in this guide mainly the brachioradialis and grip-focused musculature.',
       roleSummary: 'Grip strength, elbow flexion support, and thick forearm look.',
       primaryFunctions: null,
       aestheticNotes: null,
@@ -91,7 +95,8 @@ async function seedArms() {
       kind: 'part',
       name: 'Mid Chest (Sternocostal Head)',
       slug: 'chest-sternocostal-head',
-      description: 'Sternal / mid fibers of the pec major that do most of the heavy pressing.',
+      description:
+        'Sternal / mid fibers of the pec major that do most of the heavy pressing.',
       roleSummary: 'Drives horizontal pressing strength and mid-chest thickness.',
       primaryFunctions: JSON.stringify(['horizontal adduction', 'assists shoulder flexion']),
       aestheticNotes: JSON.stringify(['Adds fullness to the center of the chest.']),
@@ -116,7 +121,8 @@ async function seedArms() {
       name: 'Front Delts (Anterior Deltoid)',
       slug: 'front-delts',
       description: 'Front head of the deltoids that works heavily in pressing.',
-      roleSummary: 'Assists pressing and overhead work; gives rounded front-shoulder look.',
+      roleSummary:
+        'Assists pressing and overhead work; gives rounded front-shoulder look.',
       primaryFunctions: JSON.stringify(['shoulder flexion', 'assists pressing movements']),
       aestheticNotes: JSON.stringify(['Adds roundness to the front of the shoulder.']),
       meta: null,
@@ -167,6 +173,8 @@ async function seedArms() {
           'cable_curl',
           'preacher_curl_machine',
           'preacher_bar_curl',
+          'drag_curl',
+          'close_grip_bar_curl',
         ],
         formulaIds: ['biceps_long_head_formula_1'],
       }),
@@ -192,9 +200,11 @@ async function seedArms() {
           'barbell_ez_bar_curl',
           'preacher_curl_machine',
           'preacher_bar_curl',
+          'wide_dumbbell_curl',
+          'wide_grip_barbell_curl',
         ],
-        secondaryExerciseIds: ['cable_curl'],
-        formulaIds: [],
+        secondaryExerciseIds: ['cable_curl', 'waiter_curl', 'uncle_rommy_curl'],
+        formulaIds: ['biceps_short_head_formula_1'],
       }),
       parentId: 'biceps_brachii',
     },
@@ -220,7 +230,14 @@ async function seedArms() {
       ]),
       meta: JSON.stringify({
         primaryExerciseIds: ['reverse_dumbbell_curl'],
-        secondaryExerciseIds: ['barbell_ez_bar_curl', 'cable_curl'],
+        secondaryExerciseIds: [
+          'barbell_ez_bar_curl',
+          'cable_curl',
+          'double_hammer_curl',
+          'single_arm_hammer_curl',
+          'preacher_machine_hammer_curl',
+          'single_arm_brachialis_cable_curl',
+        ],
         formulaIds: ['brachialis_formula_1'],
       }),
       parentId: 'biceps_group',
@@ -246,7 +263,14 @@ async function seedArms() {
       ]),
       meta: JSON.stringify({
         primaryExerciseIds: ['reverse_dumbbell_curl'],
-        secondaryExerciseIds: [],
+        secondaryExerciseIds: [
+          'double_hammer_curl',
+          'single_arm_hammer_curl',
+          'preacher_machine_hammer_curl',
+          'single_arm_brachialis_cable_curl',
+          'forearm_dumbbell_circuit',
+          'forearm_sledgehammer_sequence',
+        ],
         formulaIds: ['brachialis_formula_1'],
       }),
       parentId: 'forearms_group',
@@ -296,8 +320,18 @@ async function seedArms() {
           'skull_crushers',
           'close_grip_bench_press',
           'incline_close_grip_bench_press',
+          'jm_press',
+          'dumbbell_jm_press',
+          'single_arm_tricep_extensions',
         ],
-        secondaryExerciseIds: ['single_arm_db_extensions'],
+        secondaryExerciseIds: [
+          'weighted_dips_upright',
+          'dips',
+          'upright_dips_tricep',
+          'dumbbell_tricep_extensions',
+          'dumbbell_kickbacks',
+          'incline_dumbbell_power_bomb',
+        ],
         formulaIds: ['triceps_long_head_formula_1'],
       }),
       parentId: 'triceps_brachii',
@@ -322,8 +356,15 @@ async function seedArms() {
         primaryExerciseIds: [
           'close_grip_bench_press',
           'reverse_grip_pushdown',
+          'dips',
+          'upright_dips_tricep',
         ],
-        secondaryExerciseIds: [],
+        secondaryExerciseIds: [
+          'triangle_pushdown',
+          'rope_attachment_tricep_superset',
+          'criss_cross_cable_pushdown',
+          'hammer_strength_tricep_extension',
+        ],
         formulaIds: ['triceps_medial_head_formula_1'],
       }),
       parentId: 'triceps_brachii',
@@ -344,8 +385,14 @@ async function seedArms() {
         'Big driver of the “arm from the side” wow factor.',
       ]),
       meta: JSON.stringify({
-        primaryExerciseIds: ['dips', 'triangle_pushdown'],
-        secondaryExerciseIds: [],
+        primaryExerciseIds: [
+          'dips',
+          'weighted_dips_upright',
+          'upright_dips_tricep',
+          'triangle_pushdown',
+          'criss_cross_cable_pushdown',
+        ],
+        secondaryExerciseIds: ['rope_attachment_tricep_superset'],
         formulaIds: ['triceps_lateral_head_formula_1'],
       }),
       parentId: 'triceps_brachii',
@@ -388,11 +435,7 @@ Lets not lie to ourselves… the coolest muscle on the body.
 Especially when the pump is hellacious.
 The bicep is basically socket with a tennis ball to flex on the haters.
 The Tricep has a horseshoe that pops out through the skin.
-...
-Well the answer to your problems lay in the tricep.
-I was naturally a guy with big arms but it wasn’t my biceps.
-It was my triceps.
-...`,
+This intro frames why arms are the “young man muscle” and why your triceps are actually the main size driver for pythons.`,
     },
     {
       id: 'mindset-arms',
@@ -401,10 +444,9 @@ It was my triceps.
       title: 'MINDSET – Arm Genetics & Work That Works',
       order: 2,
       content: `Genetically I was never "meant" to have arms like this.
-...
+You get the standard Uncle Rommy rant about genetics, work, and execution.
 Information is great …but information without execution is purely mental gymnastics and does absolutely nothing for you.
-You now have all the information you need for Conceal & Carry Pythons. Now it’s your time to GRAB the results you’ve been craving your whole life.
-...`,
+You now have all the information you need for Conceal & Carry Pythons. Now it’s your time to GRAB the results you’ve been craving your whole life.`,
     },
     {
       id: 'rules-natural-crusader',
@@ -412,17 +454,14 @@ You now have all the information you need for Conceal & Carry Pythons. Now it’
       kind: 'mindset',
       title: 'The Undeniable Standard: Becoming a Natural Crusader',
       order: 3,
-      content: `What does it mean to be Undeniable?
-To be undeniable is to be unshakable; unforgettable.
-The type of presence that doesn’t merely exist but demands attention, even when silent.
-...
-RULES OF THE NATURAL CRUSADERS:
+      content: `“Undeniable” is the standard: unshakable, unforgettable presence.
+Here Rommy lays out the RULES OF THE NATURAL CRUSADERS (1–14), covering things like:
 1. Lead with Heart, Die on Your Sword
 2. Empty the Energy Clip Every Day
 3. Never Go to Bed Hungry
 ...
 14. Face Fear as a Challenge
-...`,
+This section is mostly ethos and life rules, not programming.`,
     },
     {
       id: 'anatomy-overview-arms',
@@ -430,18 +469,14 @@ RULES OF THE NATURAL CRUSADERS:
       kind: 'anatomy',
       title: 'Anatomy – Conceal & Carry Pythons',
       order: 4,
-      content: `In order for us to build the base of our body correct…we must have an understanding of the anatomy.
-“Am I really getting a science lesson from Uncle Rommy?”
-Yes you are…
-Listen…I am not like your former professors and teachers.
-Instead of giving you information that you find useless.
-I am going to provide you with information about how to conceal & carry pythons.
-Once you understand the anatomy of the shoulder and arms it's going to be 100x easier to:
-1. Target the parts that will actually build & sculpt out your arms
-2. Reduce risk of injury through strengthening key muscle groups
-We have the Bicep & Tricep….BUT we also have the forearms.
-Let’s start with the fan favorite: The Bicep
-...`,
+      content: `To build the base of your body correctly, you need an understanding of anatomy.
+We break down the arm into:
+- Biceps (biceps brachii + brachialis)
+- Triceps (3 heads)
+- Forearms (brachioradialis + grip musculature)
+Key goals:
+1. Target the exact parts that will build & sculpt the arms
+2. Reduce risk of injury by strengthening key stabilizers (especially around the shoulder and elbow).`,
     },
     {
       id: 'anatomy-biceps',
@@ -449,40 +484,24 @@ Let’s start with the fan favorite: The Bicep
       kind: 'anatomy',
       title: 'Biceps – Long Head, Short Head & Brachialis MAXIMALISM',
       order: 5,
-      content: `The Bicep Brachii has 2 separate heads:
-Long Head (Outer Portion of the bicep)
-Short Head (Inner Portion of the Bicep)
-...
+      content: `BICEPS:
+The Bicep Brachii has 2 separate heads:
+- Long Head (Outer Portion of the Bicep)
+- Short Head (Inner Portion of the Bicep)
+
 LONG HEAD:
-The Long Head is located on the outer part of the bicep & is responsible for the peak when you hit a nasty bicep flex.
-But besides the peak development for aesthetic advantages…it provides shoulder stability.
-Due to the long head crossing over into the shoulder joint, it strengthens and stabilizes the shoulder during overhead & other pressing movements.
-...
-Overview: You must train both heads because it’s essential for balanced & peak performance regardless of what pulling movements you are implementing.
-...
-But there is more to the Bicep than these two heads.
-There are people that consider the following 2 muscles technically “a part of the forearm”:
-Brachialis
-Brachioradialis
-Why do I consider those two muscles a part of the bicep?
-Because these will make your biceps look MUCH THICKER and increase the amount of weight you can pull.
-Increasing your strength numbers SIGNIFICANTLY.
-Those muscles take your aesthetic and strength to ANOTHER LEVEL.
-And good news by shifting your attention to just ONE of these 2 muscles…the other one gets proper attention in the process.
-Brachialis MAXIMALISM
-...
-BRACHIALIS:
-If you are familiar with my work you know that I am a Brachialis Supremacist.
-It’s not for no reason…this is the secret sauce of the bicep.
-But why is it worth focusing on?
-1. Increase Arm Strength
-2. Makes your Arms look THICK
-3. Improves Grip Strength
-4. Injury Resilience (Helps Prevent Injuries)
-...
-People know about long head & short head of the bicep but they fail to focus their attention on the IMPERATIVE MUSCLE that is the Brachialis.
-Not many people understand that this is where a TON of extra gains are made.
-...`,
+Responsible for that nasty peak when you flex. Crosses the shoulder joint, so it contributes to shoulder stability and overhead pressing.
+You must train both heads for balanced performance in all pulling movements.
+
+BRACHIALIS MAXIMALISM:
+Rommy’s “secret sauce”. Brachialis sits underneath the biceps and when it grows it physically pushes the biceps up, making your arms look much thicker from the side.
+Benefits:
+1. Increased arm strength
+2. Thicker arms
+3. Better grip strength
+4. Injury resilience (elbow-friendly)
+
+Brachialis + brachioradialis are treated as “bicep-adjacent” because they massively enhance both strength numbers and aesthetics.`,
     },
     {
       id: 'anatomy-triceps',
@@ -490,22 +509,28 @@ Not many people understand that this is where a TON of extra gains are made.
       kind: 'anatomy',
       title: 'Triceps – Long, Medial & Lateral Head',
       order: 6,
-      content: `Now…we have the LARGER part of the equation & is the muscle that makes up 2/3rds of the arm.
-You guessed it…
-The Tricep:
-The Tricep has 3 separate heads:
-Long Head (largest portion of the tricep)
-Lateral Head (HorseShoe)
-Medial Head (underneath both)
+      content: `TRICEPS:
+The tricep makes up roughly 2/3 of total arm mass.
+It has 3 heads:
+- Long Head (largest, inner portion)
+- Lateral Head (outer “horseshoe”)
+- Medial Head (deep head under both)
+
 LONG HEAD:
-The Long Head is the LARGEST head in the tricep that is located on the inner part of the arm.
-That means if you want bigger & stronger triceps then you’d be smart to allocate your energy towards the long head of the tricep.
-Biomechanically it helps you straighten the arm (elbow extension) & is involved in bringing the arm down or back (shoulder extension).
-This is the huge player with strength but more obviously when it comes to putting MASS onto your arms.
-Acquiring yourself MUCH THICKER pythons while adding serious depth & shape in the process.
-And when it comes to building injury resilience… this is where the elbows and shoulder joints come into play.
-This will alleviate unnecessary load onto both your shoulder and elbow joints.
-...`,
+Largest head, located on inner arm.
+Drives elbow extension and assists shoulder extension.
+Huge for strength AND for stacked, thick arms.
+Also a big player in injury resilience by offloading shoulder and elbow joints.
+
+MEDIAL HEAD:
+Deep stabilizer on the lower part of the triceps.
+Adds density and depth around the elbow and bottom portion of the tricep.
+Primary stabilizer during pressing and pushing, especially for those with elbow tendinitis.
+
+LATERAL HEAD:
+Outer “horseshoe” on the tricep.
+Key for explosive movements, speed, and force generation.
+Aesthetic head that provides carved definition and width. Helps protect against hyperextension and reduces strain on the elbow joint.`,
     },
     {
       id: 'strength-arms',
@@ -513,27 +538,39 @@ This will alleviate unnecessary load onto both your shoulder and elbow joints.
       kind: 'strength',
       title: 'Strength – How We Load the Arms',
       order: 7,
-      content: `We are not just moving weight for the sake of it.
-We are putting your arms in positions to move heavy weight while keeping the joints safe.
-Footnote… there is a ton of layover in the exercises that target the biceps & triceps but more so the tricep.
-...`,
+      content: `We’re not just moving weight for the sake of it.
+We put your arms in positions to move heavy weight while keeping joints safe.
+Key points:
+- Use heavy compound pressing/curling as the NUMBER 1 strength work (close grip bench, incline close grip, upright dips, heavy curls).
+- Understand there is a ton of overlap between movements (especially in triceps).
+- Use structured loading patterns (drop sets, low-rep strength work, etc.) to drive performance and growth.`,
     },
     {
       id: 'formulas-arms',
       guideId: 'arms',
       kind: 'program',
-      title: 'Bicep & Tricep Formula Examples',
+      title: 'Bicep & Tricep Formula Examples (Supersets)',
       order: 8,
-      content: `Footnote…. there is a ton of layover in the exercises that target the biceps & triceps but more so the tricep.
+      content: `SUPERSETS:
+Compound lift, supersetted with an isolation exercise on the SAME muscle head.
+We use this to laser-focus stimulus with almost zero chance to miss the target.
 
 Tricep Formula EXAMPLES:
-EXAMPLE FOR THE LONG HEAD: Skull Crushers (Compound Lift) followed by Single Arm DB Extensions (isolation exercise)
-EXAMPLE FOR THE MEDIAL HEAD: Close Grip Bench (Compound Lift) followed by Reverse Grip Pushdowns (isolation exercise)
-EXAMPLE FOR THE LATERAL HEAD: Dips (Compound Lift) followed by Triangle Attachment Pushdowns (Isolation exercise)
+- LONG HEAD:
+  Skull Crushers (Compound) + Single Arm DB Extensions (Isolation)
+- MEDIAL HEAD:
+  Close Grip Bench (Compound) + Reverse Grip Pushdowns (Isolation)
+- LATERAL HEAD:
+  Dips (Compound) + Triangle Attachment Pushdowns (Isolation)
 
 Bicep Formula EXAMPLES:
-EXAMPLE FOR THE LONG HEAD: Incline Dumbbell Curls (Compound Lift) followed by Cable Curls (isolation exercise)
-...`,
+- LONG HEAD:
+  Incline Dumbbell Curls (Compound) + Cable Curls (Isolation)
+- SHORT HEAD:
+  Preacher Curls (Compound) + Wide Dumbbell Curls (Isolation)
+
+Brachialis MAXIMALISM:
+- Reverse Dumbbell Curls for heavy brachialis + brachioradialis work.`,
     },
     {
       id: 'snipers-arm-day',
@@ -542,13 +579,90 @@ EXAMPLE FOR THE LONG HEAD: Incline Dumbbell Curls (Compound Lift) followed by Ca
       title: 'THE SNIPER’S ARM DAY (THE ARM DAY FORMULA)',
       order: 9,
       content: `You now have all the information you need for Conceal & Carry Pythons.
-Now it’s your time to GRAB the results you’ve been craving your whole life.
-Information is great …but information without execution is purely mental gymnastics and does absolutely nothing for you.
-The gold mine is yours.
-“But Uncle Rommy… how do we put it together?”
-I’ll do you this favor, I present to you “THE ARM DAY FORMULA” (CLICK EACH EXERCISE FOR A VIDEO TUTORIAL)
-READ: The muscle you want to PRIORITIZE (the one you care about more) is the one to START off with.
-...`,
+THE ARM DAY FORMULA (SNIPER’S ARM DAY):
+
+READ: The muscle you want to PRIORITIZE (the one you care about more) is the one to START with. You can start with TRICEPS or BICEPS, but Rommy recommends TRICEPS.
+
+1. Triceps – NUMBER 1 Strength (Pick 1 heavy press variation)
+2. Biceps – NUMBER 1 Strength (Pick 1 heavy curl variation)
+3. Long Head Tricep SuperSet (compound + isolation)
+4. Long Head Bicep SuperSet (compound + isolation)
+5. Tricep SuperSet (Triangle + Rope attachment pushdowns)
+6. Bicep SuperSet (Brachialis-focused superset)
+7. OPTIONAL: Arm Superset (Tricep + Bicep)
+8. FOREARMS: Dumbbell Forearm Circuit + Sledgehammer Forearm Sequence.`,
+    },
+    {
+      id: 'anatomy-forearms',
+      guideId: 'arms',
+      kind: 'anatomy',
+      title: 'Forearms, Grip & Forearm Sequences',
+      order: 10,
+      content: `THE ONLY FOREARM WORKOUTS YOU NEED:
+- Sledgehammer Forearm Sequence
+- Dumbbell Circuit
+
+Accessory forearm / grip exercises:
+- Dead Hangs
+- Farmer Carries + Shrugs
+- Single Arm Farmer Carries
+
+These build:
+- Grip strength for all pressing/pulling
+- Forearm thickness
+- Extra resilience at the wrist and elbow.`,
+    },
+    {
+      id: 'bonus-arm-exercise-library',
+      guideId: 'arms',
+      kind: 'program',
+      title: 'BONUS #2 – Arm Exercise Library (Biceps, Triceps & Forearms)',
+      order: 11,
+      content: `Because you trusted Rommy in a world full of fake naturals, you get a full clickable library.
+
+BICEPS:
+- Double Hammer Curls
+- Single Arm Brachialis Cable Curls
+- Barbell/EZ Bar Curl
+- Preacher Curl Machine
+- Incline Dumbbell Curls
+- Drag Curls
+- Cable Curls
+- Close Grip Bar Curl
+- Preacher Machine Hammer Curl
+- Single arm Hammer Curls
+- Reverse Dumbbell Curls
+- Reverse Barbell Curls
+- Reverse Plate Curls
+- Preacher Bar Curls
+- Waiter Curls
+- Wide Dumbbell Curls
+- Wide Grip Barbell Curl
+- Uncle Rommy Curls
+
+TRICEPS:
+- Dumbbell Tricep Lying Extensions with Twist
+- Skull Crushers
+- JM Press
+- Incline Close Grip Bench
+- Upright Dips (Tricep Dips)
+- Close Grip Bench Press
+- Dips (Triceps)
+- Triangle Attachment Tricep Superset
+- Rope Attachment Tricep Superset
+- Criss Cross Cable Pushdowns
+- Hammer Strength Tricep Extensions
+- Dumbbell Tricep Extensions
+- Dumbbell JM Press
+- Single Arm Tricep Extensions
+- Dumbbell Kickbacks
+- Incline Dumbbell Power Bombs
+
+FOREARMS:
+- Dumbbell Circuit
+- Sledgehammer Forearm Sequence
+
+All of these have video links in the PDF and are represented as Exercises here.`,
     },
   ];
 
@@ -560,7 +674,7 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
     });
   }
 
-  // Section → Anatomy links from focusMuscles in your JSON
+  // Section → Anatomy links (focus muscles per section)
   const sectionAnatomyLinks = [
     // intro-young-man-muscle
     { sectionId: 'intro-young-man-muscle', anatomyNodeId: 'biceps_brachii' },
@@ -601,11 +715,24 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
     { sectionId: 'formulas-arms', anatomyNodeId: 'triceps_medial_head' },
     { sectionId: 'formulas-arms', anatomyNodeId: 'triceps_lateral_head' },
     { sectionId: 'formulas-arms', anatomyNodeId: 'biceps_long_head' },
+    { sectionId: 'formulas-arms', anatomyNodeId: 'biceps_short_head' },
+    { sectionId: 'formulas-arms', anatomyNodeId: 'brachialis' },
 
     // snipers-arm-day
     { sectionId: 'snipers-arm-day', anatomyNodeId: 'triceps_brachii' },
     { sectionId: 'snipers-arm-day', anatomyNodeId: 'biceps_brachii' },
     { sectionId: 'snipers-arm-day', anatomyNodeId: 'brachialis' },
+    { sectionId: 'snipers-arm-day', anatomyNodeId: 'brachioradialis' },
+
+    // anatomy-forearms
+    { sectionId: 'anatomy-forearms', anatomyNodeId: 'brachioradialis' },
+    { sectionId: 'anatomy-forearms', anatomyNodeId: 'brachialis' },
+
+    // bonus library
+    { sectionId: 'bonus-arm-exercise-library', anatomyNodeId: 'biceps_brachii' },
+    { sectionId: 'bonus-arm-exercise-library', anatomyNodeId: 'triceps_brachii' },
+    { sectionId: 'bonus-arm-exercise-library', anatomyNodeId: 'brachialis' },
+    { sectionId: 'bonus-arm-exercise-library', anatomyNodeId: 'brachioradialis' },
   ];
 
   for (const link of sectionAnatomyLinks) {
@@ -624,8 +751,10 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
   // -----------------------------
   // 3) EXERCISES
   // -----------------------------
+  // All arm / forearm exercises from structured_data.json + links.csv
 
   const exercises = [
+    // --- Big tricep presses / strength ----
     {
       id: 'close_grip_bench_press',
       name: 'Close Grip Bench Press',
@@ -634,11 +763,10 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       equipment: ['barbell', 'bench'],
       primaryMuscles: ['triceps_long_head', 'triceps_medial_head'],
       secondaryMuscles: ['chest_sternocostal_head'],
-      videoUrl:
-        'https://youtube.com/shorts/Xvl5q-PHPhk?si=zVC66iBQq3EtVMGR',
+      videoUrl: 'https://youtube.com/shorts/-Ge7BvFFGls?feature=share',
       cueSummary:
-        'Grip just inside shoulder width, tuck elbows, drive up with triceps.',
-      mentionedInSections: ['formulas-arms', 'snipers-arm-day'],
+        'Grip just inside shoulder width, tuck elbows, lower to mid-chest, drive up with triceps.',
+      mentionedInSections: ['strength-arms', 'formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
     },
     {
       id: 'incline_close_grip_bench_press',
@@ -648,11 +776,10 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       equipment: ['barbell', 'bench'],
       primaryMuscles: ['triceps_long_head', 'triceps_medial_head'],
       secondaryMuscles: ['upper_chest_clavicular'],
-      videoUrl:
-        'https://youtube.com/shorts/-Ge7BvFFGls?feature=share',
+      videoUrl: 'https://youtube.com/shorts/Xvl5q-PHPhk?si=zVC66iBQq3EtVMGR',
       cueSummary:
-        'Use a closer grip on an incline bench to load upper chest and triceps.',
-      mentionedInSections: ['snipers-arm-day'],
+        'On an incline bench with a close grip, lower to upper chest and press, keeping tension on triceps.',
+      mentionedInSections: ['strength-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
     },
     {
       id: 'weighted_dips_upright',
@@ -660,14 +787,42 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       type: 'compound',
       movementPattern: 'dip',
       equipment: ['dip_bars', 'weight_belt'],
-      primaryMuscles: ['triceps_lateral_head', 'triceps_long_head'],
+      primaryMuscles: ['triceps_long_head', 'triceps_lateral_head'],
       secondaryMuscles: ['chest_sternocostal_head', 'front_delts'],
-      videoUrl:
-        'https://youtube.com/shorts/0f0dhThWz9w?feature=share',
+      videoUrl: 'https://youtube.com/shorts/gfmALylWNv4?si=yektKPnPxfj8ZI4A',
       cueSummary:
-        'Stay more upright and lock out hard to hammer triceps.',
-      mentionedInSections: ['snipers-arm-day', 'formulas-arms'],
+        'Stay more upright, tuck elbows, dip to a comfortable depth and lock out hard to hammer triceps.',
+      mentionedInSections: ['strength-arms', 'snipers-arm-day'],
     },
+
+    // --- Dips variants & tricep pressing isolation ---
+    {
+      id: 'dips',
+      name: 'Dips (Triceps)',
+      type: 'compound',
+      movementPattern: 'dip',
+      equipment: ['dip_bars'],
+      primaryMuscles: ['triceps_lateral_head', 'triceps_long_head'],
+      secondaryMuscles: ['chest_sternocostal_head'],
+      videoUrl: 'https://youtube.com/shorts/0f0dhThWz9w?feature=share',
+      cueSummary:
+        'Use parallel bars, keep a slight forward lean or stay upright, hit a strong lockout each rep.',
+      mentionedInSections: ['formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'upright_dips_tricep',
+      name: 'Upright Dips (Tricep Dips)',
+      type: 'compound',
+      movementPattern: 'dip',
+      equipment: ['dip_bars'],
+      primaryMuscles: ['triceps_long_head', 'triceps_lateral_head'],
+      secondaryMuscles: ['chest_sternocostal_head', 'front_delts'],
+      videoUrl: 'https://youtube.com/shorts/gfmALylWNv4?si=yektKPnPxfj8ZI4A',
+      cueSummary: 'Stay upright, elbows close, focus on pure tricep lockout.',
+      mentionedInSections: ['bonus-arm-exercise-library'],
+    },
+
+    // --- Skull crushers / JM presses / lying tricep work ---
     {
       id: 'skull_crushers',
       name: 'Skull Crushers',
@@ -676,24 +831,77 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       equipment: ['barbell', 'ez_bar', 'bench'],
       primaryMuscles: ['triceps_long_head'],
       secondaryMuscles: ['triceps_medial_head'],
-      videoUrl:
-        'https://youtube.com/shorts/wN5h__DYRwg?si=cBZrFOUhf-KAMSTJ',
+      videoUrl: 'https://youtube.com/shorts/wN5h__DYRwg?si=cBZrFOUhf-KAMSTJ',
       cueSummary:
-        'Lower the bar behind the head to stretch the long head, extend without flaring elbows.',
-      mentionedInSections: ['formulas-arms', 'anatomy-triceps'],
+        'Lower the bar behind the head for a deep stretch, extend without flaring elbows.',
+      mentionedInSections: ['formulas-arms', 'anatomy-triceps', 'snipers-arm-day', 'bonus-arm-exercise-library'],
     },
     {
-      id: 'single_arm_db_extensions',
-      name: 'Single Arm DB Extensions',
+      id: 'jm_press',
+      name: 'JM Press',
+      type: 'compound',
+      movementPattern: 'extension',
+      equipment: ['barbell', 'bench'],
+      primaryMuscles: ['triceps_long_head', 'triceps_medial_head'],
+      secondaryMuscles: ['chest_sternocostal_head'],
+      videoUrl: 'https://youtube.com/shorts/Pda9ygvDdRE?si=0iiTR4f8B-onWlLl',
+      cueSummary:
+        'Hybrid between close-grip bench and skull crusher; lower toward face and press back up, loading triceps heavily.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'dumbbell_jm_press',
+      name: 'Dumbbell JM Press',
+      type: 'compound',
+      movementPattern: 'extension',
+      equipment: ['dumbbell', 'bench'],
+      primaryMuscles: ['triceps_long_head', 'triceps_medial_head'],
+      secondaryMuscles: [],
+      videoUrl: 'https://youtube.com/shorts/vILUhXIM9rc?si=0tk5k_RZiqQMKirT',
+      cueSummary:
+        'Dumbbell version of JM press; elbows tucked, lower toward face and extend without losing tension.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'dumbbell_tricep_lying_extension',
+      name: 'Dumbbell Tricep Lying Extensions',
+      type: 'isolation',
+      movementPattern: 'extension',
+      equipment: ['dumbbell', 'bench'],
+      primaryMuscles: ['triceps_long_head'],
+      secondaryMuscles: ['triceps_medial_head'],
+      videoUrl: 'https://youtube.com/shorts/h24fKMGfy_I?feature=share',
+      cueSummary:
+        'Lying on a bench, lower dumbbells behind head for a stretch and extend to full lockout.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'dumbbell_tricep_lying_extension_twist',
+      name: 'Dumbbell Tricep Lying Extensions with Twist',
+      type: 'isolation',
+      movementPattern: 'extension',
+      equipment: ['dumbbell', 'bench'],
+      primaryMuscles: ['triceps_long_head'],
+      secondaryMuscles: ['triceps_medial_head'],
+      videoUrl: 'https://youtube.com/shorts/5LzZQSRwIU4?si=YeqzpjwoiaKrBCi1',
+      cueSummary:
+        'Same as lying extensions but twist at the top for extra squeeze in the tricep.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+
+    // --- Tricep extensions / pushdowns / machines ---
+    {
+      id: 'single_arm_tricep_extensions',
+      name: 'Single Arm Tricep Extensions (DB Overhead)',
       type: 'isolation',
       movementPattern: 'extension',
       equipment: ['dumbbell'],
       primaryMuscles: ['triceps_long_head'],
-      secondaryMuscles: [],
-      videoUrl: null,
+      secondaryMuscles: ['triceps_medial_head'],
+      videoUrl: 'https://youtube.com/shorts/7v1BO026F8I?si=nxRSReWPXhkNgzMC',
       cueSummary:
-        'Overhead or lying, extend fully and squeeze the back of the arm.',
-      mentionedInSections: ['formulas-arms'],
+        'Overhead or lying, extend fully and squeeze the back of the arm one side at a time.',
+      mentionedInSections: ['formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
     },
     {
       id: 'reverse_grip_pushdown',
@@ -703,37 +911,145 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       equipment: ['cable'],
       primaryMuscles: ['triceps_medial_head'],
       secondaryMuscles: [],
-      videoUrl: null,
+      videoUrl: null, // no direct explicit link in links.csv
       cueSummary:
-        'Underhand grip, elbows pinned, extend and lock out under control.',
+        'Underhand grip on cable, elbows pinned, extend and lock out under control for medial head emphasis.',
       mentionedInSections: ['formulas-arms'],
     },
     {
       id: 'triangle_pushdown',
-      name: 'Triangle Attachment Pushdowns',
+      name: 'Triangle Attachment Tricep Superset',
       type: 'isolation',
       movementPattern: 'extension',
       equipment: ['cable'],
       primaryMuscles: ['triceps_lateral_head'],
       secondaryMuscles: ['triceps_medial_head'],
-      videoUrl: null,
+      videoUrl: 'https://youtube.com/shorts/wyfPk15nOwE?feature=share',
       cueSummary:
-        'Use triangle handle, lean slightly forward, drive down and lock out.',
-      mentionedInSections: ['formulas-arms'],
+        'Use triangle handle, lean slightly forward, drive down and lock out hard for the horseshoe.',
+      mentionedInSections: ['formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
     },
     {
-      id: 'dips',
-      name: 'Dips',
-      type: 'compound',
-      movementPattern: 'dip',
-      equipment: ['dip_bars'],
-      primaryMuscles: ['triceps_lateral_head', 'triceps_long_head'],
-      secondaryMuscles: ['chest_sternocostal_head'],
-      videoUrl: null,
+      id: 'rope_attachment_tricep_superset',
+      name: 'Rope Attachment Tricep Superset',
+      type: 'isolation',
+      movementPattern: 'extension',
+      equipment: ['cable'],
+      primaryMuscles: ['triceps_lateral_head'],
+      secondaryMuscles: ['triceps_medial_head'],
+      videoUrl: 'https://youtube.com/shorts/uyOy0-JxTuU?feature=share',
       cueSummary:
-        'Lean slightly forward or stay upright depending on emphasis; hit full lockout.',
-      mentionedInSections: ['formulas-arms'],
+        'Use rope, spread at the bottom and lock out hard to torch the outer head.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
     },
+    {
+      id: 'criss_cross_cable_pushdown',
+      name: 'Criss Cross Cable Pushdowns',
+      type: 'isolation',
+      movementPattern: 'extension',
+      equipment: ['cable'],
+      primaryMuscles: ['triceps_lateral_head'],
+      secondaryMuscles: ['triceps_medial_head'],
+      videoUrl: 'https://youtube.com/shorts/LLHEFZHVkdg?feature=share',
+      cueSummary:
+        'Cross cables and press down, focusing on peak contraction in the outer head.',
+      mentionedInSections: ['formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'hammer_strength_tricep_extension',
+      name: 'Hammer Strength Tricep Extensions',
+      type: 'isolation',
+      movementPattern: 'extension',
+      equipment: ['machine'],
+      primaryMuscles: ['triceps_long_head'],
+      secondaryMuscles: ['triceps_medial_head', 'triceps_lateral_head'],
+      videoUrl: 'https://youtube.com/shorts/FS1ujjPynzE?feature=share',
+      cueSummary:
+        'Use the Hammer Strength plate-loaded tricep machine, drive through full ROM with strong lockout.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'dumbbell_tricep_extensions',
+      name: 'Dumbbell Tricep Extensions',
+      type: 'isolation',
+      movementPattern: 'extension',
+      equipment: ['dumbbell'],
+      primaryMuscles: ['triceps_long_head'],
+      secondaryMuscles: ['triceps_medial_head'],
+      videoUrl: 'https://youtube.com/shorts/h24fKMGfy_I?feature=share',
+      cueSummary:
+        'Overhead or lying, extend the dumbbells and squeeze the triceps at the top.',
+      mentionedInSections: ['bonus-arm-exercise-library'],
+    },
+    {
+      id: 'dumbbell_kickbacks',
+      name: 'Dumbbell Kickbacks',
+      type: 'isolation',
+      movementPattern: 'extension',
+      equipment: ['dumbbell'],
+      primaryMuscles: ['triceps_lateral_head'],
+      secondaryMuscles: ['triceps_long_head'],
+      videoUrl: 'https://youtube.com/shorts/6KIn4mRX9rU?si=HKje21tyy2sB2R-k',
+      cueSummary:
+        'Hinge over, upper arm fixed, extend the dumbbell back and squeeze at lockout.',
+      mentionedInSections: ['bonus-arm-exercise-library'],
+    },
+    {
+      id: 'incline_dumbbell_power_bomb',
+      name: 'Incline Dumbbell Power Bombs',
+      type: 'compound',
+      movementPattern: 'extension',
+      equipment: ['dumbbell', 'bench'],
+      primaryMuscles: ['triceps_long_head'],
+      secondaryMuscles: ['triceps_medial_head'],
+      videoUrl: 'https://youtube.com/shorts/f8bmnveIrZE?si=ataBkVqbWj5joAK9',
+      cueSummary:
+        'On an incline bench, use a deep stretch and powerful extension to “power bomb” the triceps.',
+      mentionedInSections: ['bonus-arm-exercise-library'],
+    },
+
+    // --- Biceps heavy curls / strength ---
+    {
+      id: 'barbell_ez_bar_curl',
+      name: 'Barbell/EZ Bar Curl',
+      type: 'compound',
+      movementPattern: 'curl',
+      equipment: ['barbell', 'ez_bar'],
+      primaryMuscles: ['biceps_long_head', 'biceps_short_head'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://youtube.com/shorts/b-npw5oLoJA?feature=share',
+      cueSummary:
+        'Stand tall, no swinging, curl from full stretch to a hard squeeze with an EZ or straight bar.',
+      mentionedInSections: ['strength-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'preacher_curl_machine',
+      name: 'Preacher Curl Machine',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['machine'],
+      primaryMuscles: ['biceps_short_head'],
+      secondaryMuscles: ['biceps_long_head'],
+      videoUrl: 'https://youtube.com/shorts/4Lo3M3pTim8?feature=share',
+      cueSummary:
+        'Let the pad lock your upper arm, curl through full ROM emphasizing the inner head.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'preacher_bar_curl',
+      name: 'Preacher Bar Curls',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['barbell', 'ez_bar', 'preacher_bench'],
+      primaryMuscles: ['biceps_short_head'],
+      secondaryMuscles: ['biceps_long_head'],
+      videoUrl: 'https://youtube.com/shorts/eJKDjoBZk1E?feature=share',
+      cueSummary:
+        'Use a bar on a preacher bench; control the bottom stretch and squeeze the short head.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+
+    // --- Long-head biceps + cable curls / drag / close grip ---
     {
       id: 'incline_dumbbell_curl',
       name: 'Incline Dumbbell Curls',
@@ -742,10 +1058,10 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       equipment: ['dumbbell', 'bench'],
       primaryMuscles: ['biceps_long_head'],
       secondaryMuscles: ['brachialis'],
-      videoUrl: null,
+      videoUrl: 'https://youtube.com/shorts/_F0vp8sOE1A?feature=share',
       cueSummary:
-        'Sit back on an incline, let arms hang, curl without swinging, stretch the long head.',
-      mentionedInSections: ['formulas-arms'],
+        'Sit back on an incline, let arms hang, curl without swinging to stretch and load the long head.',
+      mentionedInSections: ['formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
     },
     {
       id: 'cable_curl',
@@ -755,50 +1071,39 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       equipment: ['cable'],
       primaryMuscles: ['biceps_long_head', 'biceps_short_head'],
       secondaryMuscles: ['brachialis'],
-      videoUrl: null,
+      videoUrl: 'https://youtube.com/shorts/UH3uES0MAgg?feature=share',
       cueSummary:
-        'Keep constant tension with the cable, squeeze at the top.',
-      mentionedInSections: ['formulas-arms'],
+        'Keep constant tension with the cable, curl and squeeze hard at the top.',
+      mentionedInSections: ['formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
     },
     {
-      id: 'barbell_ez_bar_curl',
-      name: 'Barbell/EZ Bar Curl',
+      id: 'drag_curl',
+      name: 'Drag Curls',
       type: 'compound',
       movementPattern: 'curl',
       equipment: ['barbell', 'ez_bar'],
-      primaryMuscles: ['biceps_long_head', 'biceps_short_head'],
+      primaryMuscles: ['biceps_long_head'],
       secondaryMuscles: ['brachialis'],
-      videoUrl: null,
+      videoUrl: 'https://youtube.com/shorts/sPkpBMjFHC0?feature=share',
       cueSummary:
-        'Stand tall, no swinging, curl from a full stretch to a hard squeeze.',
-      mentionedInSections: ['snipers-arm-day'],
+        'Drag the bar up your torso, keeping elbows back to emphasize long head and brachialis.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
     },
     {
-      id: 'preacher_curl_machine',
-      name: 'Preacher Curl Machine',
-      type: 'isolation',
+      id: 'close_grip_bar_curl',
+      name: 'Close Grip Bar Curl',
+      type: 'compound',
       movementPattern: 'curl',
-      equipment: ['machine'],
-      primaryMuscles: ['biceps_short_head'],
-      secondaryMuscles: [],
-      videoUrl: null,
+      equipment: ['barbell', 'ez_bar'],
+      primaryMuscles: ['biceps_long_head'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://youtube.com/shorts/rOxWlfKEoiU?feature=share',
       cueSummary:
-        'Let the pad lock your upper arm, curl through a full ROM.',
-      mentionedInSections: ['snipers-arm-day'],
+        'Use a closer grip to bias long head and keep elbows fixed at your sides.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
     },
-    {
-      id: 'preacher_bar_curl',
-      name: 'Preacher Bar Curls',
-      type: 'isolation',
-      movementPattern: 'curl',
-      equipment: ['barbell', 'ez_bar', 'preacher_bench'],
-      primaryMuscles: ['biceps_short_head'],
-      secondaryMuscles: [],
-      videoUrl: null,
-      cueSummary:
-        'Similar to machine but with free weight; control the bottom stretch.',
-      mentionedInSections: ['snipers-arm-day'],
-    },
+
+    // --- Brachialis / hammer / reverse curl variations ---
     {
       id: 'reverse_dumbbell_curl',
       name: 'Reverse Dumbbell Curls',
@@ -807,11 +1112,209 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       equipment: ['dumbbell'],
       primaryMuscles: ['brachialis', 'brachioradialis'],
       secondaryMuscles: [],
-      videoUrl:
-        'https://youtube.com/shorts/VEb1Uz0IJ1w?feature=share',
+      videoUrl: 'https://youtube.com/shorts/VEb1Uz0IJ1w?feature=share',
       cueSummary:
         'Use a pronated grip, curl without swinging to blow up brachialis and forearms.',
-      mentionedInSections: ['anatomy-biceps', 'formulas-arms'],
+      mentionedInSections: ['anatomy-biceps', 'formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'double_hammer_curl',
+      name: 'Double Hammer Curls',
+      type: 'compound',
+      movementPattern: 'curl',
+      equipment: ['dumbbell'],
+      primaryMuscles: ['brachialis', 'brachioradialis'],
+      secondaryMuscles: ['biceps_brachii'],
+      videoUrl: 'https://youtube.com/shorts/9Yyw_N4o2sM?si=fYZ2XK5_VWYavvx2',
+      cueSummary:
+        'Neutral grip dumbbell curls with both arms to hammer brachialis and brachioradialis.',
+      mentionedInSections: ['bonus-arm-exercise-library'],
+    },
+    {
+      id: 'single_arm_hammer_curl',
+      name: 'Single Arm Hammer Curls',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['dumbbell'],
+      primaryMuscles: ['brachialis', 'brachioradialis'],
+      secondaryMuscles: ['biceps_brachii'],
+      videoUrl: 'https://youtube.com/shorts/TTp-IS3K_6I?feature=share',
+      cueSummary:
+        'One arm at a time, neutral grip, strict form hammer curls for brachialis focus.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'preacher_machine_hammer_curl',
+      name: 'Preacher Machine Hammer Curl',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['machine'],
+      primaryMuscles: ['brachialis', 'biceps_short_head'],
+      secondaryMuscles: ['brachioradialis'],
+      videoUrl: 'https://youtube.com/shorts/QKrgoScwcEE?feature=share',
+      cueSummary:
+        'Hammer-grip preacher machine curl to lock in position and torch brachialis.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'single_arm_brachialis_cable_curl',
+      name: 'Single Arm Brachialis Cable Curls',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['cable'],
+      primaryMuscles: ['brachialis'],
+      secondaryMuscles: ['brachioradialis'],
+      videoUrl: 'https://youtube.com/shorts/EDC6SAo7AT8?si=koyLYBPizetE1hNM',
+      cueSummary:
+        'Cable single-arm curl with neutral/hammer grip to bias brachialis hard.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'reverse_barbell_curl',
+      name: 'Reverse Barbell Curls',
+      type: 'compound',
+      movementPattern: 'curl',
+      equipment: ['barbell', 'ez_bar'],
+      primaryMuscles: ['brachialis', 'brachioradialis'],
+      secondaryMuscles: [],
+      videoUrl: 'https://youtube.com/shorts/cw9Apa2v0KU?feature=share',
+      cueSummary:
+        'Pronated grip bar curls to smash brachialis and forearms.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'reverse_plate_curl',
+      name: 'Reverse Plate Curls',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['plate'],
+      primaryMuscles: ['brachialis', 'brachioradialis'],
+      secondaryMuscles: [],
+      videoUrl: 'https://youtube.com/shorts/Fwu50HYNlXM?feature=share',
+      cueSummary:
+        'Hold a plate with a pronated grip and curl, keeping wrists strong.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+
+    // --- Short-head / “pretty” curls ---
+    {
+      id: 'waiter_curl',
+      name: 'Waiter Curls',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['dumbbell', 'plate'],
+      primaryMuscles: ['biceps_brachii'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://youtube.com/shorts/PqnI097tCns?feature=share',
+      cueSummary:
+        'Hold a single dumbbell/plate like a tray, curl up and squeeze for peak and inner head.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'wide_dumbbell_curl',
+      name: 'Wide Dumbbell Curls',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['dumbbell'],
+      primaryMuscles: ['biceps_short_head'],
+      secondaryMuscles: ['biceps_brachii'],
+      videoUrl: 'https://youtube.com/shorts/Yj9CqMOIkEc?feature=share',
+      cueSummary:
+        'Hold dumbbells with a wider grip and curl to emphasize inner/short head.',
+      mentionedInSections: ['formulas-arms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'wide_grip_barbell_curl',
+      name: 'Wide Grip Barbell Curl',
+      type: 'compound',
+      movementPattern: 'curl',
+      equipment: ['barbell', 'ez_bar'],
+      primaryMuscles: ['biceps_short_head'],
+      secondaryMuscles: ['biceps_brachii'],
+      videoUrl: 'https://youtube.com/shorts/QnePbE2Knc0?feature=share',
+      cueSummary:
+        'Wider grip on the bar shifts emphasis to inner biceps and creates that thick frontal look.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'uncle_rommy_curl',
+      name: 'Uncle Rommy Curls',
+      type: 'isolation',
+      movementPattern: 'curl',
+      equipment: ['dumbbell'],
+      primaryMuscles: ['biceps_long_head', 'biceps_short_head'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://www.youtube.com/shorts/B3f7JKCbe7Y',
+      cueSummary:
+        'Rommy’s signature curl variation to build a nasty pump and fuller biceps.',
+      mentionedInSections: ['snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+
+    // --- FOREARMS / GRIP ---
+    {
+      id: 'forearm_dumbbell_circuit',
+      name: 'Dumbbell Forearm Circuit',
+      type: 'compound',
+      movementPattern: 'forearm_circuit',
+      equipment: ['dumbbell'],
+      primaryMuscles: ['brachioradialis'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://youtube.com/shorts/infDnTE_LSw?feature=share',
+      cueSummary:
+        'Forearm circuit with dumbbells to blow up grip, pump and endurance.',
+      mentionedInSections: ['anatomy-forearms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'forearm_sledgehammer_sequence',
+      name: 'Sledgehammer Forearm Sequence',
+      type: 'compound',
+      movementPattern: 'forearm_circuit',
+      equipment: ['sledgehammer'],
+      primaryMuscles: ['brachioradialis'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://youtu.be/38C1yg-oDl4?si=outOAc7brItrOBxr',
+      cueSummary:
+        'Sledgehammer swings/lever work to build insane forearm density and grip.',
+      mentionedInSections: ['anatomy-forearms', 'snipers-arm-day', 'bonus-arm-exercise-library'],
+    },
+    {
+      id: 'dead_hang',
+      name: 'Dead Hangs',
+      type: 'compound',
+      movementPattern: 'hang',
+      equipment: ['pullup_bar'],
+      primaryMuscles: ['brachioradialis'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://youtube.com/shorts/QSy3l2Omekw?feature=share',
+      cueSummary:
+        'Hang from a bar for time to build grip resilience and shoulder traction.',
+      mentionedInSections: ['anatomy-forearms'],
+    },
+    {
+      id: 'farmer_carries_shrugs',
+      name: 'Farmer Carries + Shrugs',
+      type: 'compound',
+      movementPattern: 'carry',
+      equipment: ['dumbbell', 'trap_bar'],
+      primaryMuscles: ['brachioradialis'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://youtube.com/shorts/P6ZJcShe0dI?feature=share',
+      cueSummary:
+        'Heavy carries with integrated shrugs to train grip, traps and overall arm support.',
+      mentionedInSections: ['anatomy-forearms'],
+    },
+    {
+      id: 'single_arm_farmer_carry',
+      name: 'Single Arm Farmer Carries',
+      type: 'compound',
+      movementPattern: 'carry',
+      equipment: ['dumbbell', 'kettlebell'],
+      primaryMuscles: ['brachioradialis'],
+      secondaryMuscles: ['brachialis'],
+      videoUrl: 'https://youtube.com/shorts/o6QeAALMWeA?si=pr-yTMidMNBpiPv6',
+      cueSummary:
+        'One-sided carries to challenge grip and core stability; brutal for forearm thickness.',
+      mentionedInSections: ['anatomy-forearms'],
     },
   ];
 
@@ -905,9 +1408,9 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
         },
         {
           order: 2,
-          exerciseId: 'single_arm_db_extensions',
+          exerciseId: 'single_arm_tricep_extensions',
           role: 'isolation',
-          notes: 'Chase a nasty pump in the long head, high reps.',
+          notes: 'Chase a nasty pump in the long head, moderate-to-high reps.',
         },
       ],
     },
@@ -978,6 +1481,28 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
       ],
     },
     {
+      id: 'biceps_short_head_formula_1',
+      name: 'Short Head – Preacher Curls + Wide Dumbbell Curls',
+      description:
+        'EXAMPLE FOR THE SHORT HEAD: Preacher Curls (Compound/anchored) followed by Wide Dumbbell Curls (isolation).',
+      pattern: 'superset',
+      targetMuscles: ['biceps_short_head'],
+      steps: [
+        {
+          order: 1,
+          exerciseId: 'preacher_bar_curl',
+          role: 'compound',
+          notes: null,
+        },
+        {
+          order: 2,
+          exerciseId: 'wide_dumbbell_curl',
+          role: 'isolation',
+          notes: null,
+        },
+      ],
+    },
+    {
       id: 'brachialis_formula_1',
       name: 'Brachialis MAXIMALISM – Reverse Dumbbell Curls',
       description:
@@ -1006,6 +1531,9 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
         pattern: f.pattern,
       },
     });
+
+    // clear & recreate steps each run to avoid duplicates
+    await prisma.formulaStep.deleteMany({ where: { formulaId: f.id } });
 
     for (const m of f.targetMuscles) {
       await prisma.formulaTarget.upsert({
@@ -1056,6 +1584,7 @@ READ: The muscle you want to PRIORITIZE (the one you care about more) is the one
   });
 
   const workoutBlocks = [
+    // 1. Triceps strength
     {
       id: 'triceps-strength-block',
       workoutId: 'snipers_arm_day',
@@ -1066,7 +1595,7 @@ Set 2: Drop 20% & set REP PR
 Set 3: Drop another 20% & set REP PR
 Explanation: Work up to a 3–4 Rep Max for 1 set. Take a 3–4 minute break. Then drop the weight by 20% and set a REP PR. Take another 3–4 minute break. Then drop the weight by another 20% and set another REP PR.`,
       notes:
-        'Pick ONE of these pressing variations and follow the drop-set scheme.',
+        'Pick ONE of these pressing variations and follow the drop-set strength scheme.',
       targetMuscles: [
         'triceps_brachii',
         'triceps_long_head',
@@ -1079,6 +1608,7 @@ Explanation: Work up to a 3–4 Rep Max for 1 set. Take a 3–4 minute break. Th
         'weighted_dips_upright',
       ],
     },
+    // 2. Biceps strength
     {
       id: 'biceps-strength-block',
       workoutId: 'snipers_arm_day',
@@ -1095,6 +1625,118 @@ Explanation: Work up to a 3–4 Rep Max for 1 set. Take a 3–4 minute break. Th
         'barbell_ez_bar_curl',
         'preacher_curl_machine',
         'preacher_bar_curl',
+      ],
+    },
+    // 3. Long Head Tricep Superset
+    {
+      id: 'triceps-long-head-superset-block',
+      workoutId: 'snipers_arm_day',
+      label: '3. Long Head Tricep SuperSet',
+      schemeStyle: 'superset',
+      schemeDesc:
+        '2–3 sets. Compound movement: fail between 5–9 reps (pick 1), then superset isolation: fail between 7–11 reps (pick 1).',
+      notes:
+        'Pick ONE compound (Skull Crushers or JM Press) and ONE isolation (Single Arm DB Extensions / DB JM Press / DB Lying Extensions).',
+      targetMuscles: ['triceps_long_head', 'triceps_brachii', 'triceps_medial_head'],
+      exerciseOptions: [
+        'skull_crushers',
+        'jm_press',
+        'single_arm_tricep_extensions',
+        'dumbbell_jm_press',
+        'dumbbell_tricep_lying_extension',
+        'dumbbell_tricep_lying_extension_twist',
+      ],
+    },
+    // 4. Long Head Bicep Superset
+    {
+      id: 'biceps-long-head-superset-block',
+      workoutId: 'snipers_arm_day',
+      label: '4. Long Head Bicep SuperSet',
+      schemeStyle: 'superset',
+      schemeDesc:
+        '2–3 sets. Compound movement: fail between 5–9 reps (pick 1), then superset isolation: fail between 7–11 reps (pick 1).',
+      notes:
+        'Pick ONE compound (Incline DB Curl or Cable Curl) and ONE isolation (Drag Curls or Close Grip Bar Curl).',
+      targetMuscles: ['biceps_long_head', 'biceps_brachii', 'brachialis'],
+      exerciseOptions: [
+        'incline_dumbbell_curl',
+        'cable_curl',
+        'drag_curl',
+        'close_grip_bar_curl',
+      ],
+    },
+    // 5. Tricep Superset
+    {
+      id: 'triceps-superset-block',
+      workoutId: 'snipers_arm_day',
+      label: '5. Tricep SuperSet',
+      schemeStyle: 'superset',
+      schemeDesc:
+        '2–3 sets x failure between 6–9 reps both ways using attachment supersets.',
+      notes: 'Triangle Attachment Tricep Superset + Rope Attachment Tricep Superset.',
+      targetMuscles: ['triceps_lateral_head', 'triceps_medial_head'],
+      exerciseOptions: ['triangle_pushdown', 'rope_attachment_tricep_superset'],
+    },
+    // 6. Bicep (Brachialis) Superset
+    {
+      id: 'biceps-brachialis-superset-block',
+      workoutId: 'snipers_arm_day',
+      label: '6. Bicep SuperSet (Brachialis Focus)',
+      schemeStyle: 'superset',
+      schemeDesc:
+        '2–3 sets. Brachialis-oriented movement: fail between 6–9 reps (pick 1), then superset movement: fail between 6–9 reps (pick 1).',
+      notes:
+        'Pick ONE hammer/reverse variant, then ONE reverse curl variant to torch brachialis and brachioradialis.',
+      targetMuscles: ['brachialis', 'brachioradialis'],
+      exerciseOptions: [
+        'preacher_machine_hammer_curl',
+        'reverse_barbell_curl',
+        'double_hammer_curl',
+        'single_arm_hammer_curl',
+        'reverse_dumbbell_curl',
+        'reverse_plate_curl',
+        'single_arm_brachialis_cable_curl',
+      ],
+    },
+    // 7. Optional Arm Superset (Tricep + Bicep)
+    {
+      id: 'optional-arm-superset-block',
+      workoutId: 'snipers_arm_day',
+      label: '7. OPTIONAL: Arm Superset (Bicep & Tricep)',
+      schemeStyle: 'superset',
+      schemeDesc:
+        '2–3 sets. Tricep: fail between 7–11 reps (pick 1). Bicep: fail between 6–9 reps (pick 1).',
+      notes:
+        'Tricep options: Criss Cross Cable Pushdowns, Hammer Strength Tricep Extensions, Upright Dips.\nBicep options: Preacher Bar Curls, Waiter Curls, Wide Dumbbell Curls, Wide Grip Barbell Curl, Uncle Rommy Curls.',
+      targetMuscles: ['triceps_brachii', 'biceps_brachii'],
+      exerciseOptions: [
+        'criss_cross_cable_pushdown',
+        'hammer_strength_tricep_extension',
+        'upright_dips_tricep',
+        'preacher_bar_curl',
+        'waiter_curl',
+        'wide_dumbbell_curl',
+        'wide_grip_barbell_curl',
+        'uncle_rommy_curl',
+      ],
+    },
+    // 8. Forearms
+    {
+      id: 'forearms-block',
+      workoutId: 'snipers_arm_day',
+      label: '8. FOREARMS',
+      schemeStyle: 'straight_sets',
+      schemeDesc:
+        'DUMBBELL Forearm Circuit + Sledgehammer Forearm Sequence. Optionally add Dead Hangs and Farmer Carries as accessories.',
+      notes:
+        'These sequences blow up grip strength and forearm size while supporting all your pressing and pulling.',
+      targetMuscles: ['brachioradialis', 'brachialis'],
+      exerciseOptions: [
+        'forearm_dumbbell_circuit',
+        'forearm_sledgehammer_sequence',
+        'dead_hang',
+        'farmer_carries_shrugs',
+        'single_arm_farmer_carry',
       ],
     },
   ];
@@ -1147,7 +1789,7 @@ Explanation: Work up to a 3–4 Rep Max for 1 set. Take a 3–4 minute break. Th
     }
   }
 
-  console.log('✅ Arms guide, anatomy, exercises, formulas, and workout seeded.');
+  console.log('✅ Arms guide, anatomy, exercises, formulas, and full Sniper’s Arm Day seeded.');
 }
 
 seedArms()

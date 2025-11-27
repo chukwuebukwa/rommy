@@ -80,6 +80,14 @@ export default function RootLayout({
                   <span className="mr-3">📖</span>
                   Guides
                 </Link>
+
+                <Link
+                  href="/db"
+                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-800 transition"
+                >
+                  <span className="mr-3">🗄️</span>
+                  Database
+                </Link>
               </div>
 
               <div className="pt-6 mt-6 border-t border-gray-800">
@@ -134,9 +142,9 @@ export default function RootLayout({
           {/* Main content area */}
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Top bar */}
-            <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
+            <header className="bg-white border-b border-gray-200 px-6 py-3 flex-shrink-0">
               <div className="flex items-center justify-between">
-                <div className="flex-1">
+                <div id="breadcrumb-container" className="flex-1">
                   {/* Breadcrumbs will be rendered here by child pages */}
                 </div>
                 <div className="text-sm text-gray-500">

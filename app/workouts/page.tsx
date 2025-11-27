@@ -30,40 +30,37 @@ export default async function WorkoutsPage() {
         </p>
       </div>
 
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {workouts.map((workout) => (
           <Link
             key={workout.id}
             href={`/workouts/${workout.id}`}
-            className="block bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:shadow-md hover:border-red-500 transition"
+            className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-red-400 transition"
           >
-            <h2 className="text-2xl font-bold text-red-600 mb-2">{workout.name}</h2>
-
-            {workout.primaryRegion && (
-              <div className="mb-3">
-                <span className="px-3 py-1 bg-red-100 text-red-800 rounded text-sm font-medium">
+            <div className="flex items-start justify-between mb-3">
+              <h2 className="text-2xl font-bold text-gray-900">{workout.name}</h2>
+              {workout.primaryRegion && (
+                <span className="px-2 py-1 bg-red-100 text-red-800 rounded text-xs font-semibold uppercase">
                   {workout.primaryRegion.name}
                 </span>
-              </div>
-            )}
-
-            {workout.goal && (
-              <p className="text-gray-700 mb-3">
-                <strong>Goal:</strong> {workout.goal}
-              </p>
-            )}
-
-            {workout.priorityRules && (
-              <p className="text-sm text-gray-600 mb-4 italic">{workout.priorityRules}</p>
-            )}
-
-            <div className="text-gray-600">
-              <strong>{workout.blocks.length} training blocks</strong> •{" "}
-              {workout.blocks.reduce((sum, block) => sum + block.exercises.length, 0)} exercise options
+              )}
             </div>
 
-            <div className="mt-4 text-sm text-red-600 font-medium">
-              View workout →
+            {workout.goal && (
+              <p className="text-gray-600 mb-4 line-clamp-2">{workout.goal}</p>
+            )}
+
+            <div className="flex items-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-1">
+                <span className="font-semibold">{workout.blocks.length}</span>
+                <span>blocks</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="font-semibold">
+                  {workout.blocks.reduce((sum, block) => sum + block.exercises.length, 0)}
+                </span>
+                <span>exercises</span>
+              </div>
             </div>
           </Link>
         ))}

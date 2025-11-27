@@ -1,200 +1,74 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { prisma } from "@/lib/prisma";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import Link from "next/link";
 
-interface AnatomyNode {
-  id: string;
-  kind: string;
-  name: string;
-  description: string | null;
-  roleSummary: string | null;
-  parentId: string | null;
-  primaryFunctions: string | null;
-  aestheticNotes: string | null;
-}
-
-interface Column {
-  items: AnatomyNode[];
-  selectedId: string | null;
-}
-
-export default function AnatomyPage() {
-  const [columns, setColumns] = useState<Column[]>([]);
-  const [selectedNode, setSelectedNode] = useState<AnatomyNode | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Load root nodes (regions)
-    fetch("/api/anatomy/roots")
-      .then((res) => res.json())
-      .then((data) => {
-        setColumns([{ items: data, selectedId: null }]);
-        setLoading(false);
-      });
-  }, []);
-
-  const handleSelect = async (node: AnatomyNode, columnIndex: number) => {
-    // Update selection in current column
-    const newColumns = columns.slice(0, columnIndex + 1);
-    newColumns[columnIndex] = { ...newColumns[columnIndex], selectedId: node.id };
-
-    // Load children if any
-    const response = await fetch(`/api/anatomy/${node.id}/children`);
-    const children = await response.json();
-
-    if (children.length > 0) {
-      newColumns.push({ items: children, selectedId: null });
-    }
-
-    setColumns(newColumns);
-    setSelectedNode(node);
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-gray-500">Loading anatomy tree...</div>
-      </div>
-    );
-  }
+export default async function AnatomyPage() {
+  const regions = await prisma.anatomyNode.findMany({
+    where: { kind: "region" },
+    include: {
+      _count: {
+        select: {
+          children: true,
+          exerciseLinks: true,
+        },
+      },
+    },
+    orderBy: { name: "asc" },
+  });
 
   return (
-    <div className="flex flex-col h-full -m-8">
-      {/* Breadcrumb */}
-      <div className="px-8 py-4 border-b bg-white flex-shrink-0">
-        <div className="text-sm text-gray-500">
-          <span className="text-gray-900 font-medium">Anatomy Browser</span>
-          {selectedNode && (
-            <>
-              <span className="mx-2">/</span>
-              <span className="text-gray-900">{selectedNode.name}</span>
-            </>
-          )}
-        </div>
+    <div className="space-y-8">
+      <Breadcrumb items={[{ label: "Anatomy" }]} />
+      
+      <div className="border-b pb-4">
+        <h1 className="text-3xl font-bold text-gray-900">Anatomy Browser</h1>
+        <p className="text-gray-600 mt-2">
+          Browse body regions and their muscle groups
+        </p>
       </div>
 
-      <div className="flex flex-1 overflow-hidden">
-        {/* Miller Columns */}
-        <div className="flex flex-1 overflow-x-auto">
-          {columns.map((column, columnIndex) => (
-            <div
-              key={columnIndex}
-              className="flex-shrink-0 w-80 border-r border-gray-200 bg-white overflow-y-auto"
-            >
-              {column.items.map((node) => {
-                const isSelected = column.selectedId === node.id;
-                const kindColors: Record<string, string> = {
-                  region: "bg-blue-100 text-blue-800",
-                  group: "bg-green-100 text-green-800",
-                  muscle: "bg-purple-100 text-purple-800",
-                  part: "bg-orange-100 text-orange-800",
-                };
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <h3 className="text-lg font-bold text-blue-900 mb-2">💡 How to Navigate</h3>
+        <ul className="text-blue-800 text-sm space-y-1">
+          <li>• <strong>Click any region</strong> to see its complete muscle breakdown</li>
+          <li>• <strong>All nested sub-parts</strong> are visible on one page - no endless clicking</li>
+          <li>• <strong>Exercise details</strong> shown inline with form cues and videos</li>
+          <li>• Use the <strong>Table of Contents</strong> sidebar for quick navigation</li>
+        </ul>
+      </div>
 
-                return (
-                  <div
-                    key={node.id}
-                    onClick={() => handleSelect(node, columnIndex)}
-                    className={`
-                      p-4 border-b border-gray-100 cursor-pointer transition
-                      ${isSelected ? "bg-blue-50 border-l-4 border-l-blue-500" : "hover:bg-gray-50"}
-                    `}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <div className="font-medium text-gray-900">{node.name}</div>
-                      {node.kind !== "part" && (
-                        <span className="text-gray-400">→</span>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-2 text-xs mb-2">
-                      <span className={`px-2 py-0.5 rounded font-medium ${kindColors[node.kind]}`}>
-                        {node.kind}
-                      </span>
-                    </div>
-                    {node.description && (
-                      <div className="text-sm text-gray-600 line-clamp-2">
-                        {node.description}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {regions.map((region) => (
+          <Link
+            key={region.id}
+            href={`/anatomy/${region.id}`}
+            className="block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-blue-400 transition"
+          >
+            <div className="flex items-start justify-between mb-3">
+              <h2 className="text-2xl font-bold text-gray-900">{region.name}</h2>
+              <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-semibold uppercase">
+                {region.kind}
+              </span>
             </div>
-          ))}
-        </div>
+            
+            {region.description && (
+              <p className="text-gray-600 mb-4 line-clamp-2">{region.description}</p>
+            )}
 
-        {/* Detail Panel */}
-        {selectedNode && (
-          <div className="w-96 flex-shrink-0 border-l border-gray-200 bg-gray-50 overflow-y-auto">
-            <div className="p-6">
-              <div className="mb-4">
-                <div className="text-xs uppercase tracking-wider text-gray-500 font-semibold mb-2">
-                  {selectedNode.kind}
-                </div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  {selectedNode.name}
-                </h2>
+            <div className="flex items-center gap-4 text-sm text-gray-500">
+              <div className="flex items-center gap-1">
+                <span className="font-semibold">{region._count.children}</span>
+                <span>sub-parts</span>
               </div>
-
-              {selectedNode.description && (
-                <div className="mb-4">
-                  <div className="text-sm text-gray-700 leading-relaxed">
-                    {selectedNode.description}
-                  </div>
-                </div>
-              )}
-
-              {selectedNode.roleSummary && (
-                <div className="mb-4 p-3 bg-blue-100 border-l-4 border-blue-500 rounded">
-                  <div className="text-sm font-semibold text-blue-900 mb-1">Role Summary</div>
-                  <div className="text-sm text-blue-800">{selectedNode.roleSummary}</div>
-                </div>
-              )}
-
-              {selectedNode.primaryFunctions && (
-                <div className="mb-4">
-                  <div className="text-sm font-semibold text-gray-900 mb-2">
-                    Primary Functions
-                  </div>
-                  <ul className="space-y-1">
-                    {JSON.parse(selectedNode.primaryFunctions).map((func: string, i: number) => (
-                      <li key={i} className="text-sm text-gray-700 flex items-start">
-                        <span className="text-blue-500 mr-2">•</span>
-                        {func}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              {selectedNode.aestheticNotes && (
-                <div className="mb-4">
-                  <div className="text-sm font-semibold text-gray-900 mb-2">
-                    Aesthetic Notes
-                  </div>
-                  <ul className="space-y-1">
-                    {JSON.parse(selectedNode.aestheticNotes).map((note: string, i: number) => (
-                      <li key={i} className="text-sm text-gray-700 flex items-start">
-                        <span className="text-green-500 mr-2">•</span>
-                        {note}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-
-              <div className="mt-6 pt-6 border-t">
-                <Link
-                  href={`/anatomy/${selectedNode.id}`}
-                  className="block w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-center font-medium"
-                >
-                  View Full Details →
-                </Link>
+              <div className="flex items-center gap-1">
+                <span className="font-semibold">{region._count.exerciseLinks}</span>
+                <span>exercises</span>
               </div>
             </div>
-          </div>
-        )}
+          </Link>
+        ))}
       </div>
     </div>
   );
 }
+
