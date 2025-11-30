@@ -129,6 +129,187 @@ async function seedArms() {
       parentId: 'shoulders',
     },
 
+
+        // --- Upper‑back / “weird” support muscles ---
+
+        {
+            id: 'back',
+            kind: 'region',
+            name: 'Back',
+            slug: 'back',
+            description:
+              'Upper and mid-back region including traps, rhomboids and supporting scapular muscles.',
+            roleSummary:
+              'Posture, scapular control and upper-back thickness that lets your shoulders and arms actually do their job.',
+            primaryFunctions: null,
+            aestheticNotes: null,
+            meta: null,
+            parentId: null,
+          },
+          {
+            id: 'upper_back_group',
+            kind: 'group',
+            name: 'Upper Back & Scapular',
+            slug: 'upper-back',
+            description:
+              'Upper-back muscles that strap your shoulder blades down and back: traps and rhomboids.',
+            roleSummary:
+              'Keeps the shoulder blades stable for pressing, rowing and overhead work.',
+            primaryFunctions: null,
+            aestheticNotes: null,
+            meta: null,
+            parentId: 'back',
+          },
+          {
+            id: 'trapezius',
+            kind: 'muscle',
+            name: 'Trapezius (Traps)',
+            slug: 'trapezius',
+            description:
+              'Large kite-shaped muscle running from the neck down through the mid-back with upper, middle and lower fibers.',
+            roleSummary:
+              'Anchors the shoulder blades, supports posture and lets you brace hard for heavy pressing and pulling.',
+            primaryFunctions: JSON.stringify([
+              'scapular elevation (upper fibers)',
+              'scapular retraction (middle fibers)',
+              'scapular depression and upward rotation (lower fibers)',
+            ]),
+            aestheticNotes: JSON.stringify([
+              'Thick upper-back “armor” that makes the torso look powerful from every angle.',
+            ]),
+            meta: null,
+            parentId: 'upper_back_group',
+          },
+          {
+            id: 'rhomboids',
+            kind: 'muscle',
+            name: 'Rhomboids',
+            slug: 'rhomboids',
+            description:
+              'Deep upper-back muscles that retract and stabilize the shoulder blades.',
+            roleSummary:
+              'Keeps your shoulders aligned, fights slouching/nerd neck and locks the scapula in for strong pressing and rowing.',
+            primaryFunctions: JSON.stringify([
+              'scapular retraction',
+              'scapular stabilization',
+              'assists shoulder rotation to maintain alignment',
+            ]),
+            aestheticNotes: JSON.stringify([
+              'Prevents the rounded-shoulder look.',
+              'Gives the upper back a tight, athletic appearance.',
+            ]),
+            meta: JSON.stringify({
+              primaryExerciseIds: [
+                'turtle_raises',
+                'seated_cable_rows',
+                'face_pulls',
+                'chest_supported_rows',
+              ],
+              secondaryExerciseIds: ['reverse_incline_flyes', 'y_raises'],
+              formulaIds: [],
+            }),
+            parentId: 'upper_back_group',
+          },
+          {
+            id: 'middle_traps',
+            kind: 'part',
+            name: 'Middle Traps',
+            slug: 'middle-traps',
+            description:
+              'Middle fibers of the trapezius sitting just below the upper traps and spanning across the shoulders.',
+            roleSummary:
+              'Pulls the shoulder blades back and helps you extend the arms behind the body.',
+            primaryFunctions: JSON.stringify([
+              'scapular retraction',
+              'assists shoulder extension behind the torso',
+            ]),
+            aestheticNotes: JSON.stringify([
+              'Adds width and thickness across the mid-back.',
+            ]),
+            meta: JSON.stringify({
+              primaryExerciseIds: ['reverse_incline_flyes', 'chest_supported_rows'],
+              secondaryExerciseIds: ['seated_cable_rows', 'face_pulls', 'supermans'],
+              formulaIds: [],
+            }),
+            parentId: 'trapezius',
+          },
+          {
+            id: 'lower_traps',
+            kind: 'part',
+            name: 'Lower Traps',
+            slug: 'lower-traps',
+            description:
+              'Lower fibers of the trapezius running far down the back.',
+            roleSummary:
+              'Pulls the shoulder blades down and back and helps “sink” them when you raise your arms overhead.',
+            primaryFunctions: JSON.stringify([
+              'scapular depression',
+              'scapular retraction',
+              'assists overhead stability by anchoring the scapula',
+            ]),
+            aestheticNotes: JSON.stringify([
+              'Gives the mid-back that deep, athletic groove and keeps the shoulders sitting low and strong.',
+            ]),
+            meta: JSON.stringify({
+              primaryExerciseIds: ['face_pulls', 'y_raises', 'supermans'],
+              secondaryExerciseIds: ['turtle_raises'],
+              formulaIds: [],
+            }),
+            parentId: 'trapezius',
+          },
+          {
+            id: 'rear_delts',
+            kind: 'muscle',
+            name: 'Rear Delts (Posterior Deltoid)',
+            slug: 'rear-delts',
+            description:
+              'Back head of the shoulder that most people treat as an afterthought but is critical for pressing, pulling and shoulder health.',
+            roleSummary:
+              'Controls shoulder extension and horizontal abduction, balances the front/side delt work and keeps the shoulders from collapsing forward.',
+            primaryFunctions: JSON.stringify([
+              'shoulder horizontal abduction',
+              'shoulder extension',
+              'assists external rotation and scapular control',
+            ]),
+            aestheticNotes: JSON.stringify([
+              'Finishes the “capped” shoulder look from the side.',
+              'Helps your shoulders look round instead of flat from the back.',
+            ]),
+            meta: JSON.stringify({
+              primaryExerciseIds: [
+                'triple_rear_delt_delight',
+                'reverse_pec_dec_flyes',
+                'face_pulls',
+                'reverse_incline_flyes',
+                'y_raises',
+              ],
+              secondaryExerciseIds: [],
+              formulaIds: [],
+            }),
+            parentId: 'shoulders',
+          },
+          {
+            id: 'rotator_cuff_complex',
+            kind: 'group',
+            name: 'Rotator Cuff',
+            slug: 'rotator-cuff',
+            description:
+              'Deep four‑muscle complex around the shoulder joint (supraspinatus, infraspinatus, teres minor, subscapularis).',
+            roleSummary:
+              'Keeps the ball of the humerus centered in the shoulder socket during pressing and pulling so the joint doesn’t get chewed up.',
+            primaryFunctions: JSON.stringify([
+              'shoulder external rotation',
+              'shoulder internal rotation',
+              'dynamic shoulder joint stability',
+            ]),
+            aestheticNotes: JSON.stringify([
+              'Not a big “show” muscle, but a strong cuff lets you keep training heavy without your shoulders falling apart.',
+            ]),
+            meta: null,
+            parentId: 'shoulders',
+          },
+
+
     // --- Biceps complex ---
     {
       id: 'biceps_brachii',
@@ -664,6 +845,43 @@ FOREARMS:
 
 All of these have video links in the PDF and are represented as Exercises here.`,
     },
+    {
+        id: 'anatomy-forearms',
+        guideId: 'arms',
+        kind: 'anatomy',
+        title: 'Forearms – The Hidden Powerhouse',
+        order: 10,
+        content: `There is a muscle group in your arm you are probably not factoring in: the forearms.
+  It’s not just one muscle – it’s a whole mess of flexors, extensors and tendons that keep the wrist and elbow healthy and let you actually hold onto heavy weight.
+  Most people ignore them because forearm work feels “boring”, but strong forearms bullet‑proof the elbow, support bicep work and make your arms look even thicker from the side.
+  ...`,
+      },
+      {
+        id: 'resilient-body-traps-rhomboids-rear-delts',
+        guideId: 'arms',
+        kind: 'anatomy',
+        title: 'Building a Resilient Body – Traps, Rhomboids & Rear Delts',
+        order: 11,
+        content: `Building a resilient body has very little to do with the arms themselves and more to do with the muscles that support the whole system.
+  The “weird” muscles that matter here are the Trapezius (especially the middle & lower traps), the Rhomboids and the Rear Delts.
+  Strong rhomboids keep your shoulders aligned and prevent slouching/nerd neck by retracting and stabilizing the scapula.
+  Middle traps sit just below the upper traps and help you pull the shoulders back and extend the arms behind you.
+  Lower traps run far down the back and are responsible for pulling the shoulder blades down & back and “sinking” them as you raise your arm overhead.
+  Rear delts balance out all the front/side delt work, blow up your pressing numbers and give you the truly capped‑out shoulder look.
+  ...`,
+      },
+      {
+        id: 'bonus-exercise-library',
+        guideId: 'arms',
+        kind: 'program',
+        title: 'BONUS – Bicep, Tricep & Forearm Exercise Library',
+        order: 12,
+        content: `This is the bonus exercise bank from the end of the guide:
+  a full library of bicep, tricep and forearm movements with video links.
+  Use it as a menu when you rotate exercises without changing the intent of the program.
+  (CLICK EACH EXERCISE FOR A VIDEO TUTORIAL)
+  ...`,
+      },
   ];
 
   for (const s of sections) {
@@ -733,6 +951,54 @@ All of these have video links in the PDF and are represented as Exercises here.`
     { sectionId: 'bonus-arm-exercise-library', anatomyNodeId: 'triceps_brachii' },
     { sectionId: 'bonus-arm-exercise-library', anatomyNodeId: 'brachialis' },
     { sectionId: 'bonus-arm-exercise-library', anatomyNodeId: 'brachioradialis' },
+
+        // strength section also talks rotator cuff / external rotation
+        { sectionId: 'strength-arms', anatomyNodeId: 'rotator_cuff_complex' },
+
+        // Forearm anatomy
+        { sectionId: 'anatomy-forearms', anatomyNodeId: 'forearms_group' },
+        { sectionId: 'anatomy-forearms', anatomyNodeId: 'brachioradialis' },
+        { sectionId: 'anatomy-forearms', anatomyNodeId: 'brachialis' },
+    
+        // Traps / rhomboids / rear delts “weird muscles”
+        {
+          sectionId: 'resilient-body-traps-rhomboids-rear-delts',
+          anatomyNodeId: 'trapezius',
+        },
+        {
+          sectionId: 'resilient-body-traps-rhomboids-rear-delts',
+          anatomyNodeId: 'rhomboids',
+        },
+        {
+          sectionId: 'resilient-body-traps-rhomboids-rear-delts',
+          anatomyNodeId: 'middle_traps',
+        },
+        {
+          sectionId: 'resilient-body-traps-rhomboids-rear-delts',
+          anatomyNodeId: 'lower_traps',
+        },
+        {
+          sectionId: 'resilient-body-traps-rhomboids-rear-delts',
+          anatomyNodeId: 'rear_delts',
+        },
+    
+        // Bonus library hits basically the whole arm complex
+        { sectionId: 'bonus-exercise-library', anatomyNodeId: 'biceps_brachii' },
+        { sectionId: 'bonus-exercise-library', anatomyNodeId: 'biceps_long_head' },
+        { sectionId: 'bonus-exercise-library', anatomyNodeId: 'biceps_short_head' },
+        { sectionId: 'bonus-exercise-library', anatomyNodeId: 'brachialis' },
+        { sectionId: 'bonus-exercise-library', anatomyNodeId: 'brachioradialis' },
+        { sectionId: 'bonus-exercise-library', anatomyNodeId: 'triceps_brachii' },
+        { sectionId: 'bonus-exercise-library', anatomyNodeId: 'triceps_long_head' },
+        {
+          sectionId: 'bonus-exercise-library',
+          anatomyNodeId: 'triceps_medial_head',
+        },
+        {
+          sectionId: 'bonus-exercise-library',
+          anatomyNodeId: 'triceps_lateral_head',
+        },
+        { sectionId: 'bonus-exercise-library', anatomyNodeId: 'forearms_group' },
   ];
 
   for (const link of sectionAnatomyLinks) {
@@ -749,7 +1015,7 @@ All of these have video links in the PDF and are represented as Exercises here.`
   }
 
   // -----------------------------
-  // 3) EXERCISES
+  // 3) EXERCISES (+ Processing)
   // -----------------------------
   // All arm / forearm exercises from structured_data.json + links.csv
 
@@ -1318,75 +1584,6 @@ All of these have video links in the PDF and are represented as Exercises here.`
     },
   ];
 
-  for (const ex of exercises) {
-    await prisma.exercise.upsert({
-      where: { id: ex.id },
-      update: {},
-      create: {
-        id: ex.id,
-        name: ex.name,
-        type: ex.type,
-        movementPattern: ex.movementPattern,
-        equipment: ex.equipment,
-        videoUrl: ex.videoUrl || null,
-        cueSummary: ex.cueSummary,
-      },
-    });
-
-    // primary / secondary anatomy links
-    for (const m of ex.primaryMuscles) {
-      await prisma.exerciseAnatomy.upsert({
-        where: {
-          exerciseId_anatomyNodeId_role: {
-            exerciseId: ex.id,
-            anatomyNodeId: m,
-            role: 'primary',
-          },
-        },
-        update: {},
-        create: {
-          exerciseId: ex.id,
-          anatomyNodeId: m,
-          role: 'primary',
-        },
-      });
-    }
-    for (const m of ex.secondaryMuscles) {
-      await prisma.exerciseAnatomy.upsert({
-        where: {
-          exerciseId_anatomyNodeId_role: {
-            exerciseId: ex.id,
-            anatomyNodeId: m,
-            role: 'secondary',
-          },
-        },
-        update: {},
-        create: {
-          exerciseId: ex.id,
-          anatomyNodeId: m,
-          role: 'secondary',
-        },
-      });
-    }
-
-    // Section ↔ Exercise links (where it’s mentioned)
-    for (const sectionId of ex.mentionedInSections) {
-      await prisma.sectionExercise.upsert({
-        where: {
-          sectionId_exerciseId: {
-            sectionId,
-            exerciseId: ex.id,
-          },
-        },
-        update: {},
-        create: {
-          sectionId,
-          exerciseId: ex.id,
-        },
-      });
-    }
-  }
-
   // -----------------------------
   // 4) FORMULAS
   // -----------------------------
@@ -1519,6 +1716,584 @@ All of these have video links in the PDF and are represented as Exercises here.`
       ],
     },
   ];
+
+  // 4a. Support / upper‑back exercises (from the "weird muscles" pages)
+  const additionalExercises = [
+   {
+    id: 'face_pulls',
+    name: 'Face Pulls',
+    type: 'isolation',
+    movementPattern: 'row',
+    equipment: ['cable', 'rope_attachment'],
+    primaryMuscles: ['rear_delts', 'rhomboids'],
+    secondaryMuscles: ['middle_traps', 'lower_traps'],
+    videoUrl: 'https://www.youtube.com/shorts/x69X23j0dw0',
+    cueSummary:
+      'Pull to eye level, thumbs back, elbows high – “pull the rope apart” to smash rear delts and upper back.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'seated_cable_rows',
+    name: 'Seated Cable Rows',
+    type: 'compound',
+    movementPattern: 'row',
+    equipment: ['cable', 'bench'],
+    primaryMuscles: ['rhomboids', 'middle_traps'],
+    secondaryMuscles: ['lower_traps'],
+    videoUrl: 'https://www.youtube.com/shorts/x69X23j0dw0',
+    cueSummary:
+      'Sit tall, chest up, row to the lower ribs while squeezing the shoulder blades together.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'turtle_raises',
+    name: 'Turtle Raises',
+    type: 'isolation',
+    movementPattern: 'raise',
+    equipment: ['cable', 'bench'],
+    primaryMuscles: ['rhomboids'],
+    secondaryMuscles: ['lower_traps', 'rear_delts'],
+    videoUrl: 'https://www.youtube.com/shorts/x69X23j0dw0',
+    cueSummary:
+      'Think “anti‑slouch” – pull the shoulders back and down while reaching long through the arms.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'triple_rear_delt_delight',
+    name: 'Triple Rear Delt Delight',
+    type: 'isolation',
+    movementPattern: 'raise',
+    equipment: ['cable', 'dumbbell', 'bench'],
+    primaryMuscles: ['rear_delts'],
+    secondaryMuscles: ['middle_traps'],
+    videoUrl: 'https://youtube.com/shorts/1Dacowkc5cM?feature=share',
+    cueSummary:
+      'Three rear‑delt variations chained together to torch the back of the shoulder.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'reverse_pec_dec_flyes',
+    name: 'Reverse Pec Dec Flyes',
+    type: 'isolation',
+    movementPattern: 'fly',
+    equipment: ['machine'],
+    primaryMuscles: ['rear_delts'],
+    secondaryMuscles: ['middle_traps'],
+    videoUrl: 'https://youtube.com/shorts/1Dacowkc5cM?feature=share',
+    cueSummary:
+      'Chest on the pad, pull the handles out and back in a wide arc, squeezing rear delts hard.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'chest_supported_rows',
+    name: 'Chest Supported Rows',
+    type: 'compound',
+    movementPattern: 'row',
+    equipment: ['bench', 'dumbbell'],
+    primaryMuscles: ['rhomboids', 'middle_traps'],
+    secondaryMuscles: ['lower_traps'],
+    videoUrl: 'https://www.youtube.com/shorts/x69X23j0dw0',
+    cueSummary:
+      'Lay on an incline bench, let the arms hang and row with zero lower‑back cheating.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'supermans',
+    name: 'Supermans',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['bodyweight', 'floor'],
+    primaryMuscles: ['lower_traps'],
+    secondaryMuscles: ['middle_traps'],
+    videoUrl: 'https://youtube.com/shorts/1Dacowkc5cM?feature=share',
+    cueSummary:
+      'On your stomach, raise arms and legs slightly off the floor, pulling the shoulder blades down and back.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'y_raises',
+    name: 'Y Raises',
+    type: 'isolation',
+    movementPattern: 'raise',
+    equipment: ['dumbbell', 'bench'],
+    primaryMuscles: ['lower_traps', 'rear_delts'],
+    secondaryMuscles: ['middle_traps'],
+    videoUrl: 'https://youtube.com/shorts/1Dacowkc5cM?feature=share',
+    cueSummary:
+      'On an incline bench or standing, raise the arms in a “Y” while keeping the ribs down and shoulder blades depressed.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'reverse_incline_flyes',
+    name: 'Reverse Incline Flyes',
+    type: 'isolation',
+    movementPattern: 'fly',
+    equipment: ['dumbbell', 'bench'],
+    primaryMuscles: ['middle_traps', 'rear_delts'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/6vrlwEdrkTA?si=ujeeGkVESneRpR9h',
+    cueSummary:
+      'Lay chest‑down on an incline bench and sweep the dumbbells out wide, driving from the shoulder blades.',
+    mentionedInSections: [
+      'resilient-body-traps-rhomboids-rear-delts',
+      'bonus-exercise-library',
+    ],
+  },
+  {
+    id: 'jm_press',
+    name: 'JM Press',
+    type: 'compound',
+    movementPattern: 'press',
+    equipment: ['barbell', 'bench'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: ['triceps_medial_head'],
+    videoUrl: 'https://youtube.com/shorts/7v1BO026F8I?si=nxRSReWPXhkNgzMC',
+    cueSummary:
+      'Hybrid between a close‑grip bench and skull crusher; lower toward chin then press back up with triceps.',
+    mentionedInSections: ['formulas-arms', 'bonus-exercise-library'],
+  },
+  {
+    id: 'single_arm_db_overhead_extensions',
+    name: 'Single Arm DB Overhead Extensions',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/5LzZQSRwIU4?si=YeqzpjwoiaKrBCi1',
+    cueSummary:
+      'Take a dumbbell overhead, bend only at the elbow, and fully extend while the upper arm stays locked in place.',
+    mentionedInSections: ['formulas-arms', 'bonus-exercise-library'],
+  },
+  {
+    id: 'dumbbell_jm_press',
+    name: 'Dumbbell JM Press',
+    type: 'compound',
+    movementPattern: 'press',
+    equipment: ['dumbbell', 'bench'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: ['triceps_medial_head'],
+    videoUrl: 'https://youtube.com/shorts/5LzZQSRwIU4?si=YeqzpjwoiaKrBCi1',
+    cueSummary:
+      'Same idea as the barbell JM press but with dumbbells for more elbow‑friendly loading.',
+    mentionedInSections: ['formulas-arms', 'bonus-exercise-library'],
+  },
+  {
+    id: 'dumbbell_tricep_lying_extensions',
+    name: 'Dumbbell Tricep Lying Extensions',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['dumbbell', 'bench'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/5LzZQSRwIU4?si=YeqzpjwoiaKrBCi1',
+    cueSummary:
+      'Classic dumbbell skull‑crusher style — lower behind the head for a deep stretch, then extend.',
+    mentionedInSections: ['formulas-arms', 'bonus-exercise-library'],
+  },
+  {
+    id: 'dumbbell_tricep_lying_extensions_twist',
+    name: 'Dumbbell Tricep Lying Extensions (with Twist)',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['dumbbell', 'bench'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/5LzZQSRwIU4?si=YeqzpjwoiaKrBCi1',
+    cueSummary:
+      'Same as lying extensions but finish with a twist to squeeze every fiber of the long head.',
+    mentionedInSections: ['formulas-arms', 'bonus-exercise-library'],
+  },
+  {
+    id: 'triangle_attachment_tricep_superset',
+    name: 'Triangle Attachment Tricep Superset',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['cable'],
+    primaryMuscles: ['triceps_lateral_head'],
+    secondaryMuscles: ['triceps_medial_head'],
+    videoUrl: 'https://youtube.com/shorts/uyOy0-JxTuU?feature=share',
+    cueSummary:
+      'Heavy triangle‑handle pushdowns used as part of a nasty tricep superset.',
+    mentionedInSections: ['formulas-arms', 'bonus-exercise-library'],
+  },
+  {
+    id: 'rope_attachment_tricep_superset',
+    name: 'Rope Attachment Tricep Superset',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['cable', 'rope_attachment'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: ['triceps_lateral_head'],
+    videoUrl: 'https://youtube.com/shorts/uyOy0-JxTuU?feature=share',
+    cueSummary:
+      'Rope pushdowns done with intent — flare at the bottom and lock out hard.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'criss_cross_cable_pushdowns',
+    name: 'Criss Cross Cable Pushdowns',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['cable'],
+    primaryMuscles: ['triceps_lateral_head'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/uyOy0-JxTuU?feature=share',
+    cueSummary:
+      'Cables set in a crossover, driving down and out for a brutal lateral‑head pump.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'hammer_strength_tricep_extensions',
+    name: 'Hammer Strength Tricep Extensions',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['machine'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: ['triceps_medial_head'],
+    videoUrl: 'https://youtube.com/shorts/uyOy0-JxTuU?feature=share',
+    cueSummary:
+      'Machine‑based heavy extensions where you can safely load the long head.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'dumbbell_tricep_extensions',
+    name: 'Dumbbell Tricep Extensions',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/uyOy0-JxTuU?feature=share',
+    cueSummary:
+      'Overhead or lying — extend fully and lock in a hard squeeze on the back of the arm.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'single_arm_tricep_extensions',
+    name: 'Single Arm Tricep Extensions',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['dumbbell', 'cable'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/6KIn4mRX9rU?si=HKje21tyy2sB2R-k',
+    cueSummary:
+      'Single‑arm extensions to clean up imbalances and put all focus on one tricep at a time.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'dumbbell_kickbacks',
+    name: 'Dumbbell Kickbacks',
+    type: 'isolation',
+    movementPattern: 'extension',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['triceps_lateral_head'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/6KIn4mRX9rU?si=HKje21tyy2sB2R-k',
+    cueSummary:
+      'Hinge over, upper arm locked to your side, kick the dumbbell straight back and squeeze.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'incline_dumbbell_power_bombs',
+    name: 'Incline Dumbbell Power Bombs',
+    type: 'compound',
+    movementPattern: 'extension',
+    equipment: ['dumbbell', 'bench'],
+    primaryMuscles: ['triceps_long_head'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/f8bmnveIrZE?si=ataBkVqbWj5joAK9',
+    cueSummary:
+      'Big range‑of‑motion tricep extensions on an incline bench – long head stretch plus power.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+
+  {
+    id: 'double_hammer_curls',
+    name: 'Double Hammer Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['brachialis'],
+    secondaryMuscles: ['brachioradialis', 'biceps_brachii'],
+    videoUrl: 'https://youtube.com/shorts/9Yyw_N4o2sM?si=fYZ2XK5_VWYavvx2',
+    cueSummary:
+      'Neutral‑grip curls with both arms moving together to blow up brachialis and forearms.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'single_arm_brachialis_cable_curls',
+    name: 'Single Arm Brachialis Cable Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['cable'],
+    primaryMuscles: ['brachialis'],
+    secondaryMuscles: ['brachioradialis'],
+    videoUrl: 'https://youtube.com/shorts/EDC6SAo7AT8?si=koyLYBPizetE1hNM',
+    cueSummary:
+      'Cable anchored low, neutral or slightly pronated grip, curling only at the elbow.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'preacher_machine_hammer_curl',
+    name: 'Preacher Machine Hammer Curl',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['machine'],
+    primaryMuscles: ['brachialis'],
+    secondaryMuscles: ['biceps_short_head'],
+    videoUrl: 'https://youtube.com/shorts/9Yyw_N4o2sM?si=fYZ2XK5_VWYavvx2',
+    cueSummary:
+      'Hammer‑grip curls on a preacher machine to pin the upper arm and torch the brachialis.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'double_arm_hammer_curls',
+    name: 'Double Arm Hammer Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['brachialis'],
+    secondaryMuscles: ['brachioradialis'],
+    videoUrl: 'https://youtube.com/shorts/9Yyw_N4o2sM?si=fYZ2XK5_VWYavvx2',
+    cueSummary:
+      'Both arms hammer‑curling together for a heavy brachialis and forearm hit.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'single_arm_hammer_curls',
+    name: 'Single Arm Hammer Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['brachialis'],
+    secondaryMuscles: ['brachioradialis'],
+    videoUrl: 'https://youtube.com/shorts/TTp-IS3K_6I?feature=share',
+    cueSummary:
+      'One arm at a time, neutral grip, strict control to load the brachialis.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'reverse_barbell_curls',
+    name: 'Reverse Barbell Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['barbell'],
+    primaryMuscles: ['brachialis', 'brachioradialis'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/cw9Apa2v0KU?feature=share',
+    cueSummary:
+      'Pronated‑grip curls with a barbell to hammer the brachialis and brachioradialis.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'reverse_barbell_ez_bar_curls',
+    name: 'Reverse Barbell/EZ Bar Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['barbell', 'ez_bar'],
+    primaryMuscles: ['brachialis', 'brachioradialis'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/9Yyw_N4o2sM?si=fYZ2XK5_VWYavvx2',
+    cueSummary:
+      'Reverse curls with a barbell or EZ bar; slight angle can be easier on the wrists.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'reverse_plate_curls',
+    name: 'Reverse Plate Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['plate'],
+    primaryMuscles: ['brachialis', 'brachioradialis'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtube.com/shorts/EDC6SAo7AT8?si=koyLYBPizetE1hNM',
+    cueSummary:
+      'Hold a plate with both hands and curl using a pronated grip for forearm and brachialis burn.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'waiter_curls',
+    name: 'Waiter Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['dumbbell', 'plate'],
+    primaryMuscles: ['biceps_short_head'],
+    secondaryMuscles: ['biceps_brachii'],
+    videoUrl: 'https://www.youtube.com/shorts/B3f7JKCbe7Y',
+    cueSummary:
+      'Hold a dumbbell or plate under the palms like a tray and curl up to target inner biceps.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'wide_dumbbell_curls',
+    name: 'Wide Dumbbell Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['biceps_long_head'],
+    secondaryMuscles: ['biceps_brachii'],
+    videoUrl: 'https://www.youtube.com/shorts/B3f7JKCbe7Y',
+    cueSummary:
+      'Hands slightly wider and turned out to emphasize the long head of the biceps.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'wide_grip_barbell_curl',
+    name: 'Wide Grip Barbell Curl',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['barbell'],
+    primaryMuscles: ['biceps_short_head'],
+    secondaryMuscles: ['biceps_brachii'],
+    videoUrl: 'https://www.youtube.com/shorts/B3f7JKCbe7Y',
+    cueSummary:
+      'Take a wider‑than‑shoulder grip on the bar to shift focus to the inner biceps.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+  {
+    id: 'uncle_rommy_curls',
+    name: 'Uncle Rommy Curls',
+    type: 'isolation',
+    movementPattern: 'curl',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['biceps_brachii'],
+    secondaryMuscles: ['brachialis'],
+    videoUrl: 'https://www.youtube.com/shorts/B3f7JKCbe7Y',
+    cueSummary:
+      'Signature curl variation from Uncle Rommy used as a fun finisher for a nasty pump.',
+    mentionedInSections: ['bonus-exercise-library'],
+  },
+
+  // Forearm finishers
+  {
+    id: 'dumbbell_forearm_circuit',
+    name: 'Dumbbell Forearm Circuit',
+    type: 'isolation',
+    movementPattern: 'forearm_circuit',
+    equipment: ['dumbbell'],
+    primaryMuscles: ['brachioradialis'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtu.be/38C1yg-oDl4?si=outOAc7brItrOBxr',
+    cueSummary:
+      'Series of dumbbell forearm moves strung together to build grip and elbow resilience.',
+    mentionedInSections: ['anatomy-forearms', 'bonus-exercise-library'],
+  },
+  {
+    id: 'sledgehammer_forearm_sequence',
+    name: 'Sledgehammer Forearm Sequence',
+    type: 'isolation',
+    movementPattern: 'forearm_circuit',
+    equipment: ['sledgehammer'],
+    primaryMuscles: ['brachioradialis'],
+    secondaryMuscles: [],
+    videoUrl: 'https://youtu.be/38C1yg-oDl4?si=outOAc7brItrOBxr',
+    cueSummary:
+      'Lever‑based forearm work using a hammer to light up all the small supporting muscles.',
+    mentionedInSections: ['anatomy-forearms', 'bonus-exercise-library'],
+  },
+  ];
+
+  // Merge additional exercises into main exercises array
+  exercises.push(...additionalExercises);
+
+  for (const ex of exercises) {
+    await prisma.exercise.upsert({
+      where: { id: ex.id },
+      update: {},
+      create: {
+        id: ex.id,
+        name: ex.name,
+        type: ex.type,
+        movementPattern: ex.movementPattern,
+        equipment: ex.equipment,
+        videoUrl: ex.videoUrl || null,
+        cueSummary: ex.cueSummary,
+      },
+    });
+
+    // primary / secondary anatomy links
+    for (const m of ex.primaryMuscles) {
+      await prisma.exerciseAnatomy.upsert({
+        where: {
+          exerciseId_anatomyNodeId_role: {
+            exerciseId: ex.id,
+            anatomyNodeId: m,
+            role: 'primary',
+          },
+        },
+        update: {},
+        create: {
+          exerciseId: ex.id,
+          anatomyNodeId: m,
+          role: 'primary',
+        },
+      });
+    }
+    for (const m of ex.secondaryMuscles) {
+      await prisma.exerciseAnatomy.upsert({
+        where: {
+          exerciseId_anatomyNodeId_role: {
+            exerciseId: ex.id,
+            anatomyNodeId: m,
+            role: 'secondary',
+          },
+        },
+        update: {},
+        create: {
+          exerciseId: ex.id,
+          anatomyNodeId: m,
+          role: 'secondary',
+        },
+      });
+    }
+
+    // Section ↔ Exercise links (where it's mentioned)
+    for (const sectionId of ex.mentionedInSections) {
+      await prisma.sectionExercise.upsert({
+        where: {
+          sectionId_exerciseId: {
+            sectionId,
+            exerciseId: ex.id,
+          },
+        },
+        update: {},
+        create: {
+          sectionId,
+          exerciseId: ex.id,
+        },
+      });
+    }
+  }
+
+  // -----------------------------
+  // 4) FORMULAS
+  // -----------------------------
 
   for (const f of formulas) {
     await prisma.formula.upsert({

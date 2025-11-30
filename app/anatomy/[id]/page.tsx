@@ -11,11 +11,32 @@ export default async function AnatomyPage({
 }) {
   const { id } = await params;
 
-  // Load FULL tree with all nested levels and exercises
+  // Load FULL tree with all nested levels, exercises, and formulas
   const anatomy = await prisma.anatomyNode.findUnique({
     where: { id },
     include: {
       parent: true,
+      formulaTargets: {
+        include: {
+          formula: {
+            include: {
+              steps: {
+                include: {
+                  exercise: true,
+                },
+                orderBy: {
+                  order: "asc",
+                },
+              },
+              targets: {
+                include: {
+                  anatomy: true,
+                },
+              },
+            },
+          },
+        },
+      },
       exerciseLinks: {
         include: {
           exercise: {
@@ -31,6 +52,27 @@ export default async function AnatomyPage({
       },
       children: {
         include: {
+          formulaTargets: {
+            include: {
+              formula: {
+                include: {
+                  steps: {
+                    include: {
+                      exercise: true,
+                    },
+                    orderBy: {
+                      order: "asc",
+                    },
+                  },
+                  targets: {
+                    include: {
+                      anatomy: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
           exerciseLinks: {
             include: {
               exercise: {
@@ -46,6 +88,27 @@ export default async function AnatomyPage({
           },
           children: {
             include: {
+              formulaTargets: {
+                include: {
+                  formula: {
+                    include: {
+                      steps: {
+                        include: {
+                          exercise: true,
+                        },
+                        orderBy: {
+                          order: "asc",
+                        },
+                      },
+                      targets: {
+                        include: {
+                          anatomy: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
               exerciseLinks: {
                 include: {
                   exercise: {
@@ -61,6 +124,27 @@ export default async function AnatomyPage({
               },
               children: {
                 include: {
+                  formulaTargets: {
+                    include: {
+                      formula: {
+                        include: {
+                          steps: {
+                            include: {
+                              exercise: true,
+                            },
+                            orderBy: {
+                              order: "asc",
+                            },
+                          },
+                          targets: {
+                            include: {
+                              anatomy: true,
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
                   exerciseLinks: {
                     include: {
                       exercise: {
@@ -76,6 +160,27 @@ export default async function AnatomyPage({
                   },
                   children: {
                     include: {
+                      formulaTargets: {
+                        include: {
+                          formula: {
+                            include: {
+                              steps: {
+                                include: {
+                                  exercise: true,
+                                },
+                                orderBy: {
+                                  order: "asc",
+                                },
+                              },
+                              targets: {
+                                include: {
+                                  anatomy: true,
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
                       exerciseLinks: {
                         include: {
                           exercise: {

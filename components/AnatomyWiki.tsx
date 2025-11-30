@@ -26,6 +26,31 @@ interface AnatomyNodeData {
       equipment: any;
     };
   }>;
+  formulaTargets?: Array<{
+    formula: {
+      id: string;
+      name: string;
+      description: string | null;
+      pattern: string;
+      steps: Array<{
+        order: number;
+        role: string;
+        notes: string | null;
+        exercise: {
+          id: string;
+          name: string;
+          type: string;
+        };
+      }>;
+      targets: Array<{
+        anatomyNodeId: string;
+        anatomy: {
+          id: string;
+          name: string;
+        };
+      }>;
+    };
+  }>;
 }
 
 interface AnatomyWikiProps {
@@ -69,6 +94,12 @@ export function AnatomyWiki({ node, level = 1 }: AnatomyWikiProps) {
 
   const primaryExercises = node.exerciseLinks?.filter((link) => link.role === "primary") || [];
   const secondaryExercises = node.exerciseLinks?.filter((link) => link.role === "secondary") || [];
+  
+  // Only show formulas that directly target THIS node (no roll-up from children)
+  const allFormulas = node.formulaTargets?.map((target) => ({
+    formula: target.formula,
+    targetNodes: [{ id: node.id, name: node.name }],
+  })) || [];
 
   // Header size based on level
   const HeaderTag = `h${Math.min(level + 1, 6)}` as keyof JSX.IntrinsicElements;
@@ -270,6 +301,87 @@ export function AnatomyWiki({ node, level = 1 }: AnatomyWikiProps) {
                         )}
                       </div>
                     </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Exercise Formulas */}
+          {allFormulas.length > 0 && (
+            <div className="mb-6">
+              <h4 className="font-bold text-gray-900 mb-3">
+                🎯 Exercise Formulas ({allFormulas.length})
+              </h4>
+              <div className="space-y-4">
+                {allFormulas.map((item) => {
+                  const formula = item.formula;
+                  return (
+                    <div
+                      key={formula.id}
+                      className="p-4 bg-purple-50 border-2 border-purple-200 rounded-lg"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <Link href={`/formulas/${formula.id}`}>
+                          <h5 className="font-bold text-purple-700 text-base hover:text-purple-900 hover:underline cursor-pointer">
+                            {formula.name}
+                          </h5>
+                        </Link>
+                        <span className="px-2 py-1 bg-purple-200 text-purple-800 rounded text-xs font-medium uppercase">
+                          {formula.pattern}
+                        </span>
+                      </div>
+
+                      {formula.description && (
+                        <p className="text-gray-700 text-sm mb-3">{formula.description}</p>
+                      )}
+
+                      {/* Show which anatomy nodes this formula targets */}
+                      {item.targetNodes.length > 0 && (
+                        <div className="mb-3">
+                          <div className="text-xs text-gray-600 mb-1">Targets:</div>
+                          <div className="flex flex-wrap gap-1">
+                            {item.targetNodes.map((tn) => (
+                              <span
+                                key={tn.id}
+                                className="px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs font-medium"
+                              >
+                                {tn.name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Exercise Steps */}
+                      <div className="space-y-2">
+                        {formula.steps.map((step: any) => (
+                          <div
+                            key={step.exercise.id}
+                            className="flex items-center gap-2 text-sm"
+                          >
+                            <span className="flex-shrink-0 w-6 h-6 bg-purple-200 rounded-full flex items-center justify-center text-xs font-bold text-purple-800">
+                              {step.order}
+                            </span>
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                openExerciseDrawer(step.exercise);
+                              }}
+                              className="font-medium text-gray-900 hover:text-blue-600 hover:underline cursor-pointer text-left"
+                            >
+                              {step.exercise.name}
+                            </button>
+                            <span className="px-2 py-0.5 bg-white border border-purple-200 text-purple-700 rounded text-xs">
+                              {step.role}
+                            </span>
+                            {step.notes && (
+                              <span className="text-xs text-gray-500">• {step.notes}</span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   );
                 })}
               </div>
