@@ -1,0 +1,226 @@
+{
+  "arms": {
+    "intro-young-man-muscle": {
+      "pages": [
+        9
+      ]
+    },
+    "mindset-arms": {
+      "pages": [
+        42
+      ]
+    },
+    "rules-natural-crusader": {
+      "pages": [
+        13
+      ]
+    },
+    "anatomy-overview-arms": {
+      "pages": [
+        15
+      ]
+    },
+    "anatomy-biceps": {
+      "pages": [
+        16,
+        17
+      ]
+    },
+    "anatomy-triceps": {
+      "pages": [
+        21,
+        22
+      ]
+    },
+    "strength-arms": {
+      "pages": []
+    },
+    "formulas-arms": {
+      "pages": [
+        35,
+        36
+      ]
+    },
+    "snipers-arm-day": {
+      "pages": [
+        42
+      ]
+    },
+    "anatomy-forearms": {
+      "pages": [
+        26
+      ]
+    },
+    "bonus-arm-exercise-library": {
+      "pages": [
+        43,
+        46,
+        47
+      ]
+    },
+    "resilient-body-traps-rhomboids-rear-delts": {
+      "pages": [
+        38,
+        39
+      ]
+    },
+    "bonus-exercise-library": {
+      "pages": [
+        46
+      ]
+    }
+  },
+  "shoulders": {
+    "shoulders-intro": {
+      "pages": []
+    },
+    "shoulders-standard-natural-crusader": {
+      "pages": [
+        25
+      ]
+    },
+    "anatomy-shoulders-overview": {
+      "pages": [
+        14
+      ]
+    },
+    "anatomy-rear-delt-supremacist": {
+      "pages": [
+        15
+      ]
+    },
+    "anatomy-side-and-front-delts": {
+      "pages": [
+        16
+      ]
+    },
+    "anatomy-rotator-cuff-shoulders": {
+      "pages": [
+        18,
+        22
+      ]
+    },
+    "strength-shoulders": {
+      "pages": [
+        29
+      ]
+    },
+    "muscle-growth-shoulders": {
+      "pages": []
+    },
+    "injury-resilience-shoulders": {
+      "pages": []
+    },
+    "mobility-shoulders": {
+      "pages": [
+        37,
+        42,
+        45
+      ]
+    },
+    "healing-tears-shoulders": {
+      "pages": []
+    },
+    "snipers-shoulder-day": {
+      "pages": []
+    },
+    "shoulder-rehab-sequence-shoulders": {
+      "pages": []
+    },
+    "bonus-shoulders-exercise-library": {
+      "pages": []
+    }
+  },
+  "back": {
+    "back-weird-muscles-overview": {
+      "pages": []
+    },
+    "intro-back-king-kong": {
+      "pages": []
+    },
+    "back-rhomboids": {
+      "pages": [
+        20
+      ]
+    },
+    "mindset-back-natural-crusader": {
+      "pages": []
+    },
+    "back-rear-delts": {
+      "pages": [
+        14
+      ]
+    },
+    "anatomy-overview-back": {
+      "pages": []
+    },
+    "back-middle-traps": {
+      "pages": [
+        13
+      ]
+    },
+    "anatomy-traps": {
+      "pages": [
+        13
+      ]
+    },
+    "back-lower-traps": {
+      "pages": [
+        13
+      ]
+    },
+    "anatomy-posterior-delt-teres": {
+      "pages": []
+    },
+    "back-exercise-examples": {
+      "pages": [
+        43
+      ]
+    },
+    "anatomy-rotator-cuff": {
+      "pages": []
+    },
+    "anatomy-rhomboids-erectors-lats": {
+      "pages": []
+    },
+    "strength-back": {
+      "pages": []
+    },
+    "muscle-growth-back": {
+      "pages": []
+    },
+    "mobility-back": {
+      "pages": [
+        39,
+        44,
+        46,
+        49
+      ]
+    },
+    "injury-resilience-back": {
+      "pages": []
+    },
+    "snipers-back-day": {
+      "pages": [
+        42
+      ]
+    },
+    "shoulder-rehab-sequence": {
+      "pages": [
+        45
+      ]
+    },
+    "back-shoulder-rehab-exercise-bank": {
+      "pages": [
+        39,
+        46,
+        47,
+        49
+      ]
+    },
+    "bonus-back-exercise-library": {
+      "pages": []
+    }
+  },
+  "chest": {}
+}

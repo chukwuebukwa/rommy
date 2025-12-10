@@ -67,6 +67,7 @@ model Section {
   title    String
   order    Int
   content  String                                   // full Uncle Rommy text (can be long)
+  images   Json?                                    // Array of namespaced image paths like ["arms/page3_img1.jpeg"]
 
   focusAnatomyLinks SectionAnatomy[]
   exerciseLinks     SectionExercise[]

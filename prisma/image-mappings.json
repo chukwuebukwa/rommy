@@ -1,0 +1,742 @@
+{
+  "arms": {
+    "guideName": "arms",
+    "totalPages": 52,
+    "pageImages": {
+      "1": [
+        "arms/page1_img1.png",
+        "arms/page1_img2.png",
+        "arms/page1_img3.png",
+        "arms/page1_img4.png",
+        "arms/page1_img5.png"
+      ],
+      "2": [
+        "arms/page2_img1.png",
+        "arms/page2_img2.jpeg"
+      ],
+      "3": [
+        "arms/page3_img1.jpeg",
+        "arms/page3_img2.png"
+      ],
+      "4": [
+        "arms/page4_img1.jpeg"
+      ],
+      "5": [
+        "arms/page5_img1.png"
+      ],
+      "6": [
+        "arms/page6_img1.jpeg"
+      ],
+      "8": [
+        "arms/page8_img1.jpeg",
+        "arms/page8_img2.jpeg"
+      ],
+      "9": [
+        "arms/page9_img1.jpeg",
+        "arms/page9_img2.jpeg",
+        "arms/page9_img3.png"
+      ],
+      "11": [
+        "arms/page11_img1.jpeg"
+      ],
+      "12": [
+        "arms/page12_img1.jpeg",
+        "arms/page12_img2.png"
+      ],
+      "14": [
+        "arms/page14_img1.jpeg",
+        "arms/page14_img2.png"
+      ],
+      "15": [
+        "arms/page15_img1.jpeg"
+      ],
+      "16": [
+        "arms/page16_img1.jpeg",
+        "arms/page16_img2.jpeg",
+        "arms/page16_img3.jpeg",
+        "arms/page16_img4.jpeg"
+      ],
+      "17": [
+        "arms/page17_img1.png",
+        "arms/page17_img2.jpeg"
+      ],
+      "18": [
+        "arms/page18_img1.jpeg",
+        "arms/page18_img2.jpeg"
+      ],
+      "20": [
+        "arms/page20_img1.jpeg"
+      ],
+      "21": [
+        "arms/page21_img1.jpeg",
+        "arms/page21_img2.jpeg"
+      ],
+      "22": [
+        "arms/page22_img1.jpeg"
+      ],
+      "23": [
+        "arms/page23_img1.jpeg"
+      ],
+      "24": [
+        "arms/page24_img1.jpeg"
+      ],
+      "25": [
+        "arms/page25_img1.jpeg"
+      ],
+      "26": [
+        "arms/page26_img1.jpeg",
+        "arms/page26_img2.png"
+      ],
+      "27": [
+        "arms/page27_img1.jpeg",
+        "arms/page27_img2.jpeg"
+      ],
+      "28": [
+        "arms/page28_img1.jpeg"
+      ],
+      "29": [
+        "arms/page29_img1.jpeg"
+      ],
+      "30": [
+        "arms/page30_img1.jpeg",
+        "arms/page30_img2.png"
+      ],
+      "31": [
+        "arms/page31_img1.jpeg"
+      ],
+      "33": [
+        "arms/page33_img1.jpeg"
+      ],
+      "34": [
+        "arms/page34_img1.jpeg",
+        "arms/page34_img2.jpeg",
+        "arms/page34_img3.png"
+      ],
+      "36": [
+        "arms/page36_img1.jpeg",
+        "arms/page36_img2.jpeg"
+      ],
+      "37": [
+        "arms/page37_img1.jpeg",
+        "arms/page37_img2.jpeg"
+      ],
+      "40": [
+        "arms/page40_img1.jpeg",
+        "arms/page40_img2.png",
+        "arms/page40_img3.jpeg"
+      ],
+      "41": [
+        "arms/page41_img1.jpeg",
+        "arms/page41_img2.jpeg"
+      ],
+      "44": [
+        "arms/page44_img1.jpeg",
+        "arms/page44_img2.png"
+      ],
+      "45": [
+        "arms/page45_img1.jpeg"
+      ],
+      "48": [
+        "arms/page48_img1.jpeg",
+        "arms/page48_img2.jpeg"
+      ],
+      "51": [
+        "arms/page51_img1.png",
+        "arms/page51_img2.jpeg",
+        "arms/page51_img3.png"
+      ],
+      "52": [
+        "arms/page52_img1.png"
+      ]
+    },
+    "allImages": [
+      "arms/page1_img1.png",
+      "arms/page1_img2.png",
+      "arms/page1_img3.png",
+      "arms/page1_img4.png",
+      "arms/page1_img5.png",
+      "arms/page2_img1.png",
+      "arms/page2_img2.jpeg",
+      "arms/page3_img1.jpeg",
+      "arms/page3_img2.png",
+      "arms/page4_img1.jpeg",
+      "arms/page5_img1.png",
+      "arms/page6_img1.jpeg",
+      "arms/page8_img1.jpeg",
+      "arms/page8_img2.jpeg",
+      "arms/page9_img1.jpeg",
+      "arms/page9_img2.jpeg",
+      "arms/page9_img3.png",
+      "arms/page11_img1.jpeg",
+      "arms/page12_img1.jpeg",
+      "arms/page12_img2.png",
+      "arms/page14_img1.jpeg",
+      "arms/page14_img2.png",
+      "arms/page15_img1.jpeg",
+      "arms/page16_img1.jpeg",
+      "arms/page16_img2.jpeg",
+      "arms/page16_img3.jpeg",
+      "arms/page16_img4.jpeg",
+      "arms/page17_img1.png",
+      "arms/page17_img2.jpeg",
+      "arms/page18_img1.jpeg",
+      "arms/page18_img2.jpeg",
+      "arms/page20_img1.jpeg",
+      "arms/page21_img1.jpeg",
+      "arms/page21_img2.jpeg",
+      "arms/page22_img1.jpeg",
+      "arms/page23_img1.jpeg",
+      "arms/page24_img1.jpeg",
+      "arms/page25_img1.jpeg",
+      "arms/page26_img1.jpeg",
+      "arms/page26_img2.png",
+      "arms/page27_img1.jpeg",
+      "arms/page27_img2.jpeg",
+      "arms/page28_img1.jpeg",
+      "arms/page29_img1.jpeg",
+      "arms/page30_img1.jpeg",
+      "arms/page30_img2.png",
+      "arms/page31_img1.jpeg",
+      "arms/page33_img1.jpeg",
+      "arms/page34_img1.jpeg",
+      "arms/page34_img2.jpeg",
+      "arms/page34_img3.png",
+      "arms/page36_img1.jpeg",
+      "arms/page36_img2.jpeg",
+      "arms/page37_img1.jpeg",
+      "arms/page37_img2.jpeg",
+      "arms/page40_img1.jpeg",
+      "arms/page40_img2.png",
+      "arms/page40_img3.jpeg",
+      "arms/page41_img1.jpeg",
+      "arms/page41_img2.jpeg",
+      "arms/page44_img1.jpeg",
+      "arms/page44_img2.png",
+      "arms/page45_img1.jpeg",
+      "arms/page48_img1.jpeg",
+      "arms/page48_img2.jpeg",
+      "arms/page51_img1.png",
+      "arms/page51_img2.jpeg",
+      "arms/page51_img3.png",
+      "arms/page52_img1.png"
+    ]
+  },
+  "shoulders": {
+    "guideName": "shoulders",
+    "totalPages": 54,
+    "pageImages": {
+      "1": [
+        "shoulders/page1_img1.png",
+        "shoulders/page1_img2.png",
+        "shoulders/page1_img3.png"
+      ],
+      "2": [
+        "shoulders/page2_img1.jpeg",
+        "shoulders/page2_img2.jpeg"
+      ],
+      "3": [
+        "shoulders/page3_img1.png"
+      ],
+      "4": [
+        "shoulders/page4_img1.jpeg",
+        "shoulders/page4_img2.jpeg",
+        "shoulders/page4_img3.png"
+      ],
+      "5": [
+        "shoulders/page5_img1.jpeg",
+        "shoulders/page5_img2.jpeg",
+        "shoulders/page5_img3.png"
+      ],
+      "6": [
+        "shoulders/page6_img1.jpeg"
+      ],
+      "7": [
+        "shoulders/page7_img1.png",
+        "shoulders/page7_img2.png",
+        "shoulders/page7_img3.png",
+        "shoulders/page7_img4.png"
+      ],
+      "8": [
+        "shoulders/page8_img1.png"
+      ],
+      "9": [
+        "shoulders/page9_img1.jpeg"
+      ],
+      "11": [
+        "shoulders/page11_img1.jpeg",
+        "shoulders/page11_img2.png"
+      ],
+      "12": [
+        "shoulders/page12_img1.jpeg",
+        "shoulders/page12_img2.png"
+      ],
+      "13": [
+        "shoulders/page13_img1.jpeg"
+      ],
+      "14": [
+        "shoulders/page14_img1.jpeg"
+      ],
+      "15": [
+        "shoulders/page15_img1.jpeg"
+      ],
+      "16": [
+        "shoulders/page16_img1.jpeg",
+        "shoulders/page16_img2.jpeg"
+      ],
+      "17": [
+        "shoulders/page17_img1.jpeg"
+      ],
+      "18": [
+        "shoulders/page18_img1.jpeg"
+      ],
+      "19": [
+        "shoulders/page19_img1.jpeg"
+      ],
+      "20": [
+        "shoulders/page20_img1.jpeg"
+      ],
+      "21": [
+        "shoulders/page21_img1.jpeg",
+        "shoulders/page21_img2.png"
+      ],
+      "24": [
+        "shoulders/page24_img1.jpeg"
+      ],
+      "27": [
+        "shoulders/page27_img1.jpeg"
+      ],
+      "31": [
+        "shoulders/page31_img1.png"
+      ],
+      "35": [
+        "shoulders/page35_img1.jpeg",
+        "shoulders/page35_img2.jpeg"
+      ],
+      "36": [
+        "shoulders/page36_img1.jpeg",
+        "shoulders/page36_img2.png"
+      ],
+      "41": [
+        "shoulders/page41_img1.png"
+      ],
+      "45": [
+        "shoulders/page45_img1.jpeg",
+        "shoulders/page45_img2.png"
+      ],
+      "53": [
+        "shoulders/page53_img1.jpeg",
+        "shoulders/page53_img2.jpeg",
+        "shoulders/page53_img3.jpeg"
+      ],
+      "54": [
+        "shoulders/page54_img1.png"
+      ]
+    },
+    "allImages": [
+      "shoulders/page1_img1.png",
+      "shoulders/page1_img2.png",
+      "shoulders/page1_img3.png",
+      "shoulders/page2_img1.jpeg",
+      "shoulders/page2_img2.jpeg",
+      "shoulders/page3_img1.png",
+      "shoulders/page4_img1.jpeg",
+      "shoulders/page4_img2.jpeg",
+      "shoulders/page4_img3.png",
+      "shoulders/page5_img1.jpeg",
+      "shoulders/page5_img2.jpeg",
+      "shoulders/page5_img3.png",
+      "shoulders/page6_img1.jpeg",
+      "shoulders/page7_img1.png",
+      "shoulders/page7_img2.png",
+      "shoulders/page7_img3.png",
+      "shoulders/page7_img4.png",
+      "shoulders/page8_img1.png",
+      "shoulders/page9_img1.jpeg",
+      "shoulders/page11_img1.jpeg",
+      "shoulders/page11_img2.png",
+      "shoulders/page12_img1.jpeg",
+      "shoulders/page12_img2.png",
+      "shoulders/page13_img1.jpeg",
+      "shoulders/page14_img1.jpeg",
+      "shoulders/page15_img1.jpeg",
+      "shoulders/page16_img1.jpeg",
+      "shoulders/page16_img2.jpeg",
+      "shoulders/page17_img1.jpeg",
+      "shoulders/page18_img1.jpeg",
+      "shoulders/page19_img1.jpeg",
+      "shoulders/page20_img1.jpeg",
+      "shoulders/page21_img1.jpeg",
+      "shoulders/page21_img2.png",
+      "shoulders/page24_img1.jpeg",
+      "shoulders/page27_img1.jpeg",
+      "shoulders/page31_img1.png",
+      "shoulders/page35_img1.jpeg",
+      "shoulders/page35_img2.jpeg",
+      "shoulders/page36_img1.jpeg",
+      "shoulders/page36_img2.png",
+      "shoulders/page41_img1.png",
+      "shoulders/page45_img1.jpeg",
+      "shoulders/page45_img2.png",
+      "shoulders/page53_img1.jpeg",
+      "shoulders/page53_img2.jpeg",
+      "shoulders/page53_img3.jpeg",
+      "shoulders/page54_img1.png"
+    ]
+  },
+  "back": {
+    "guideName": "back",
+    "totalPages": 53,
+    "pageImages": {
+      "1": [
+        "back/page1_img1.png",
+        "back/page1_img2.png",
+        "back/page1_img3.png"
+      ],
+      "2": [
+        "back/page2_img1.jpeg"
+      ],
+      "3": [
+        "back/page3_img1.jpeg",
+        "back/page3_img2.jpeg"
+      ],
+      "5": [
+        "back/page5_img1.jpeg"
+      ],
+      "7": [
+        "back/page7_img1.jpeg",
+        "back/page7_img2.png"
+      ],
+      "8": [
+        "back/page8_img1.jpeg",
+        "back/page8_img2.png"
+      ],
+      "9": [
+        "back/page9_img1.jpeg"
+      ],
+      "10": [
+        "back/page10_img1.jpeg"
+      ],
+      "11": [
+        "back/page11_img1.jpeg"
+      ],
+      "12": [
+        "back/page12_img1.jpeg"
+      ],
+      "13": [
+        "back/page13_img1.jpeg",
+        "back/page13_img2.jpeg"
+      ],
+      "14": [
+        "back/page14_img1.jpeg"
+      ],
+      "15": [
+        "back/page15_img1.jpeg"
+      ],
+      "16": [
+        "back/page16_img1.jpeg"
+      ],
+      "18": [
+        "back/page18_img1.jpeg",
+        "back/page18_img2.jpeg"
+      ],
+      "19": [
+        "back/page19_img1.jpeg"
+      ],
+      "20": [
+        "back/page20_img1.jpeg"
+      ],
+      "21": [
+        "back/page21_img1.jpeg"
+      ],
+      "22": [
+        "back/page22_img1.jpeg"
+      ],
+      "23": [
+        "back/page23_img1.jpeg",
+        "back/page23_img2.jpeg"
+      ],
+      "24": [
+        "back/page24_img1.jpeg",
+        "back/page24_img2.png"
+      ],
+      "26": [
+        "back/page26_img1.jpeg"
+      ],
+      "28": [
+        "back/page28_img1.png",
+        "back/page28_img2.png",
+        "back/page28_img3.png"
+      ],
+      "30": [
+        "back/page30_img1.png"
+      ],
+      "32": [
+        "back/page32_img1.jpeg"
+      ],
+      "35": [
+        "back/page35_img1.jpeg"
+      ],
+      "36": [
+        "back/page36_img1.png",
+        "back/page36_img2.jpeg",
+        "back/page36_img3.png"
+      ],
+      "39": [
+        "back/page39_img1.jpeg",
+        "back/page39_img2.jpeg",
+        "back/page39_img3.png"
+      ],
+      "40": [
+        "back/page40_img1.jpeg"
+      ],
+      "44": [
+        "back/page44_img1.jpeg"
+      ],
+      "45": [
+        "back/page45_img1.jpeg"
+      ],
+      "52": [
+        "back/page52_img1.jpeg",
+        "back/page52_img2.jpeg",
+        "back/page52_img3.png",
+        "back/page52_img4.png"
+      ],
+      "53": [
+        "back/page53_img1.png"
+      ]
+    },
+    "allImages": [
+      "back/page1_img1.png",
+      "back/page1_img2.png",
+      "back/page1_img3.png",
+      "back/page2_img1.jpeg",
+      "back/page3_img1.jpeg",
+      "back/page3_img2.jpeg",
+      "back/page5_img1.jpeg",
+      "back/page7_img1.jpeg",
+      "back/page7_img2.png",
+      "back/page8_img1.jpeg",
+      "back/page8_img2.png",
+      "back/page9_img1.jpeg",
+      "back/page10_img1.jpeg",
+      "back/page11_img1.jpeg",
+      "back/page12_img1.jpeg",
+      "back/page13_img1.jpeg",
+      "back/page13_img2.jpeg",
+      "back/page14_img1.jpeg",
+      "back/page15_img1.jpeg",
+      "back/page16_img1.jpeg",
+      "back/page18_img1.jpeg",
+      "back/page18_img2.jpeg",
+      "back/page19_img1.jpeg",
+      "back/page20_img1.jpeg",
+      "back/page21_img1.jpeg",
+      "back/page22_img1.jpeg",
+      "back/page23_img1.jpeg",
+      "back/page23_img2.jpeg",
+      "back/page24_img1.jpeg",
+      "back/page24_img2.png",
+      "back/page26_img1.jpeg",
+      "back/page28_img1.png",
+      "back/page28_img2.png",
+      "back/page28_img3.png",
+      "back/page30_img1.png",
+      "back/page32_img1.jpeg",
+      "back/page35_img1.jpeg",
+      "back/page36_img1.png",
+      "back/page36_img2.jpeg",
+      "back/page36_img3.png",
+      "back/page39_img1.jpeg",
+      "back/page39_img2.jpeg",
+      "back/page39_img3.png",
+      "back/page40_img1.jpeg",
+      "back/page44_img1.jpeg",
+      "back/page45_img1.jpeg",
+      "back/page52_img1.jpeg",
+      "back/page52_img2.jpeg",
+      "back/page52_img3.png",
+      "back/page52_img4.png",
+      "back/page53_img1.png"
+    ]
+  },
+  "chest": {
+    "guideName": "chest",
+    "totalPages": 44,
+    "pageImages": {
+      "1": [
+        "chest/page1_img1.png",
+        "chest/page1_img2.png",
+        "chest/page1_img3.png",
+        "chest/page1_img4.png"
+      ],
+      "2": [
+        "chest/page2_img1.jpeg"
+      ],
+      "3": [
+        "chest/page3_img1.jpeg"
+      ],
+      "5": [
+        "chest/page5_img1.jpeg",
+        "chest/page5_img2.jpeg",
+        "chest/page5_img3.png"
+      ],
+      "7": [
+        "chest/page7_img1.jpeg",
+        "chest/page7_img2.jpeg",
+        "chest/page7_img3.png",
+        "chest/page7_img4.jpeg",
+        "chest/page7_img5.jpeg",
+        "chest/page7_img6.png"
+      ],
+      "8": [
+        "chest/page8_img1.png"
+      ],
+      "11": [
+        "chest/page11_img1.jpeg",
+        "chest/page11_img2.png"
+      ],
+      "12": [
+        "chest/page12_img1.jpeg",
+        "chest/page12_img2.jpeg"
+      ],
+      "13": [
+        "chest/page13_img1.jpeg"
+      ],
+      "14": [
+        "chest/page14_img1.jpeg",
+        "chest/page14_img2.jpeg"
+      ],
+      "15": [
+        "chest/page15_img1.jpeg",
+        "chest/page15_img2.jpeg"
+      ],
+      "16": [
+        "chest/page16_img1.jpeg",
+        "chest/page16_img2.jpeg",
+        "chest/page16_img3.jpeg"
+      ],
+      "17": [
+        "chest/page17_img1.jpeg"
+      ],
+      "18": [
+        "chest/page18_img1.jpeg"
+      ],
+      "19": [
+        "chest/page19_img1.jpeg"
+      ],
+      "20": [
+        "chest/page20_img1.jpeg"
+      ],
+      "21": [
+        "chest/page21_img1.jpeg",
+        "chest/page21_img2.png"
+      ],
+      "22": [
+        "chest/page22_img1.jpeg"
+      ],
+      "24": [
+        "chest/page24_img1.jpeg"
+      ],
+      "25": [
+        "chest/page25_img1.jpeg",
+        "chest/page25_img2.png"
+      ],
+      "26": [
+        "chest/page26_img1.jpeg"
+      ],
+      "27": [
+        "chest/page27_img1.png",
+        "chest/page27_img2.png"
+      ],
+      "31": [
+        "chest/page31_img1.jpeg",
+        "chest/page31_img2.png",
+        "chest/page31_img3.jpeg"
+      ],
+      "32": [
+        "chest/page32_img1.jpeg",
+        "chest/page32_img2.jpeg"
+      ],
+      "33": [
+        "chest/page33_img1.jpeg"
+      ],
+      "36": [
+        "chest/page36_img1.jpeg",
+        "chest/page36_img2.png"
+      ],
+      "37": [
+        "chest/page37_img1.jpeg"
+      ],
+      "40": [
+        "chest/page40_img1.jpeg",
+        "chest/page40_img2.jpeg"
+      ],
+      "43": [
+        "chest/page43_img1.png",
+        "chest/page43_img2.jpeg",
+        "chest/page43_img3.png"
+      ],
+      "44": [
+        "chest/page44_img1.png"
+      ]
+    },
+    "allImages": [
+      "chest/page1_img1.png",
+      "chest/page1_img2.png",
+      "chest/page1_img3.png",
+      "chest/page1_img4.png",
+      "chest/page2_img1.jpeg",
+      "chest/page3_img1.jpeg",
+      "chest/page5_img1.jpeg",
+      "chest/page5_img2.jpeg",
+      "chest/page5_img3.png",
+      "chest/page7_img1.jpeg",
+      "chest/page7_img2.jpeg",
+      "chest/page7_img3.png",
+      "chest/page7_img4.jpeg",
+      "chest/page7_img5.jpeg",
+      "chest/page7_img6.png",
+      "chest/page8_img1.png",
+      "chest/page11_img1.jpeg",
+      "chest/page11_img2.png",
+      "chest/page12_img1.jpeg",
+      "chest/page12_img2.jpeg",
+      "chest/page13_img1.jpeg",
+      "chest/page14_img1.jpeg",
+      "chest/page14_img2.jpeg",
+      "chest/page15_img1.jpeg",
+      "chest/page15_img2.jpeg",
+      "chest/page16_img1.jpeg",
+      "chest/page16_img2.jpeg",
+      "chest/page16_img3.jpeg",
+      "chest/page17_img1.jpeg",
+      "chest/page18_img1.jpeg",
+      "chest/page19_img1.jpeg",
+      "chest/page20_img1.jpeg",
+      "chest/page21_img1.jpeg",
+      "chest/page21_img2.png",
+      "chest/page22_img1.jpeg",
+      "chest/page24_img1.jpeg",
+      "chest/page25_img1.jpeg",
+      "chest/page25_img2.png",
+      "chest/page26_img1.jpeg",
+      "chest/page27_img1.png",
+      "chest/page27_img2.png",
+      "chest/page31_img1.jpeg",
+      "chest/page31_img2.png",
+      "chest/page31_img3.jpeg",
+      "chest/page32_img1.jpeg",
+      "chest/page32_img2.jpeg",
+      "chest/page33_img1.jpeg",
+      "chest/page36_img1.jpeg",
+      "chest/page36_img2.png",
+      "chest/page37_img1.jpeg",
+      "chest/page40_img1.jpeg",
+      "chest/page40_img2.jpeg",
+      "chest/page43_img1.png",
+      "chest/page43_img2.jpeg",
+      "chest/page43_img3.png",
+      "chest/page44_img1.png"
+    ]
+  }
+}

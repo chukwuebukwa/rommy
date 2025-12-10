@@ -26,6 +26,7 @@ interface GuideSection {
   kind: string;
   title: string;
   content: string;
+  images: string | null;
   focusAnatomyLinks: Array<{
     anatomyNodeId: string;
     anatomy: {
@@ -136,6 +137,35 @@ export function GuideDetailClient({ guide, sectionsByKind }: GuideDetailClientPr
               {section.content}
             </div>
           </div>
+
+          {/* Section Images */}
+          {section.images && (() => {
+            try {
+              const imageList = JSON.parse(section.images) as string[];
+              return imageList.length > 0 ? (
+                <div className="mt-6 pt-4 border-t">
+                  <h3 className="font-semibold text-gray-900 mb-3">📸 Images</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {imageList.map((imagePath) => (
+                      <div 
+                        key={imagePath} 
+                        className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition cursor-pointer"
+                      >
+                        <img
+                          src={`/guides/${imagePath}`}
+                          alt={`${section.title} - ${imagePath}`}
+                          className="w-full h-auto object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : null;
+            } catch (e) {
+              console.error('Error parsing images:', e);
+              return null;
+            }
+          })()}
 
           {/* Related Anatomy */}
           {section.focusAnatomyLinks.length > 0 && (

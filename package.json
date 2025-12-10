@@ -12,7 +12,11 @@
     "db:seed": "bun run prisma/seed/seed-arms.ts",
     "db:reset": "prisma migrate reset && bun run prisma/seed/seed-arms.ts",
     "db:export": "bun run prisma/export-db.ts",
-    "db:import": "bun run prisma/import-db.ts"
+    "db:import": "bun run prisma/import-db.ts",
+    "images:extract": "bun run prisma/extract-guide-images.ts",
+    "images:template": "bun run prisma/generate-section-mapping.ts",
+    "images:automap": "bun run prisma/auto-map-sections.ts",
+    "images:update": "bun run prisma/update-section-images.ts"
   },
   "prisma": {
     "seed": "bun run prisma/seed/seed-arms.ts"
