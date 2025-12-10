@@ -289,21 +289,21 @@ async function seedArms() {
             parentId: 'shoulders',
           },
           {
-            id: 'rotator_cuff_complex',
+            id: 'rotator_cuff_group',
             kind: 'group',
             name: 'Rotator Cuff',
             slug: 'rotator-cuff',
             description:
               'Deep four‑muscle complex around the shoulder joint (supraspinatus, infraspinatus, teres minor, subscapularis).',
             roleSummary:
-              'Keeps the ball of the humerus centered in the shoulder socket during pressing and pulling so the joint doesn’t get chewed up.',
+              'Keeps the ball of the humerus centered in the shoulder socket during pressing and pulling so the joint doesn\'t get chewed up.',
             primaryFunctions: JSON.stringify([
               'shoulder external rotation',
               'shoulder internal rotation',
               'dynamic shoulder joint stability',
             ]),
             aestheticNotes: JSON.stringify([
-              'Not a big “show” muscle, but a strong cuff lets you keep training heavy without your shoulders falling apart.',
+              'Not a big "show" muscle, but a strong cuff lets you keep training heavy without your shoulders falling apart.',
             ]),
             meta: null,
             parentId: 'shoulders',
@@ -582,8 +582,8 @@ async function seedArms() {
 
   for (const node of anatomyNodes) {
     await prisma.anatomyNode.upsert({
-      where: { id: node.id },
-      update: {},
+      where: { slug: node.slug },
+      update: node,
       create: node,
     });
   }
@@ -953,7 +953,7 @@ All of these have video links in the PDF and are represented as Exercises here.`
     { sectionId: 'bonus-arm-exercise-library', anatomyNodeId: 'brachioradialis' },
 
         // strength section also talks rotator cuff / external rotation
-        { sectionId: 'strength-arms', anatomyNodeId: 'rotator_cuff_complex' },
+        { sectionId: 'strength-arms', anatomyNodeId: 'rotator_cuff_group' },
 
         // Forearm anatomy
         { sectionId: 'anatomy-forearms', anatomyNodeId: 'forearms_group' },

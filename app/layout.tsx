@@ -98,35 +98,51 @@ export default function RootLayout({
                 </div>
                 
                 <Link
-                  href="/anatomy/biceps_long_head"
+                  href="/anatomy/arms"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
-                  <span className="mr-2">→</span>
-                  Biceps Long Head
+                  <span className="mr-2">💪</span>
+                  Arms
                 </Link>
                 
                 <Link
-                  href="/anatomy/triceps_long_head"
+                  href="/anatomy/back"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
-                  <span className="mr-2">→</span>
-                  Triceps Long Head
+                  <span className="mr-2">🔙</span>
+                  Back
                 </Link>
 
                 <Link
-                  href="/exercises/close_grip_bench_press"
+                  href="/anatomy/chest"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
-                  <span className="mr-2">→</span>
-                  Close Grip Bench
+                  <span className="mr-2">🫁</span>
+                  Chest
                 </Link>
 
                 <Link
-                  href="/workouts/snipers_arm_day"
+                  href="/anatomy/legs"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
-                  <span className="mr-2">→</span>
-                  Sniper's Arm Day
+                  <span className="mr-2">🦵</span>
+                  Legs
+                </Link>
+
+                <Link
+                  href="/anatomy/shoulders"
+                  className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
+                >
+                  <span className="mr-2">👐</span>
+                  Shoulders
+                </Link>
+
+                <Link
+                  href="/anatomy/core"
+                  className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
+                >
+                  <span className="mr-2">🎯</span>
+                  Core
                 </Link>
               </div>
 

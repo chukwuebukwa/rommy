@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ExerciseEditor } from "./ExerciseEditor";
+import { VideoEmbed } from "./VideoEmbed";
 
 interface Exercise {
   id: string;
@@ -157,91 +158,145 @@ export function ExerciseLibrary({ exercises: initialExercises }: ExerciseLibrary
             <h2 className="text-2xl font-bold text-gray-900 capitalize flex items-center gap-2">
               {type === "compound" ? "🏋️" : "🎯"} {type} Exercises ({typeExercises.length})
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {typeExercises.map((exercise) => {
                 const primaryLinks = exercise.anatomyLinks
                   .filter((link) => link.role === "primary");
                 const secondaryLinks = exercise.anatomyLinks
                   .filter((link) => link.role === "secondary");
 
+                // Group anatomy by parent hierarchy
+                const groupAnatomyByParent = (links: typeof primaryLinks) => {
+                  const grouped = new Map<string, Set<string>>();
+                  
+                  links.forEach((link) => {
+                    const anatomy = link.anatomy;
+                    if (anatomy.parent) {
+                      // Get the top-most parent as the group
+                      let topParent = anatomy.parent;
+                      while (topParent.parent) {
+                        topParent = topParent.parent;
+                      }
+                      
+                      const groupKey = topParent.name;
+                      if (!grouped.has(groupKey)) {
+                        grouped.set(groupKey, new Set());
+                      }
+                      
+                      // Add the full path for this anatomy node
+                      const path = buildAnatomyPath(anatomy).slice(1).join(' → ');
+                      if (path) {
+                        grouped.get(groupKey)!.add(path);
+                      }
+                    } else {
+                      // No parent, just add the name
+                      if (!grouped.has(anatomy.name)) {
+                        grouped.set(anatomy.name, new Set());
+                      }
+                    }
+                  });
+                  
+                  return grouped;
+                };
+
+                const primaryGroups = groupAnatomyByParent(primaryLinks);
+                const secondaryGroups = groupAnatomyByParent(secondaryLinks);
+
                 return (
                   <div
                     key={exercise.id}
-                    className="bg-white border border-gray-200 rounded-lg p-5 shadow-sm hover:shadow-md hover:border-blue-500 transition relative group"
+                    className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg hover:border-blue-400 transition relative group overflow-hidden"
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <Link href={`/exercises/${exercise.id}`} className="flex-1">
-                        <h3 className="font-bold text-lg text-blue-600 hover:underline">
+                    {/* Edit button - top right corner */}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setEditingExercise(exercise);
+                      }}
+                      className="absolute top-3 right-3 z-10 px-3 py-1 bg-white/90 backdrop-blur-sm hover:bg-blue-600 hover:text-white text-gray-700 text-sm font-medium rounded shadow-sm transition opacity-0 group-hover:opacity-100"
+                    >
+                      Edit
+                    </button>
+
+                    <div className="p-5 space-y-4">
+                      {/* Exercise Name */}
+                      <Link href={`/exercises/${exercise.id}`}>
+                        <h3 className="font-bold text-xl text-gray-900 hover:text-blue-600 transition pr-16">
                           {exercise.name}
                         </h3>
                       </Link>
-                      
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setEditingExercise(exercise);
-                        }}
-                        className="ml-2 px-3 py-1 bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-700 text-sm font-medium rounded transition opacity-0 group-hover:opacity-100"
-                      >
-                        Edit
-                      </button>
-                    </div>
 
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2">
-                        <span className="text-gray-500">Pattern:</span>
-                        <span className="px-2 py-1 bg-gray-100 rounded text-gray-700 font-medium">
-                          {exercise.movementPattern}
-                        </span>
-                      </div>
-
+                      {/* Primary Muscles */}
                       {primaryLinks.length > 0 && (
-                        <div>
-                          <div className="text-gray-500 mb-1">Primary:</div>
-                          <div className="flex flex-wrap gap-1">
-                            {(() => {
-                              const uniqueParts = new Set<string>();
-                              primaryLinks.forEach((link) => {
-                                buildAnatomyPath(link.anatomy).forEach(part => uniqueParts.add(part));
-                              });
-                              return Array.from(uniqueParts).map((part, idx) => (
-                                <span
-                                  key={idx}
-                                  className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs"
-                                >
-                                  {part}
-                                </span>
-                              ));
-                            })()}
-                          </div>
+                        <div className="space-y-2">
+                          <div className="text-sm font-semibold text-gray-600">Primary:</div>
+                          {Array.from(primaryGroups.entries()).map(([group, paths]) => (
+                            <div key={group} className="text-sm">
+                              <div className="font-medium text-gray-800">{group}</div>
+                              {Array.from(paths).map((path, idx) => (
+                                <div key={idx} className="text-gray-600 ml-2">
+                                  {path}
+                                </div>
+                              ))}
+                            </div>
+                          ))}
                         </div>
                       )}
 
-                      {secondaryLinks.length > 0 && (
-                        <div>
-                          <div className="text-gray-500 mb-1">Secondary:</div>
-                          <div className="flex flex-wrap gap-1">
-                            {(() => {
-                              const uniqueParts = new Set<string>();
-                              secondaryLinks.forEach((link) => {
-                                buildAnatomyPath(link.anatomy).forEach(part => uniqueParts.add(part));
-                              });
-                              return Array.from(uniqueParts).map((part, idx) => (
-                                <span
-                                  key={idx}
-                                  className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs"
-                                >
-                                  {part}
-                                </span>
-                              ));
-                            })()}
-                          </div>
-                        </div>
-                      )}
-
+                      {/* Video Embed - Smaller */}
                       {exercise.videoUrl && (
-                        <div className="text-blue-500 text-xs mt-2">📹 Video available</div>
+                        <div className="my-3">
+                          <div className="relative w-full rounded-lg overflow-hidden bg-gray-100" style={{ paddingBottom: "56.25%" }}>
+                            <iframe
+                              src={(() => {
+                                try {
+                                  const url = new URL(exercise.videoUrl);
+                                  let videoId = "";
+                                  if (url.pathname.includes("/shorts/")) {
+                                    videoId = url.pathname.split("/shorts/")[1]?.split("?")[0] || "";
+                                  } else if (url.hostname.includes("youtube.com")) {
+                                    videoId = url.searchParams.get("v") || "";
+                                  } else if (url.hostname.includes("youtu.be")) {
+                                    videoId = url.pathname.slice(1).split("?")[0];
+                                  }
+                                  return videoId ? `https://www.youtube.com/embed/${videoId}` : exercise.videoUrl;
+                                } catch {
+                                  return exercise.videoUrl;
+                                }
+                              })()}
+                              className="absolute top-0 left-0 w-full h-full"
+                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                              allowFullScreen
+                              title={exercise.name}
+                            />
+                          </div>
+                        </div>
                       )}
+
+                      {/* Secondary Muscles */}
+                      {secondaryLinks.length > 0 && (
+                        <div className="space-y-2">
+                          <div className="text-sm font-semibold text-gray-600">Secondary:</div>
+                          {Array.from(secondaryGroups.entries()).map(([group, paths]) => (
+                            <div key={group} className="text-sm">
+                              <div className="font-medium text-gray-700">{group}</div>
+                              {Array.from(paths).map((path, idx) => (
+                                <div key={idx} className="text-gray-600 ml-2">
+                                  {path}
+                                </div>
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Movement Pattern */}
+                      <div className="pt-2 border-t border-gray-100">
+                        <div className="text-sm text-gray-600">
+                          <span className="font-medium">Pattern:</span>{" "}
+                          <span className="text-gray-800">{exercise.movementPattern}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 );
