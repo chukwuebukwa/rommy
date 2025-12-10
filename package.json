@@ -10,7 +10,9 @@
     "db:migrate": "prisma migrate dev",
     "studio": "prisma studio",
     "db:seed": "bun run prisma/seed/seed-arms.ts",
-    "db:reset": "prisma migrate reset && bun run prisma/seed/seed-arms.ts"
+    "db:reset": "prisma migrate reset && bun run prisma/seed/seed-arms.ts",
+    "db:export": "bun run prisma/export-db.ts",
+    "db:import": "bun run prisma/import-db.ts"
   },
   "prisma": {
     "seed": "bun run prisma/seed/seed-arms.ts"
