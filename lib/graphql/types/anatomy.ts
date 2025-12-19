@@ -58,6 +58,22 @@ builder.prismaObject('AnatomyNode', {
     primaryWorkouts: t.relation('primaryWorkouts', {
       description: 'Workouts that focus on this anatomy',
     }),
+    
+    exerciseLinks: t.relation('exerciseLinks', {
+      description: 'Exercises that target this anatomy part',
+    }),
+    
+    sectionLinks: t.relation('sectionLinks', {
+      description: 'Guide sections that reference this anatomy',
+    }),
+    
+    formulaTargets: t.relation('formulaTargets', {
+      description: 'Formulas that target this anatomy part',
+    }),
+    
+    workoutTargets: t.relation('workoutTargets', {
+      description: 'Workout blocks that target this anatomy part',
+    }),
   }),
 });
 

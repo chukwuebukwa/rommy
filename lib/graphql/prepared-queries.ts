@@ -41,7 +41,9 @@ export const GET_ANATOMY_REGIONS = `
         id
       }
       exerciseLinks {
-        exerciseId
+        exercise {
+          id
+        }
       }
     }
   }
@@ -599,6 +601,138 @@ export const GET_RELATED_CONTENT = `
         id
         name
         slug
+      }
+    }
+  }
+`;
+
+// ===== LEARN PAGE - Unified Anatomy + Guide View =====
+
+export const GET_LEARN_PAGE = `
+  query GetLearnPage($id: String!) {
+    anatomyNode(id: $id) {
+      id
+      name
+      kind
+      description
+      roleSummary
+      
+      # Get direct children (these become tabs: Biceps, Triceps, etc.)
+      children {
+        id
+        name
+        kind
+        description
+        roleSummary
+        primaryFunctions
+        aestheticNotes
+        
+        # Nested children for full hierarchy
+        children {
+          id
+          name
+          kind
+          description
+          primaryFunctions
+          aestheticNotes
+          
+          children {
+            id
+            name
+            kind
+            description
+            primaryFunctions
+            aestheticNotes
+            
+            # Exercises at the deepest level (e.g., triceps heads)
+            exerciseLinks {
+              role
+              exercise {
+                id
+                name
+                type
+                movementPattern
+                equipment
+                videoUrl
+                cueSummary
+                anatomyLinks {
+                  role
+                  anatomy {
+                    id
+                    name
+                    kind
+                  }
+                }
+              }
+            }
+          }
+          
+          # Exercises at each level
+          exerciseLinks {
+            role
+            exercise {
+              id
+              name
+              type
+              movementPattern
+              equipment
+              videoUrl
+              cueSummary
+              anatomyLinks {
+                role
+                anatomy {
+                  id
+                  name
+                  kind
+                }
+              }
+            }
+          }
+        }
+        
+        # Exercises for child groups
+        exerciseLinks {
+          role
+          exercise {
+            id
+            name
+            type
+            movementPattern
+            equipment
+            videoUrl
+            cueSummary
+            anatomyLinks {
+              role
+              anatomy {
+                id
+                name
+                kind
+              }
+            }
+          }
+        }
+      }
+      
+      # Guide content with images
+      primaryGuides {
+        id
+        title
+        author
+        sections {
+          id
+          kind
+          title
+          order
+          content
+          images
+          
+          focusAnatomyLinks {
+            anatomy {
+              id
+              name
+            }
+          }
+        }
       }
     }
   }

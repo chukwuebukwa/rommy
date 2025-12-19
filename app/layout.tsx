@@ -42,6 +42,14 @@ export default function RootLayout({
                 </div>
 
                 <Link
+                  href="/learn"
+                  className="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-800 transition"
+                >
+                  <span className="mr-3">🎓</span>
+                  Learn
+                </Link>
+
+                <Link
                   href="/anatomy"
                   className="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-800 transition"
                 >
@@ -98,7 +106,7 @@ export default function RootLayout({
                 </div>
                 
                 <Link
-                  href="/anatomy/arms"
+                  href="/learn/arms"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
                   <span className="mr-2">💪</span>
@@ -106,7 +114,7 @@ export default function RootLayout({
                 </Link>
                 
                 <Link
-                  href="/anatomy/back"
+                  href="/learn/back"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
                   <span className="mr-2">🔙</span>
@@ -114,7 +122,7 @@ export default function RootLayout({
                 </Link>
 
                 <Link
-                  href="/anatomy/chest"
+                  href="/learn/chest"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
                   <span className="mr-2">🫁</span>
@@ -122,7 +130,7 @@ export default function RootLayout({
                 </Link>
 
                 <Link
-                  href="/anatomy/legs"
+                  href="/learn/legs"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
                   <span className="mr-2">🦵</span>
@@ -130,7 +138,7 @@ export default function RootLayout({
                 </Link>
 
                 <Link
-                  href="/anatomy/shoulders"
+                  href="/learn/shoulders"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
                   <span className="mr-2">👐</span>
@@ -138,7 +146,7 @@ export default function RootLayout({
                 </Link>
 
                 <Link
-                  href="/anatomy/core"
+                  href="/learn/core"
                   className="flex items-center px-3 py-2 text-xs rounded-lg hover:bg-gray-800 transition text-gray-300"
                 >
                   <span className="mr-2">🎯</span>

@@ -30,20 +30,22 @@ export default async function Home() {
       {/* Main Navigation */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">📖 Browse Anatomy</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">🎓 Learn by Region</h2>
           <p className="text-gray-600 mb-4">
-            Complete hierarchical articles - Arms → Biceps → Long Head, all on one page
+            Complete learning experience with Uncle Rommy's guides, anatomy breakdown, and exercises - all in one tabbed interface
           </p>
           <div className="space-y-2">
             {regions.map((region) => (
               <Link
                 key={region.id}
-                href={`/anatomy/${region.id}`}
+                href={`/learn/${region.id}`}
                 className="block p-3 border border-gray-200 rounded hover:border-blue-500 hover:bg-blue-50 transition"
               >
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-blue-600">{region.name}</span>
-                  <span className="text-xs text-gray-500">{region._count.children} sub-sections</span>
+                  <span className="text-xs text-gray-500">
+                    Guide + {region._count.children} muscles + exercises
+                  </span>
                 </div>
               </Link>
             ))}
@@ -86,18 +88,41 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Database Explorer Link */}
-      <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-        <h3 className="text-lg font-bold text-gray-900 mb-2">🗄️ Database Explorer</h3>
-        <p className="text-gray-600 mb-3">
-          Want to explore the raw database with tables, IDs, and relationships?
-        </p>
-        <Link
-          href="/db"
-          className="inline-block px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition font-medium text-sm"
-        >
-          Open Database Explorer →
-        </Link>
+      {/* Additional Resources */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+          <h3 className="text-lg font-bold text-gray-900 mb-2">🗄️ Database Explorer</h3>
+          <p className="text-gray-600 mb-3">
+            Explore the raw database with tables, IDs, and relationships
+          </p>
+          <Link
+            href="/db"
+            className="inline-block px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition font-medium text-sm"
+          >
+            Open Database Explorer →
+          </Link>
+        </div>
+
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+          <h3 className="text-lg font-bold text-blue-900 mb-2">📚 Legacy Views</h3>
+          <p className="text-blue-700 mb-3">
+            Access separate anatomy and guide pages (old format)
+          </p>
+          <div className="flex gap-2">
+            <Link
+              href="/anatomy"
+              className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm"
+            >
+              Anatomy Only →
+            </Link>
+            <Link
+              href="/guides"
+              className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm"
+            >
+              Guides Only →
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ interface Exercise {
     anatomy: {
       id: string;
       name: string;
+      kind?: string;
     };
   }>;
 }
@@ -204,6 +205,37 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
             <div className="p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
               <h3 className="font-semibold text-blue-900 mb-2">Form Cues</h3>
               <p className="text-gray-700">{exercise.cueSummary}</p>
+            </div>
+          )}
+
+          {/* Anatomy Targets */}
+          {exercise.anatomyLinks && exercise.anatomyLinks.length > 0 && (
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-3">Targets</h3>
+              <div className="space-y-2">
+                {exercise.anatomyLinks.map((link) => (
+                  <div
+                    key={link.anatomy.id}
+                    className="flex items-center gap-2 p-2 bg-gray-50 rounded"
+                  >
+                    <span
+                      className={`text-xs px-2 py-1 rounded font-semibold ${
+                        link.role === "primary"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }`}
+                    >
+                      {link.role}
+                    </span>
+                    <a
+                      href={`/learn/${link.anatomy.id}`}
+                      className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      {link.anatomy.name}
+                    </a>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
