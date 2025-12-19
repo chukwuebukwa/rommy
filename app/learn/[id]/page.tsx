@@ -19,7 +19,24 @@ export default async function LearnPage({
 
   const anatomy = data.anatomyNode;
 
-  // Build tabs from top-level children
+  // Extract unique anatomy nodes referenced in guide sections
+  const guideReferencedAnatomy = new Map();
+  if (anatomy.primaryGuides?.[0]?.sections) {
+    anatomy.primaryGuides[0].sections.forEach((section: any) => {
+      section.focusAnatomyLinks?.forEach((link: any) => {
+        const anatomyNode = link.anatomy;
+        if (anatomyNode && !guideReferencedAnatomy.has(anatomyNode.id)) {
+          guideReferencedAnatomy.set(anatomyNode.id, anatomyNode);
+        }
+      });
+    });
+  }
+
+  // Build tabs: hierarchical children + guide-referenced anatomy (avoiding duplicates)
+  const hierarchicalIds = new Set(anatomy.children.map((c: any) => c.id));
+  const crossReferencedAnatomy = Array.from(guideReferencedAnatomy.values())
+    .filter((node: any) => !hierarchicalIds.has(node.id));
+
   const tabs = [
     // Guide tab if guide exists
     ...(anatomy.primaryGuides?.length > 0
@@ -32,12 +49,21 @@ export default async function LearnPage({
           },
         ]
       : []),
-    // Anatomy group tabs (Biceps, Triceps, etc.)
+    // Anatomy group tabs (hierarchical children: Biceps, Triceps, etc.)
     ...anatomy.children.map((child: any) => ({
       id: child.id,
       label: child.name,
       type: "anatomy" as const,
       data: child,
+      isCrossReference: false,
+    })),
+    // Cross-referenced anatomy tabs (e.g., Rear Delts on Back page)
+    ...crossReferencedAnatomy.map((node: any) => ({
+      id: node.id,
+      label: node.name,
+      type: "anatomy" as const,
+      data: node,
+      isCrossReference: true,
     })),
   ];
 

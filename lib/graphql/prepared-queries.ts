@@ -730,6 +730,96 @@ export const GET_LEARN_PAGE = `
             anatomy {
               id
               name
+              kind
+              description
+              roleSummary
+              primaryFunctions
+              aestheticNotes
+              
+              # Get the full anatomy structure for guide-referenced muscles
+              children {
+                id
+                name
+                kind
+                description
+                primaryFunctions
+                aestheticNotes
+                
+                children {
+                  id
+                  name
+                  kind
+                  description
+                  primaryFunctions
+                  aestheticNotes
+                  
+                  # Exercises at deepest level
+                  exerciseLinks {
+                    role
+                    exercise {
+                      id
+                      name
+                      type
+                      movementPattern
+                      equipment
+                      videoUrl
+                      cueSummary
+                      anatomyLinks {
+                        role
+                        anatomy {
+                          id
+                          name
+                          kind
+                        }
+                      }
+                    }
+                  }
+                }
+                
+                # Exercises at middle level
+                exerciseLinks {
+                  role
+                  exercise {
+                    id
+                    name
+                    type
+                    movementPattern
+                    equipment
+                    videoUrl
+                    cueSummary
+                    anatomyLinks {
+                      role
+                      anatomy {
+                        id
+                        name
+                        kind
+                      }
+                    }
+                  }
+                }
+              }
+              
+              # Exercises for guide-referenced anatomy
+              exerciseLinks {
+                role
+                exercise {
+                  id
+                  name
+                  type
+                  movementPattern
+                  equipment
+                  videoUrl
+                  cueSummary
+                  anatomyLinks {
+                    role
+                    anatomy {
+                      id
+                      name
+                      kind
+                    }
+                  }
+                }
+              }
             }
           }
         }

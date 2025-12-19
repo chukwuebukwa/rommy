@@ -9,6 +9,7 @@ interface Tab {
   label: string;
   type: "guide" | "anatomy";
   data: any;
+  isCrossReference?: boolean;
 }
 
 interface LearnTabsProps {
@@ -44,7 +45,7 @@ export function LearnTabs({
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`
-                px-6 py-3 font-medium border-b-2 transition
+                px-6 py-3 font-medium border-b-2 transition relative
                 ${
                   activeTab === tab.id
                     ? "border-blue-500 text-blue-600"
@@ -53,6 +54,11 @@ export function LearnTabs({
               `}
             >
               {tab.label}
+              {tab.isCrossReference && (
+                <span className="ml-1 text-xs text-purple-600" title="Also covered in this guide">
+                  ✦
+                </span>
+              )}
             </button>
           ))}
         </nav>
