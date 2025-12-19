@@ -46,6 +46,16 @@ export function AnatomyTabContent({ anatomyNode }: AnatomyTabContentProps) {
         )}
       </div>
 
+      {/* Top-level node content (for nodes without children, like Front Delts) */}
+      {(!anatomyNode.children || anatomyNode.children.length === 0) && (
+        <AnatomySection
+          node={anatomyNode}
+          onExerciseClick={openExercise}
+          level={1}
+          hideTitle={true}
+        />
+      )}
+
       {/* Child muscles (e.g., Biceps Brachii, Brachialis) */}
       {anatomyNode.children?.map((muscle) => (
         <AnatomySection
@@ -69,31 +79,41 @@ interface AnatomySectionProps {
   node: AnatomyNode;
   onExerciseClick: (exercise: any) => void;
   level?: number;
+  hideTitle?: boolean;
 }
 
 function AnatomySection({
   node,
   onExerciseClick,
   level = 2,
+  hideTitle = false,
 }: AnatomySectionProps) {
   const primaryFunctions = parseFunctions(node.primaryFunctions);
   const aestheticNotes = parseFunctions(node.aestheticNotes);
-  const exercises = node.exerciseLinks || [];
+  
+  // Sort exercises: primary first, then secondary
+  const exercises = (node.exerciseLinks || []).sort((a, b) => {
+    if (a.role === 'primary' && b.role === 'secondary') return -1;
+    if (a.role === 'secondary' && b.role === 'primary') return 1;
+    return 0;
+  });
 
   const HeadingTag = `h${Math.min(level + 1, 6)}` as any;
 
   return (
     <div className="space-y-4">
-      <HeadingTag
-        className={`font-bold ${level === 2 ? "text-xl" : "text-lg"}`}
-      >
-        {node.name}
-        <span className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded uppercase">
-          {node.kind}
-        </span>
-      </HeadingTag>
+      {!hideTitle && (
+        <HeadingTag
+          className={`font-bold ${level === 2 ? "text-xl" : "text-lg"}`}
+        >
+          {node.name}
+          <span className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded uppercase">
+            {node.kind}
+          </span>
+        </HeadingTag>
+      )}
 
-      {node.description && (
+      {!hideTitle && node.description && (
         <p className="text-gray-700">{node.description}</p>
       )}
 

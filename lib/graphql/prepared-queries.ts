@@ -627,6 +627,28 @@ export const GET_LEARN_PAGE = `
         primaryFunctions
         aestheticNotes
         
+        # Exercises for direct children (e.g., front_delts in shoulders)
+        exerciseLinks {
+          role
+          exercise {
+            id
+            name
+            type
+            movementPattern
+            equipment
+            videoUrl
+            cueSummary
+            anatomyLinks {
+              role
+              anatomy {
+                id
+                name
+                kind
+              }
+            }
+          }
+        }
+        
         # Nested children for full hierarchy
         children {
           id

@@ -1,0 +1,32 @@
+{
+  "arms": {
+    "crossReferences": [],
+    "excludeChildren": []
+  },
+  "back": {
+    "crossReferences": [
+      "rear_delts",
+      "rotator_cuff_group"
+    ],
+    "excludeChildren": [
+      "scapular_control_complex",
+      "upper_back_group"
+    ]
+  },
+  "shoulders": {
+    "crossReferences": [],
+    "excludeChildren": []
+  },
+  "chest": {
+    "crossReferences": [],
+    "excludeChildren": []
+  },
+  "legs": {
+    "crossReferences": [],
+    "excludeChildren": []
+  },
+  "core": {
+    "crossReferences": [],
+    "excludeChildren": []
+  }
+}
