@@ -1,6 +1,6 @@
 // schema.prisma
 datasource db {
-  provider = "sqlite" // change to "postgresql" or "mysql" if you want
+  provider = "postgresql" // Changed from sqlite for production (Vercel deployment)
   url      = env("DATABASE_URL")
 }
 

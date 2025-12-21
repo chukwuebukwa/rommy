@@ -40,10 +40,23 @@ async function importDatabase(filePath?: string) {
     const exportData = JSON.parse(fileContent);
 
     console.log(`📅 Export date: ${exportData.exportDate}`);
-    console.log('📊 Import summary:');
+    console.log(`🔖 Export version: ${exportData.version || '1.0'}`);
+    if (exportData.schemaVersion) {
+      console.log(`📋 Schema version: ${exportData.schemaVersion}`);
+    }
+    
+    console.log('\n📊 Records to import:');
     Object.entries(exportData.counts).forEach(([key, count]) => {
-      console.log(`   ${key}: ${count}`);
+      console.log(`   • ${key.padEnd(25)} ${count}`);
     });
+
+    // Check for config files
+    if (exportData.configFiles && Object.keys(exportData.configFiles).length > 0) {
+      console.log('\n📄 Configuration files to restore:');
+      Object.keys(exportData.configFiles).forEach(key => {
+        console.log(`   • ${key}`);
+      });
+    }
 
     // Clear existing data (in reverse order of dependencies)
     console.log('\n🗑️  Clearing existing data...');
@@ -177,7 +190,19 @@ async function importDatabase(filePath?: string) {
       }
     }
 
-    console.log('\n✅ Import complete!');
+    // Restore configuration files
+    if (exportData.configFiles && Object.keys(exportData.configFiles).length > 0) {
+      console.log('\n📄 Restoring configuration files...');
+      
+      if (exportData.configFiles.learnPageConfig) {
+        const configPath = path.join(process.cwd(), 'lib', 'learn-page-config.json');
+        fs.writeFileSync(configPath, JSON.stringify(exportData.configFiles.learnPageConfig, null, 2), 'utf-8');
+        console.log('   ✓ learn-page-config.json restored');
+      }
+    }
+
+    console.log('\n✅ Import complete! Database and configuration files restored.');
+    console.log('💡 Run the dev server to verify: bun run dev');
   } catch (error) {
     console.error('❌ Import failed:', error);
     throw error;
