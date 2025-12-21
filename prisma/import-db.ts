@@ -58,25 +58,33 @@ async function importDatabase(filePath?: string) {
       });
     }
 
-    // Clear existing data (in reverse order of dependencies)
+    // Clear existing data (in reverse order of dependencies - children first!)
     console.log('\n🗑️  Clearing existing data...');
+    
+    // Workout relationships
     await prisma.workoutBlockExercise.deleteMany();
     await prisma.workoutBlockTarget.deleteMany();
     await prisma.workoutBlock.deleteMany();
     await prisma.workout.deleteMany();
     
+    // Formula relationships
     await prisma.formulaTarget.deleteMany();
     await prisma.formulaStep.deleteMany();
     await prisma.formula.deleteMany();
     
+    // Section relationships (DELETE BEFORE EXERCISES!)
+    await prisma.sectionExercise.deleteMany();
+    await prisma.sectionAnatomy.deleteMany();
+    
+    // Exercise relationships
     await prisma.exerciseAnatomy.deleteMany();
     await prisma.exercise.deleteMany();
     
-    await prisma.sectionExercise.deleteMany();
-    await prisma.sectionAnatomy.deleteMany();
+    // Sections and guides
     await prisma.section.deleteMany();
     await prisma.guide.deleteMany();
     
+    // Anatomy nodes (last because everything references them)
     await prisma.anatomyNode.deleteMany();
 
     // Import data (in order of dependencies)
@@ -84,9 +92,23 @@ async function importDatabase(filePath?: string) {
     const { data } = exportData;
 
     // 1. Anatomy nodes (base of hierarchy)
+    // Must import in order: parents before children
     console.log('   - Anatomy nodes...');
+    
+    // First pass: create all nodes without parent relationships
     for (const node of data.anatomyNodes) {
-      await prisma.anatomyNode.create({ data: node });
+      const { parentId, ...nodeWithoutParent } = node;
+      await prisma.anatomyNode.create({ data: nodeWithoutParent });
+    }
+    
+    // Second pass: update parent relationships
+    for (const node of data.anatomyNodes) {
+      if (node.parentId) {
+        await prisma.anatomyNode.update({
+          where: { id: node.id },
+          data: { parentId: node.parentId }
+        });
+      }
     }
 
     // 2. Guides
@@ -105,7 +127,15 @@ async function importDatabase(filePath?: string) {
       }
     }
 
-    // 4. Section links
+    // 4. Exercises (MUST come before section-exercise links!)
+    if (data.exercises && data.exercises.length > 0) {
+      console.log('   - Exercises...');
+      for (const exercise of data.exercises) {
+        await prisma.exercise.create({ data: exercise });
+      }
+    }
+
+    // 5. Section links (now that exercises exist)
     if (data.sectionAnatomy && data.sectionAnatomy.length > 0) {
       console.log('   - Section anatomy links...');
       for (const link of data.sectionAnatomy) {
@@ -117,14 +147,6 @@ async function importDatabase(filePath?: string) {
       console.log('   - Section exercise links...');
       for (const link of data.sectionExercise) {
         await prisma.sectionExercise.create({ data: link });
-      }
-    }
-
-    // 5. Exercises
-    if (data.exercises && data.exercises.length > 0) {
-      console.log('   - Exercises...');
-      for (const exercise of data.exercises) {
-        await prisma.exercise.create({ data: exercise });
       }
     }
 
