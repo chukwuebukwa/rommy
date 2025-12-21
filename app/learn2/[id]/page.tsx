@@ -126,6 +126,9 @@ export default async function LearnPage({
     name: region.name,
   }));
 
+  // Serialize data to plain objects for Client Components
+  const serializedTabs = JSON.parse(JSON.stringify(tabs));
+
   return (
     <div className="space-y-4">
       <LearnBreadcrumb
@@ -136,7 +139,7 @@ export default async function LearnPage({
       <LearnTabs2
         regionName={anatomy.name}
         regionDescription={anatomy.description}
-        tabs={tabs}
+        tabs={serializedTabs}
       />
     </div>
   );
