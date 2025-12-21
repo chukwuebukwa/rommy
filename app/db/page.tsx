@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { DatabaseExplorer } from "../page-client";
 import { Breadcrumb } from "@/components/Breadcrumb";
 
+export const dynamic = "force-dynamic";
+
 export default async function DatabasePage() {
   // Get counts for all entities
   const [

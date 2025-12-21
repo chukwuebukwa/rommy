@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ExerciseDetailClient } from "@/components/ExerciseDetailClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function ExerciseDetailPage({
   params,
 }: {
