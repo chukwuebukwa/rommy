@@ -75,14 +75,20 @@ export default async function LearnIndexPage() {
     );
   } catch (error) {
     console.error("Error loading learn page:", error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return (
       <div className="space-y-6">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Learn" }]} />
         <div className="bg-red-50 border border-red-200 rounded-lg p-8">
           <h1 className="text-2xl font-bold text-red-800 mb-4">Error Loading Content</h1>
-          <p className="text-red-600">
+          <p className="text-red-600 mb-4">
             Unable to load learn page. Please check your database connection.
           </p>
+          {process.env.NODE_ENV === 'development' && (
+            <pre className="bg-red-100 p-4 rounded text-xs overflow-auto">
+              {errorMessage}
+            </pre>
+          )}
         </div>
       </div>
     );
