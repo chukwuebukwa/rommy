@@ -3,15 +3,17 @@
  * GraphQL client helper for server-side queries in Next.js
  */
 
-export async function graphqlQuery(query: string, variables?: any) {
-  const response = await fetch('http://localhost:3000/api/graphql', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ query, variables }),
-    cache: 'no-store', // or 'force-cache' for static builds
-  });
+import { graphql } from 'graphql';
+import { schema } from './schema';
 
-  const result = await response.json();
+export async function graphqlQuery(query: string, variables?: any) {
+  // Execute GraphQL query directly against the schema (server-side only)
+  // This avoids HTTP requests and works reliably in all environments
+  const result = await graphql({
+    schema,
+    source: query,
+    variableValues: variables,
+  });
 
   if (result.errors) {
     console.error('GraphQL errors:', result.errors);

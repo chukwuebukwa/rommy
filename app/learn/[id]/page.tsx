@@ -20,7 +20,7 @@ export default async function LearnPage({
     notFound();
   }
 
-  const anatomy = data.anatomyNode;
+  const anatomy = data.anatomyNode as any;
 
   // Get configuration for this region
   const config = getLearnPageConfig(id);
@@ -132,7 +132,7 @@ export default async function LearnPage({
     })),
   ];
 
-  const allRegions = (regionsData?.anatomyNodes || []).map((region: any) => ({
+  const allRegions = ((regionsData?.anatomyNodes as any[]) || []).map((region: any) => ({
     id: region.id,
     name: region.name,
   }));

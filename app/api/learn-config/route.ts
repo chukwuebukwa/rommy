@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Region not found' }, { status: 404 });
     }
 
-    const anatomy = data.anatomyNode;
+    const anatomy = data.anatomyNode as any;
 
     // Get current config
     const configFile = fs.readFileSync(CONFIG_PATH, 'utf-8');

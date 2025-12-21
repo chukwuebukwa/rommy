@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function LearnIndexPage() {
   try {
     const data = await graphqlQuery(GET_ANATOMY_REGIONS, {});
-    const regions = data?.anatomyNodes || [];
+    const regions = (data?.anatomyNodes as any[]) || [];
 
     return (
       <div className="space-y-6">
