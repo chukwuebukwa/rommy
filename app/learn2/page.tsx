@@ -3,11 +3,14 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { graphqlQuery } from "@/lib/graphql/client";
 import { GET_ANATOMY_REGIONS } from "@/lib/graphql/prepared-queries";
 
-export default async function LearnIndexPage() {
-  const data = await graphqlQuery(GET_ANATOMY_REGIONS, {});
-  const regions = data?.anatomyNodes || [];
+export const dynamic = "force-dynamic";
 
-  return (
+export default async function LearnIndexPage() {
+  try {
+    const data = await graphqlQuery(GET_ANATOMY_REGIONS, {});
+    const regions = data?.anatomyNodes || [];
+
+    return (
     <div className="space-y-6">
       <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Learn2" }]} />
 
@@ -69,7 +72,19 @@ export default async function LearnIndexPage() {
         </div>
       </div>
     </div>
-  );
+    );
+  } catch (error) {
+    console.error("Error loading learn2 page:", error);
+    return (
+      <div className="space-y-6">
+        <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Learn2" }]} />
+        <div className="bg-red-50 border border-red-200 rounded-lg p-8">
+          <h1 className="text-2xl font-bold text-red-800 mb-4">Error Loading Content</h1>
+          <p className="text-red-600">
+            Unable to load learn2 page. Please check your database connection.
+          </p>
+        </div>
+      </div>
+    );
+  }
 }
-
-
