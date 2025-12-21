@@ -1,6 +1,6 @@
 // schema.prisma
 datasource db {
-  provider = "postgresql" // Changed from sqlite for production (Vercel deployment)
+  provider = "postgresql" // Using Railway PostgreSQL for everything
   url      = env("DATABASE_URL")
 }
 
