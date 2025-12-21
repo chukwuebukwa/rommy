@@ -195,7 +195,7 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
             {/* Anatomy target tags */}
             {exercise.anatomyLinks?.map((link) => (
               <span
-                key={link.anatomy.id}
+                key={`${link.anatomy.id}-${link.role}`}
                 className={`px-1.5 py-0.5 text-[10px] font-medium rounded ${
                   link.role === 'primary' 
                     ? 'bg-green-600 text-white' 

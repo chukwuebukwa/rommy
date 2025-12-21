@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
     // Filter guide anatomy to only valid cross-references:
     // 1. Not in hierarchical children
     // 2. Not descendants of hierarchical children
-    const hierarchicalIds = new Set(hierarchicalChildren.map(c => c.id));
+    const hierarchicalIds = new Set(hierarchicalChildren.map((c: { id: string; name: string; kind: string }) => c.id));
     const availableCrossRefs = Array.from(guideReferencedAnatomy.values())
       .filter(node => {
         // Skip if already in hierarchical children

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { ExerciseDrawer } from "./ExerciseDrawer";
 
@@ -102,7 +102,7 @@ export function AnatomyWiki({ node, level = 1 }: AnatomyWikiProps) {
   })) || [];
 
   // Header size based on level
-  const HeaderTag = `h${Math.min(level + 1, 6)}` as keyof JSX.IntrinsicElements;
+  const HeaderTag = `h${Math.min(level + 1, 6)}` as keyof React.JSX.IntrinsicElements;
   const headerSizes = [
     "text-3xl",
     "text-2xl", 

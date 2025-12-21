@@ -11,10 +11,15 @@ interface Exercise {
   type: string;
   movementPattern: string;
   videoUrl: string | null;
+  cdnVideoUrl: string | null;
+  equipment: string[] | null;
+  cueSummary: string | null;
   anatomyLinks: Array<{
     role: string;
     anatomy: {
+      id: string;
       name: string;
+      kind: string;
       parent: {
         name: string;
         parent?: {

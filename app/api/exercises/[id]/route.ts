@@ -3,9 +3,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await request.json();
     const { name, type, movementPattern, videoUrl, equipment, cueSummary, anatomyLinks } = body;
 
@@ -13,7 +14,7 @@ export async function PATCH(
     const result = await prisma.$transaction(async (tx) => {
       // Update the exercise basic info
       const exercise = await tx.exercise.update({
-        where: { id: params.id },
+        where: { id },
         data: {
           name,
           type,
@@ -26,14 +27,14 @@ export async function PATCH(
 
       // Delete existing anatomy links
       await tx.exerciseAnatomy.deleteMany({
-        where: { exerciseId: params.id },
+        where: { exerciseId: id },
       });
 
       // Create new anatomy links if provided
       if (anatomyLinks && anatomyLinks.length > 0) {
         await tx.exerciseAnatomy.createMany({
           data: anatomyLinks.map((link: { anatomyNodeId: string; role: string }) => ({
-            exerciseId: params.id,
+            exerciseId: id,
             anatomyNodeId: link.anatomyNodeId,
             role: link.role,
           })),
@@ -42,7 +43,7 @@ export async function PATCH(
 
       // Fetch the updated exercise with links
       return await tx.exercise.findUnique({
-        where: { id: params.id },
+        where: { id },
         include: {
           anatomyLinks: {
             include: {

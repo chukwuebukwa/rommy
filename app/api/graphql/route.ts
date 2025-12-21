@@ -14,5 +14,11 @@ const yoga = createYoga({
 });
 
 // Export handlers for Next.js App Router
-export { yoga as GET, yoga as POST };
+export async function GET(request: Request) {
+  return yoga.fetch(request);
+}
+
+export async function POST(request: Request) {
+  return yoga.fetch(request);
+}
 

@@ -2,6 +2,7 @@
 import SchemaBuilder from '@pothos/core';
 import PrismaPlugin from '@pothos/plugin-prisma';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 
 export const builder = new SchemaBuilder<{
@@ -10,6 +11,7 @@ export const builder = new SchemaBuilder<{
   plugins: [PrismaPlugin],
   prisma: {
     client: prisma,
+    dmmf: Prisma.dmmf,
     // Automatically resolve relations when they're queried
     filterConnectionTotalCount: true,
   },

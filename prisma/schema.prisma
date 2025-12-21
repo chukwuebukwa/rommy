@@ -8,6 +8,10 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
 // ---- CORE ANATOMY GRAPH ----
 // Everything anatomical lives here: regions, groups, muscles, heads/parts.
 // Hierarchy is via parentId -> children. Example:

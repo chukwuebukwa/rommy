@@ -117,7 +117,7 @@ export function AnatomyTreeNode({ node, level, defaultOpen = true }: AnatomyTree
                   <div className="p-3 bg-white rounded">
                     <h4 className="font-semibold text-gray-900 mb-2">Primary Functions:</h4>
                     <ul className="space-y-1">
-                      {primaryFunctions.map((func, i) => (
+                      {primaryFunctions.map((func: string, i: number) => (
                         <li key={i} className="text-gray-700 text-sm flex items-start">
                           <span className="text-blue-500 mr-2">•</span>
                           {func}
@@ -131,7 +131,7 @@ export function AnatomyTreeNode({ node, level, defaultOpen = true }: AnatomyTree
                   <div className="p-3 bg-white rounded">
                     <h4 className="font-semibold text-gray-900 mb-2">Aesthetic Notes:</h4>
                     <ul className="space-y-1">
-                      {aestheticNotes.map((note, i) => (
+                      {aestheticNotes.map((note: string, i: number) => (
                         <li key={i} className="text-gray-700 text-sm flex items-start">
                           <span className="text-green-500 mr-2">•</span>
                           {note}
@@ -174,7 +174,7 @@ export function AnatomyTreeNode({ node, level, defaultOpen = true }: AnatomyTree
                           <p className="text-gray-700 text-sm mb-2">{link.exercise.cueSummary}</p>
                         )}
                         <div className="flex items-center gap-2 flex-wrap">
-                          {equipment.slice(0, 3).map((item) => (
+                          {equipment.slice(0, 3).map((item: string) => (
                             <span key={item} className="px-2 py-1 bg-white text-gray-600 rounded text-xs">
                               {item}
                             </span>

@@ -1,5 +1,6 @@
 // lib/graphql/queries/guides.ts
 import { builder } from '../builder';
+import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
 
 // Get all guides
@@ -80,7 +81,7 @@ builder.queryField('sectionsWithImages', (t) =>
         ...query,
         where: {
           images: {
-            not: null,
+            not: Prisma.DbNull,
           },
         },
         orderBy: [
