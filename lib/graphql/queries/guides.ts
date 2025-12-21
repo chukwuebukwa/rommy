@@ -1,15 +1,14 @@
 // lib/graphql/queries/guides.ts
 import { builder } from '../builder';
 import { Prisma } from '@prisma/client';
-import { prisma } from '@/lib/prisma';
 
 // Get all guides
 builder.queryField('guides', (t) =>
   t.prismaField({
     type: ['Guide'],
     description: 'Get all training guides',
-    resolve: async (query) => {
-      return prisma.guide.findMany({
+    resolve: async (query, _root, _args, ctx) => {
+      return ctx.prisma.guide.findMany({
         ...query,
         orderBy: { title: 'asc' },
       });
@@ -26,8 +25,8 @@ builder.queryField('guide', (t) =>
     args: {
       id: t.arg.string({ required: true }),
     },
-    resolve: async (query, _root, args) => {
-      return prisma.guide.findUnique({
+    resolve: async (query, _root, args, ctx) => {
+      return ctx.prisma.guide.findUnique({
         ...query,
         where: { id: args.id },
       });
@@ -44,8 +43,8 @@ builder.queryField('guideBySlug', (t) =>
     args: {
       slug: t.arg.string({ required: true }),
     },
-    resolve: async (query, _root, args) => {
-      return prisma.guide.findUnique({
+    resolve: async (query, _root, args, ctx) => {
+      return ctx.prisma.guide.findUnique({
         ...query,
         where: { slug: args.slug },
       });
@@ -62,8 +61,8 @@ builder.queryField('section', (t) =>
     args: {
       id: t.arg.string({ required: true }),
     },
-    resolve: async (query, _root, args) => {
-      return prisma.section.findUnique({
+    resolve: async (query, _root, args, ctx) => {
+      return ctx.prisma.section.findUnique({
         ...query,
         where: { id: args.id },
       });
@@ -76,8 +75,8 @@ builder.queryField('sectionsWithImages', (t) =>
   t.prismaField({
     type: ['Section'],
     description: 'Get all sections that have images',
-    resolve: async (query) => {
-      return prisma.section.findMany({
+    resolve: async (query, _root, _args, ctx) => {
+      return ctx.prisma.section.findMany({
         ...query,
         where: {
           images: {

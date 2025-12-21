@@ -3,14 +3,15 @@ import SchemaBuilder from '@pothos/core';
 import PrismaPlugin from '@pothos/plugin-prisma';
 import type PrismaTypes from '@pothos/plugin-prisma/generated';
 import { Prisma } from '@prisma/client';
-import { prisma } from '@/lib/prisma';
+import type { GraphQLContext } from './context';
 
 export const builder = new SchemaBuilder<{
   PrismaTypes: PrismaTypes;
+  Context: GraphQLContext;
 }>({
   plugins: [PrismaPlugin],
   prisma: {
-    client: prisma,
+    client: (ctx) => ctx.prisma,
     dmmf: Prisma.dmmf,
     // Automatically resolve relations when they're queried
     filterConnectionTotalCount: true,

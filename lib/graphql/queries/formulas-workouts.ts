@@ -1,6 +1,5 @@
 // lib/graphql/queries/formulas-workouts.ts
 import { builder } from '../builder';
-import { prisma } from '@/lib/prisma';
 
 // ===== FORMULAS =====
 
@@ -9,8 +8,8 @@ builder.queryField('formulas', (t) =>
   t.prismaField({
     type: ['Formula'],
     description: 'Get all training formulas',
-    resolve: async (query) => {
-      return prisma.formula.findMany({
+    resolve: async (query, _root, _args, ctx) => {
+      return ctx.prisma.formula.findMany({
         ...query,
         orderBy: { name: 'asc' },
       });
@@ -27,8 +26,8 @@ builder.queryField('formula', (t) =>
     args: {
       id: t.arg.string({ required: true }),
     },
-    resolve: async (query, _root, args) => {
-      return prisma.formula.findUnique({
+    resolve: async (query, _root, args, ctx) => {
+      return ctx.prisma.formula.findUnique({
         ...query,
         where: { id: args.id },
       });
@@ -43,8 +42,8 @@ builder.queryField('workouts', (t) =>
   t.prismaField({
     type: ['Workout'],
     description: 'Get all workouts',
-    resolve: async (query) => {
-      return prisma.workout.findMany({
+    resolve: async (query, _root, _args, ctx) => {
+      return ctx.prisma.workout.findMany({
         ...query,
         orderBy: { name: 'asc' },
       });
@@ -61,8 +60,8 @@ builder.queryField('workout', (t) =>
     args: {
       id: t.arg.string({ required: true }),
     },
-    resolve: async (query, _root, args) => {
-      return prisma.workout.findUnique({
+    resolve: async (query, _root, args, ctx) => {
+      return ctx.prisma.workout.findUnique({
         ...query,
         where: { id: args.id },
       });
@@ -79,8 +78,8 @@ builder.queryField('workoutBySlug', (t) =>
     args: {
       slug: t.arg.string({ required: true }),
     },
-    resolve: async (query, _root, args) => {
-      return prisma.workout.findUnique({
+    resolve: async (query, _root, args, ctx) => {
+      return ctx.prisma.workout.findUnique({
         ...query,
         where: { slug: args.slug },
       });

@@ -1,6 +1,5 @@
 // lib/graphql/queries/exercises.ts
 import { builder } from '../builder';
-import { prisma } from '@/lib/prisma';
 
 // Get all exercises
 builder.queryField('exercises', (t) =>
@@ -11,13 +10,13 @@ builder.queryField('exercises', (t) =>
       type: t.arg.string({ required: false, description: 'Filter by type (compound | isolation)' }),
       movementPattern: t.arg.string({ required: false, description: 'Filter by movement pattern (press, curl, etc.)' }),
     },
-    resolve: async (query, _root, args) => {
+    resolve: async (query, _root, args, ctx) => {
       const where: any = {};
       
       if (args.type) where.type = args.type;
       if (args.movementPattern) where.movementPattern = args.movementPattern;
       
-      return prisma.exercise.findMany({
+      return ctx.prisma.exercise.findMany({
         ...query,
         where: Object.keys(where).length > 0 ? where : undefined,
         orderBy: { name: 'asc' },
@@ -35,8 +34,8 @@ builder.queryField('exercise', (t) =>
     args: {
       id: t.arg.string({ required: true }),
     },
-    resolve: async (query, _root, args) => {
-      return prisma.exercise.findUnique({
+    resolve: async (query, _root, args, ctx) => {
+      return ctx.prisma.exercise.findUnique({
         ...query,
         where: { id: args.id },
       });
@@ -52,8 +51,8 @@ builder.queryField('searchExercises', (t) =>
     args: {
       query: t.arg.string({ required: true }),
     },
-    resolve: async (query, _root, args) => {
-      return prisma.exercise.findMany({
+    resolve: async (query, _root, args, ctx) => {
+      return ctx.prisma.exercise.findMany({
         ...query,
         where: {
           name: {
