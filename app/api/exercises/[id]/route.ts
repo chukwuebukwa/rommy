@@ -8,7 +8,7 @@ export async function PATCH(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { name, type, movementPattern, videoUrl, equipment, cueSummary, anatomyLinks } = body;
+    const { name, type, movementPattern, videoUrl, cdnVideoUrl, equipment, cueSummary, anatomyLinks } = body;
 
     // Start a transaction to update the exercise and its anatomy links
     const result = await prisma.$transaction(async (tx) => {
@@ -20,6 +20,7 @@ export async function PATCH(
           type,
           movementPattern,
           videoUrl: videoUrl || null,
+          cdnVideoUrl: cdnVideoUrl || null,
           equipment: equipment || null,
           cueSummary: cueSummary || null,
         },

@@ -89,8 +89,8 @@ export function ExerciseDetailClient({ exercise: initialExercise, navigation }: 
         : exercise.equipment)
     : [];
 
-  const primaryMuscles = exercise.anatomyLinks.filter((link) => link.role === "primary");
-  const secondaryMuscles = exercise.anatomyLinks.filter((link) => link.role === "secondary");
+  const primaryMuscles = exercise.anatomyLinks?.filter((link) => link.role === "primary") ?? [];
+  const secondaryMuscles = exercise.anatomyLinks?.filter((link) => link.role === "secondary") ?? [];
 
   const handleSaveExercise = (updatedExercise: Exercise) => {
     setExercise(updatedExercise);
@@ -354,13 +354,13 @@ export function ExerciseDetailClient({ exercise: initialExercise, navigation }: 
             )}
 
             {/* Formulas */}
-            {exercise.formulas.length > 0 && (
+            {(exercise.formulas?.length ?? 0) > 0 && (
               <div className="bg-white border border-gray-200 rounded-lg p-6 shadow">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Part of Formulas ({exercise.formulas.length})
+                  Part of Formulas ({exercise.formulas?.length ?? 0})
                 </h2>
                 <div className="space-y-3">
-                  {exercise.formulas.map((step) => (
+                  {exercise.formulas?.map((step) => (
                     <Link
                       key={step.formulaId}
                       href={`/formulas/${step.formula.id}`}
@@ -378,13 +378,13 @@ export function ExerciseDetailClient({ exercise: initialExercise, navigation }: 
             )}
 
             {/* Workout Blocks */}
-            {exercise.workoutBlocks.length > 0 && (
+            {(exercise.workoutBlocks?.length ?? 0) > 0 && (
               <div className="bg-white border border-gray-200 rounded-lg p-6 shadow">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Used in Workouts ({exercise.workoutBlocks.length})
+                  Used in Workouts ({exercise.workoutBlocks?.length ?? 0})
                 </h2>
                 <div className="space-y-3">
-                  {exercise.workoutBlocks.map((wbe) => (
+                  {exercise.workoutBlocks?.map((wbe) => (
                     <Link
                       key={wbe.blockId}
                       href={`/workouts/${wbe.block.workoutId}#${wbe.block.id}`}
@@ -402,13 +402,13 @@ export function ExerciseDetailClient({ exercise: initialExercise, navigation }: 
             )}
 
             {/* Mentioned in Sections */}
-            {exercise.mentionedIn.length > 0 && (
+            {(exercise.mentionedIn?.length ?? 0) > 0 && (
               <div className="bg-white border border-gray-200 rounded-lg p-6 shadow">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                  Mentioned in Guide Sections ({exercise.mentionedIn.length})
+                  Mentioned in Guide Sections ({exercise.mentionedIn?.length ?? 0})
                 </h2>
                 <div className="space-y-3">
-                  {exercise.mentionedIn.map((se) => (
+                  {exercise.mentionedIn?.map((se) => (
                     <Link
                       key={se.sectionId}
                       href={`/guides/${se.section.guideId}#${se.section.id}`}
@@ -434,7 +434,7 @@ export function ExerciseDetailClient({ exercise: initialExercise, navigation }: 
                   <div className="space-y-3">
                     <video
                       controls
-                      className="w-full rounded-lg"
+                      className="w-full rounded-lg max-h-[500px]"
                       poster={exercise.cdnVideoUrl.replace('.mp4', '-thumbnail.jpg')}
                     >
                       <source src={exercise.cdnVideoUrl} type="video/mp4" />

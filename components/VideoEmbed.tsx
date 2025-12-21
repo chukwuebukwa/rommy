@@ -42,7 +42,7 @@ export function VideoEmbed({ videoUrl, title }: VideoEmbedProps) {
     return (
       <div>
         <h3 className="font-semibold text-gray-900 mb-3">Video Tutorial</h3>
-        <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+        <div className="relative w-full max-h-[500px]" style={{ paddingBottom: "56.25%" }}>
           <iframe
             src={embedUrl}
             className="absolute top-0 left-0 w-full h-full rounded-lg"
