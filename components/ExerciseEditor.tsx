@@ -25,6 +25,7 @@ interface Exercise {
   type: string;
   movementPattern: string;
   videoUrl: string | null;
+  cdnVideoUrl: string | null;
   equipment: string[] | null;
   cueSummary: string | null;
   anatomyLinks: Array<{
@@ -50,6 +51,7 @@ export function ExerciseEditor({ exercise, onClose, onSave }: ExerciseEditorProp
     type: exercise.type,
     movementPattern: exercise.movementPattern,
     videoUrl: exercise.videoUrl || "",
+    cdnVideoUrl: exercise.cdnVideoUrl || "",
     cueSummary: exercise.cueSummary || "",
     equipment: exercise.equipment || [],
   });
@@ -265,8 +267,36 @@ export function ExerciseEditor({ exercise, onClose, onSave }: ExerciseEditorProp
                 value={formData.videoUrl}
                 onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="https://www.youtube.com/watch?v=..."
+                placeholder="https://www.youtube.com/shorts/VIDEO_ID"
               />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                CDN Video URL
+                <span className="ml-2 text-xs text-gray-500">(Auto-populated)</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  value={formData.cdnVideoUrl}
+                  readOnly
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600 cursor-not-allowed"
+                  placeholder="No CDN video available"
+                />
+                {formData.cdnVideoUrl && (
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                    <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-800">
+                      ✓ Available
+                    </span>
+                  </div>
+                )}
+              </div>
+              {!formData.cdnVideoUrl && formData.videoUrl && (
+                <p className="mt-1 text-xs text-yellow-600">
+                  ⚠ No CDN video found. Run the audit script to check availability.
+                </p>
+              )}
             </div>
 
             <div>

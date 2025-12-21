@@ -101,7 +101,8 @@ model Exercise {
   type            String                              // "compound" | "isolation"
   movementPattern String                              // "press" | "curl" | "extension" | "dip" | ...
   equipment       Json?                               // string[], e.g. ["barbell","bench"]
-  videoUrl        String?
+  videoUrl        String?                             // YouTube shorts URL
+  cdnVideoUrl     String?                             // CDN video URL (e.g., https://unclerommy.b-cdn.net/VIDEO_ID.mp4)
   cueSummary      String?
 
   mentionedIn     SectionExercise[]                  // where in the guides this is mentioned

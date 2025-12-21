@@ -228,7 +228,7 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
                       {link.role}
                     </span>
                     <a
-                      href={`/learn/${link.anatomy.id}`}
+                      href={`/anatomy/${link.anatomy.id}`}
                       className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
                     >
                       {link.anatomy.name}

@@ -637,6 +637,7 @@ export const GET_LEARN_PAGE = `
             movementPattern
             equipment
             videoUrl
+            cdnVideoUrl
             cueSummary
             anatomyLinks {
               role
@@ -676,6 +677,7 @@ export const GET_LEARN_PAGE = `
                 movementPattern
                 equipment
                 videoUrl
+                cdnVideoUrl
                 cueSummary
                 anatomyLinks {
                   role
@@ -699,6 +701,7 @@ export const GET_LEARN_PAGE = `
               movementPattern
               equipment
               videoUrl
+              cdnVideoUrl
               cueSummary
               anatomyLinks {
                 role
@@ -722,6 +725,7 @@ export const GET_LEARN_PAGE = `
             movementPattern
             equipment
             videoUrl
+            cdnVideoUrl
             cueSummary
             anatomyLinks {
               role
@@ -785,6 +789,7 @@ export const GET_LEARN_PAGE = `
                       movementPattern
                       equipment
                       videoUrl
+                      cdnVideoUrl
                       cueSummary
                       anatomyLinks {
                         role
@@ -808,6 +813,7 @@ export const GET_LEARN_PAGE = `
                     movementPattern
                     equipment
                     videoUrl
+                    cdnVideoUrl
                     cueSummary
                     anatomyLinks {
                       role
@@ -831,6 +837,7 @@ export const GET_LEARN_PAGE = `
                   movementPattern
                   equipment
                   videoUrl
+                  cdnVideoUrl
                   cueSummary
                   anatomyLinks {
                     role

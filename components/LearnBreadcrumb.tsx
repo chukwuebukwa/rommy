@@ -14,9 +14,10 @@ export interface LearnBreadcrumbProps {
     id: string;
     name: string;
   }>;
+  basePath?: string; // e.g. "/learn" or "/learn2"
 }
 
-export function LearnBreadcrumb({ currentRegion, allRegions }: LearnBreadcrumbProps) {
+export function LearnBreadcrumb({ currentRegion, allRegions, basePath = "/learn" }: LearnBreadcrumbProps) {
   const [mounted, setMounted] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -82,7 +83,7 @@ export function LearnBreadcrumb({ currentRegion, allRegions }: LearnBreadcrumbPr
                 <button
                   key={region.id}
                   onClick={() => {
-                    router.push(`/learn/${region.id}`);
+                    router.push(`${basePath}/${region.id}`);
                     setIsOpen(false);
                   }}
                   className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-50 transition flex items-center gap-2 ${

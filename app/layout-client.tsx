@@ -59,6 +59,15 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
             </Link>
 
             <Link
+              href="/learn2"
+              className="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-800 transition"
+              onClick={() => setSidebarOpen(false)}
+            >
+              <span className="mr-3">🚧</span>
+              Learn2
+            </Link>
+
+            <Link
               href="/anatomy"
               className="flex items-center px-3 py-2 text-sm font-medium rounded-lg hover:bg-gray-800 transition"
               onClick={() => setSidebarOpen(false)}
@@ -231,7 +240,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
 
         {/* Scrollable content */}
         <main className="flex-1 overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <div className="max-w-7xl mx-auto">
             {children}
           </div>
         </main>

@@ -12,6 +12,7 @@ interface Exercise {
   type: string;
   movementPattern: string;
   videoUrl: string | null;
+  cdnVideoUrl: string | null;
   equipment: any;
   cueSummary: string | null;
   anatomyLinks: Array<{
@@ -424,10 +425,52 @@ export function ExerciseDetailClient({ exercise: initialExercise, navigation }: 
 
           {/* Right Column - Video (Sticky) */}
           <div>
-            {exercise.videoUrl && (
+            {(exercise.videoUrl || exercise.cdnVideoUrl) && (
               <div className="bg-white border border-gray-200 rounded-lg p-6 shadow md:sticky md:top-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-4">Video Tutorial</h2>
-                <VideoEmbed videoUrl={exercise.videoUrl} title={exercise.name} />
+                
+                {/* CDN Video (preferred) */}
+                {exercise.cdnVideoUrl && (
+                  <div className="space-y-3">
+                    <video
+                      controls
+                      className="w-full rounded-lg"
+                      poster={exercise.cdnVideoUrl.replace('.mp4', '-thumbnail.jpg')}
+                    >
+                      <source src={exercise.cdnVideoUrl} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                    <div className="flex items-center gap-2 text-sm text-green-700 bg-green-50 px-3 py-2 rounded">
+                      <span className="font-semibold">✓</span>
+                      <span>CDN Video Available</span>
+                    </div>
+                  </div>
+                )}
+                
+                {/* YouTube Fallback */}
+                {exercise.videoUrl && !exercise.cdnVideoUrl && (
+                  <div className="space-y-3">
+                    <VideoEmbed videoUrl={exercise.videoUrl} title={exercise.name} />
+                    <div className="flex items-center gap-2 text-sm text-yellow-700 bg-yellow-50 px-3 py-2 rounded">
+                      <span className="font-semibold">⚠</span>
+                      <span>YouTube only (no CDN video)</span>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Show YouTube link if CDN exists */}
+                {exercise.videoUrl && exercise.cdnVideoUrl && (
+                  <div className="mt-3 pt-3 border-t">
+                    <a
+                      href={exercise.videoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      View on YouTube →
+                    </a>
+                  </div>
+                )}
               </div>
             )}
           </div>

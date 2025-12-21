@@ -9,7 +9,8 @@ builder.prismaObject('Exercise', {
     name: t.exposeString('name'),
     type: t.exposeString('type', { description: 'compound | isolation' }),
     movementPattern: t.exposeString('movementPattern', { description: 'press | curl | extension | dip, etc.' }),
-    videoUrl: t.exposeString('videoUrl', { nullable: true }),
+    videoUrl: t.exposeString('videoUrl', { nullable: true, description: 'YouTube shorts URL' }),
+    cdnVideoUrl: t.exposeString('cdnVideoUrl', { nullable: true, description: 'CDN video URL (preferred over YouTube)' }),
     cueSummary: t.exposeString('cueSummary', { nullable: true, description: 'Exercise cues and tips' }),
     
     // Equipment - parse JSON array
