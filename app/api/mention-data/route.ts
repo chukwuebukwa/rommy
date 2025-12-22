@@ -77,10 +77,10 @@ export async function GET(request: NextRequest) {
 
     if (type === "exercise") {
       const data = await graphqlQuery(GET_EXERCISE, { id });
-      return NextResponse.json(data.exercise);
+      return NextResponse.json(data?.exercise ?? null);
     } else if (type === "anatomy") {
       const data = await graphqlQuery(GET_ANATOMY, { id });
-      return NextResponse.json(data.anatomyNode);
+      return NextResponse.json(data?.anatomyNode ?? null);
     } else {
       return NextResponse.json(
         { error: "Invalid type parameter" },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { MentionDrawer } from "./MentionDrawer";
 
 interface MentionRendererProps {
@@ -21,7 +21,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
   // Parse mentions: @[Name](type:id)
   const renderContent = () => {
     const mentionRegex = /@\[([^\]]+)\]\(([^:]+):([^)]+)\)/g;
-    const parts: (string | JSX.Element)[] = [];
+    const parts: (string | React.ReactNode)[] = [];
     let lastIndex = 0;
     let match;
     let key = 0;
