@@ -40,6 +40,13 @@ builder.prismaObject('AnatomyNode', {
         }
       },
     }),
+
+    meta: t.field({
+      type: 'JSON',
+      nullable: true,
+      description: 'Additional metadata (images, etc.)',
+      resolve: (node) => node.meta,
+    }),
     
     // Relations
     parent: t.relation('parent', {

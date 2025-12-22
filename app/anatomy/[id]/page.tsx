@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { Breadcrumb, BreadcrumbItem } from "@/components/Breadcrumb";
 import { AnatomyWiki } from "@/components/AnatomyWiki";
 import { TableOfContents } from "@/components/TableOfContents";
@@ -239,7 +240,15 @@ export default async function AnatomyPage({
 
   return (
     <div className="space-y-6">
-      <Breadcrumb items={breadcrumbItems} />
+      <div className="flex items-center justify-between">
+        <Breadcrumb items={breadcrumbItems} />
+        <Link
+          href={`/anatomy/editor/${anatomy.id}`}
+          className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
+          ✏️ Edit
+        </Link>
+      </div>
 
       {/* Wikipedia-style layout with TOC sidebar */}
       <div className="flex gap-6 items-start">

@@ -3,8 +3,11 @@
 import { useState, useEffect } from "react";
 
 interface ImagePickerProps {
+  category?: string;
+  selectedImages?: string[];
   onSelect: (images: string[]) => void;
   onClose: () => void;
+  basePath?: string;
 }
 
 interface ImageCategory {
@@ -13,11 +16,17 @@ interface ImageCategory {
   count: number;
 }
 
-export function ImagePicker({ onSelect, onClose }: ImagePickerProps) {
+export function ImagePicker({ 
+  category, 
+  selectedImages: initialSelectedImages = [], 
+  onSelect, 
+  onClose,
+  basePath = "/guides"
+}: ImagePickerProps) {
   const [categories, setCategories] = useState<ImageCategory[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(category || null);
   const [images, setImages] = useState<string[]>([]);
-  const [selectedImages, setSelectedImages] = useState<Set<string>>(new Set());
+  const [selectedImages, setSelectedImages] = useState<Set<string>>(new Set(initialSelectedImages));
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -25,7 +34,8 @@ export function ImagePicker({ onSelect, onClose }: ImagePickerProps) {
   useEffect(() => {
     const loadCategories = async () => {
       try {
-        const response = await fetch("/api/guides/images");
+        const apiPath = basePath === "/anatomy" ? "/api/anatomy/images" : "/api/guides/images";
+        const response = await fetch(apiPath);
         const data = await response.json();
         setCategories(data.categories || []);
       } catch (error) {
@@ -33,7 +43,7 @@ export function ImagePicker({ onSelect, onClose }: ImagePickerProps) {
       }
     };
     loadCategories();
-  }, []);
+  }, [basePath]);
 
   // Load images for selected category
   useEffect(() => {
@@ -45,8 +55,9 @@ export function ImagePicker({ onSelect, onClose }: ImagePickerProps) {
     const loadImages = async () => {
       setLoading(true);
       try {
+        const apiPath = basePath === "/anatomy" ? "/api/anatomy/images" : "/api/guides/images";
         const response = await fetch(
-          `/api/guides/images?category=${selectedCategory}`
+          `${apiPath}?category=${selectedCategory}`
         );
         const data = await response.json();
         setImages(data.images || []);
@@ -172,6 +183,18 @@ export function ImagePicker({ onSelect, onClose }: ImagePickerProps) {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {filteredImages.map((imagePath) => {
                   const isSelected = selectedImages.has(imagePath);
+                  
+                  // Handle both old format and new source:path format
+                  const getImageSrc = (path: string) => {
+                    if (path.startsWith('guides:')) {
+                      return `/guides/${path.replace('guides:', '')}`;
+                    } else if (path.startsWith('anatomy:')) {
+                      return `/anatomy/${path.replace('anatomy:', '')}`;
+                    }
+                    // Default to basePath for backwards compatibility
+                    return `${basePath}/${path}`;
+                  };
+                  
                   return (
                     <button
                       key={imagePath}
@@ -183,7 +206,7 @@ export function ImagePicker({ onSelect, onClose }: ImagePickerProps) {
                       }`}
                     >
                       <img
-                        src={`/guides/${imagePath}`}
+                        src={getImageSrc(imagePath)}
                         alt={imagePath}
                         className="w-full h-40 object-cover"
                       />
