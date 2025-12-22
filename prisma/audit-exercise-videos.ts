@@ -11,6 +11,9 @@ interface AuditResult {
   youtubeUrl: string | null;
   videoId: string | null;
   cdnUrl: string | null;
+  cdnVideoUrl: string | null;
+  cdnVideoId: string | null;
+  idsMatch: boolean | null;
   cdnExists: boolean | null;
   error?: string;
 }
@@ -25,6 +28,21 @@ function extractVideoId(url: string | null): string | null {
     // https://www.youtube.com/shorts/_F0vp8sOE1A?si=something
     // https://youtube.com/shorts/_F0vp8sOE1A
     const match = url.match(/\/shorts\/([^?]+)/);
+    return match ? match[1] : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+// Extract video ID from CDN URL
+function extractCdnVideoId(url: string | null): string | null {
+  if (!url) return null;
+  
+  try {
+    // Match patterns like:
+    // https://unclerommy.b-cdn.net/_F0vp8sOE1A.mp4
+    // https://unclerommy.b-cdn.net/path/_F0vp8sOE1A.mp4
+    const match = url.match(/\/([^\/]+)\.mp4$/);
     return match ? match[1] : null;
   } catch (e) {
     return null;
@@ -58,12 +76,24 @@ async function auditExerciseVideos() {
   let hasVideoCount = 0;
   let cdnExistsCount = 0;
   let cdnMissingCount = 0;
+  let idMismatchCount = 0;
 
   for (const exercise of exercises) {
     const videoId = extractVideoId(exercise.videoUrl);
+    const cdnVideoId = extractCdnVideoId(exercise.cdnVideoUrl);
     const cdnUrl = videoId ? `https://unclerommy.b-cdn.net/${videoId}.mp4` : null;
     
     let cdnExists: boolean | null = null;
+    let idsMatch: boolean | null = null;
+    
+    // Check if IDs match (only if both exist)
+    if (videoId && cdnVideoId) {
+      idsMatch = videoId === cdnVideoId;
+      if (!idsMatch) {
+        idMismatchCount++;
+        console.log(`⚠️  ${exercise.name} - ID MISMATCH: YouTube(${videoId}) != CDN(${cdnVideoId})`);
+      }
+    }
     
     if (videoId) {
       hasVideoCount++;
@@ -71,10 +101,14 @@ async function auditExerciseVideos() {
       
       if (cdnExists) {
         cdnExistsCount++;
-        console.log(`✅ ${exercise.name} - CDN video exists`);
+        if (idsMatch === true || idsMatch === null) {
+          console.log(`✅ ${exercise.name} - CDN video exists`);
+        }
       } else {
         cdnMissingCount++;
-        console.log(`❌ ${exercise.name} - CDN video MISSING`);
+        if (idsMatch !== false) {
+          console.log(`❌ ${exercise.name} - CDN video MISSING`);
+        }
       }
     } else if (exercise.videoUrl) {
       console.log(`⚠️  ${exercise.name} - Has videoUrl but couldn't extract ID: ${exercise.videoUrl}`);
@@ -88,6 +122,9 @@ async function auditExerciseVideos() {
       youtubeUrl: exercise.videoUrl,
       videoId,
       cdnUrl,
+      cdnVideoUrl: exercise.cdnVideoUrl,
+      cdnVideoId,
+      idsMatch,
       cdnExists,
     });
   }
@@ -100,7 +137,23 @@ async function auditExerciseVideos() {
   console.log(`Exercises with YouTube URLs: ${hasVideoCount}`);
   console.log(`CDN videos found: ${cdnExistsCount}`);
   console.log(`CDN videos missing: ${cdnMissingCount}`);
+  console.log(`Video ID mismatches: ${idMismatchCount}`);
   console.log(`Exercises without video URLs: ${exercises.length - hasVideoCount}`);
+  
+  // Show ID mismatches
+  const mismatches = results.filter(r => r.idsMatch === false);
+  if (mismatches.length > 0) {
+    console.log('\n' + '='.repeat(60));
+    console.log('⚠️  VIDEO ID MISMATCHES');
+    console.log('='.repeat(60));
+    mismatches.forEach(r => {
+      console.log(`\n${r.exerciseName} (${r.exerciseId})`);
+      console.log(`  YouTube URL: ${r.youtubeUrl}`);
+      console.log(`  YouTube Video ID: ${r.videoId}`);
+      console.log(`  CDN URL: ${r.cdnVideoUrl}`);
+      console.log(`  CDN Video ID: ${r.cdnVideoId}`);
+    });
+  }
   
   // Show missing videos
   const missing = results.filter(r => r.videoId && !r.cdnExists);
@@ -131,7 +184,10 @@ async function auditExerciseVideos() {
     'Exercise ID',
     'Exercise Name',
     'YouTube URL',
-    'Video ID',
+    'YouTube Video ID',
+    'CDN URL (from DB)',
+    'CDN Video ID',
+    'IDs Match',
     'Expected CDN URL',
     'CDN Exists',
     'Status'
@@ -139,7 +195,9 @@ async function auditExerciseVideos() {
 
   const csvRows = results.map(r => {
     let status = 'No Video URL';
-    if (r.videoId) {
+    if (r.idsMatch === false) {
+      status = 'ID MISMATCH';
+    } else if (r.videoId) {
       status = r.cdnExists ? 'CDN OK' : 'CDN MISSING';
     } else if (r.youtubeUrl) {
       status = 'Invalid YouTube URL';
@@ -150,6 +208,9 @@ async function auditExerciseVideos() {
       `"${r.exerciseName}"`, // Wrap in quotes in case name has commas
       r.youtubeUrl || '',
       r.videoId || '',
+      r.cdnVideoUrl || '',
+      r.cdnVideoId || '',
+      r.idsMatch === null ? '' : (r.idsMatch ? 'YES' : 'NO'),
       r.cdnUrl || '',
       r.cdnExists === null ? '' : (r.cdnExists ? 'YES' : 'NO'),
       status

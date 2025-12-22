@@ -222,12 +222,10 @@ export const GET_ALL_GUIDES = `
       slug
       title
       author
-      
       primaryRegion {
         id
         name
       }
-      
       sections {
         id
         kind

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 interface Exercise {
   id: string;
@@ -95,15 +95,89 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
     }
   };
 
-  // Video Card Component with hover preview
+  // Video Card Component with optimized loading
   function VideoCard({ exercise }: { exercise: Exercise }) {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const [isHovering, setIsHovering] = useState(false);
+    const [loadState, setLoadState] = useState<'unloaded' | 'preloading' | 'loaded'>('unloaded');
+    const [shouldLoad, setShouldLoad] = useState(false);
     const embedUrl = getYouTubeEmbedUrl(exercise.videoUrl);
+
+    // Intersection Observer for lazy loading
+    useEffect(() => {
+      if (!containerRef.current) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Start loading when video is within 200% of viewport (2 screens away)
+            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+              setShouldLoad(true);
+            } else {
+              // Only unload if really far away (to prevent re-loading on small scrolls)
+              const rect = entry.boundingClientRect;
+              const viewportHeight = window.innerHeight;
+              const distanceFromViewport = Math.min(
+                Math.abs(rect.top),
+                Math.abs(rect.bottom - viewportHeight)
+              );
+              
+              // Unload if more than 3 viewports away
+              if (distanceFromViewport > viewportHeight * 3) {
+                setShouldLoad(false);
+                setLoadState('unloaded');
+                if (videoRef.current) {
+                  videoRef.current.pause();
+                  videoRef.current.src = '';
+                  videoRef.current.load();
+                }
+              }
+            }
+          });
+        },
+        {
+          // Start loading 2 screens before entering viewport
+          rootMargin: '200% 0px 200% 0px',
+          threshold: [0, 0.25, 0.5, 0.75, 1.0]
+        }
+      );
+
+      observer.observe(containerRef.current);
+
+      return () => observer.disconnect();
+    }, []);
+
+    // Load video when shouldLoad is true
+    useEffect(() => {
+      if (!shouldLoad || !videoRef.current || !exercise.cdnVideoUrl) return;
+
+      const video = videoRef.current;
+      
+      if (loadState === 'unloaded') {
+        setLoadState('preloading');
+        video.src = exercise.cdnVideoUrl;
+        // Preload just metadata first for fast initial load
+        video.preload = 'metadata';
+        video.load();
+        
+        // Once metadata is loaded, switch to auto preload for smoother playback
+        const handleLoadedMetadata = () => {
+          setLoadState('loaded');
+          video.preload = 'auto';
+        };
+        
+        video.addEventListener('loadedmetadata', handleLoadedMetadata, { once: true });
+        
+        return () => {
+          video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        };
+      }
+    }, [shouldLoad, exercise.cdnVideoUrl, loadState]);
 
     const handleMouseEnter = () => {
       setIsHovering(true);
-      if (videoRef.current && exercise.cdnVideoUrl) {
+      if (videoRef.current && exercise.cdnVideoUrl && loadState === 'loaded') {
         videoRef.current.currentTime = 0;
         videoRef.current.play().catch(() => {
           // Autoplay might be blocked, that's okay
@@ -121,25 +195,32 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
 
     return (
       <div
+        ref={containerRef}
         className="relative aspect-[9/16] bg-gray-900 overflow-hidden group"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         {exercise.cdnVideoUrl ? (
           <>
-            {/* HTML5 Video Player (CDN) */}
+            {/* HTML5 Video Player (CDN) - Only load when in viewport */}
             <video
               ref={videoRef}
-              src={exercise.cdnVideoUrl}
               className="absolute inset-0 w-full h-full object-cover"
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="none"
             />
             
-            {/* Play indicator when not hovering */}
-            {!isHovering && (
+            {/* Loading indicator */}
+            {loadState === 'preloading' && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+                <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              </div>
+            )}
+            
+            {/* Play indicator when not hovering and loaded */}
+            {!isHovering && loadState === 'loaded' && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/20 pointer-events-none">
                 <div className="w-12 h-12 rounded-full bg-white/80 flex items-center justify-center">
                   <svg className="w-6 h-6 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -158,14 +239,21 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
           </>
         ) : embedUrl ? (
           <>
-            {/* YouTube Fallback */}
-            <iframe
-              src={`${embedUrl}?controls=1&modestbranding=1&rel=0`}
-              className="absolute inset-0 w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title={exercise.name}
-            />
+            {/* YouTube Fallback - Lazy load iframe */}
+            {shouldLoad ? (
+              <iframe
+                src={`${embedUrl}?controls=1&modestbranding=1&rel=0`}
+                className="absolute inset-0 w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title={exercise.name}
+                loading="lazy"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+                <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              </div>
+            )}
             
             {/* YouTube Badge */}
             <div className="absolute top-2 right-2 z-10">

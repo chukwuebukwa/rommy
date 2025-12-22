@@ -19,8 +19,11 @@ interface CsvRow {
   exerciseId: string;
   exerciseName: string;
   youtubeUrl: string;
-  videoId: string;
-  cdnUrl: string;
+  youtubeVideoId: string;
+  cdnUrlFromDb: string;
+  cdnVideoId: string;
+  idsMatch: string;
+  expectedCdnUrl: string;
   cdnExists: string;
   status: string;
 }
@@ -50,15 +53,18 @@ function parseCsv(csvContent: string): CsvRow[] {
     }
     values.push(currentValue);
     
-    if (values.length >= 7) {
+    if (values.length >= 10) {
       rows.push({
         exerciseId: values[0],
         exerciseName: values[1],
         youtubeUrl: values[2],
-        videoId: values[3],
-        cdnUrl: values[4],
-        cdnExists: values[5],
-        status: values[6],
+        youtubeVideoId: values[3],
+        cdnUrlFromDb: values[4],
+        cdnVideoId: values[5],
+        idsMatch: values[6],
+        expectedCdnUrl: values[7],
+        cdnExists: values[8],
+        status: values[9],
       });
     }
   }
@@ -155,7 +161,7 @@ async function syncMissingVideos() {
   const rows = parseCsv(csvContent);
   
   // Filter for missing CDN videos
-  const missingVideos = rows.filter(r => r.cdnExists === 'NO' && r.videoId && r.youtubeUrl);
+  const missingVideos = rows.filter(r => r.cdnExists === 'NO' && r.youtubeVideoId && r.youtubeUrl);
   
   console.log(`\n📋 Found ${missingVideos.length} videos to sync\n`);
   
@@ -165,15 +171,15 @@ async function syncMissingVideos() {
   
   for (let i = 0; i < missingVideos.length; i++) {
     const video = missingVideos[i];
-    console.log(`\n[${i + 1}/${missingVideos.length}] ${video.exerciseName} (${video.videoId})`);
+    console.log(`\n[${i + 1}/${missingVideos.length}] ${video.exerciseName} (${video.youtubeVideoId})`);
     console.log('-'.repeat(60));
     
     try {
       // Step 1: Download from YouTube
-      const localPath = await downloadVideo(video.youtubeUrl, video.videoId);
+      const localPath = await downloadVideo(video.youtubeUrl, video.youtubeVideoId);
       
       // Step 2: Upload to BunnyCDN
-      const cdnUrl = await uploadToBunnyCDN(localPath, video.videoId);
+      const cdnUrl = await uploadToBunnyCDN(localPath, video.youtubeVideoId);
       
       // Step 3: Update database
       await updateDatabase(video.exerciseId, cdnUrl);

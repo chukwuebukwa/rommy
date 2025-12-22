@@ -9,8 +9,11 @@ interface CsvRow {
   exerciseId: string;
   exerciseName: string;
   youtubeUrl: string;
-  videoId: string;
-  cdnUrl: string;
+  youtubeVideoId: string;
+  cdnUrlFromDb: string;
+  cdnVideoId: string;
+  idsMatch: string;
+  expectedCdnUrl: string;
   cdnExists: string;
   status: string;
 }
@@ -43,15 +46,18 @@ function parseCsv(csvContent: string): CsvRow[] {
     }
     values.push(currentValue); // Push last value
     
-    if (values.length >= 7) {
+    if (values.length >= 10) {
       rows.push({
         exerciseId: values[0],
         exerciseName: values[1],
         youtubeUrl: values[2],
-        videoId: values[3],
-        cdnUrl: values[4],
-        cdnExists: values[5],
-        status: values[6],
+        youtubeVideoId: values[3],
+        cdnUrlFromDb: values[4],
+        cdnVideoId: values[5],
+        idsMatch: values[6],
+        expectedCdnUrl: values[7],
+        cdnExists: values[8],
+        status: values[9],
       });
     }
   }
@@ -74,15 +80,15 @@ async function populateCdnVideoUrls() {
   
   for (const row of rows) {
     try {
-      // Only update if CDN video exists
-      if (row.cdnExists === 'YES' && row.cdnUrl) {
+      // Only update if CDN video exists and DB doesn't have it yet
+      if (row.cdnExists === 'YES' && row.expectedCdnUrl && !row.cdnUrlFromDb) {
         const result = await prisma.exercise.update({
           where: { id: row.exerciseId },
-          data: { cdnVideoUrl: row.cdnUrl },
+          data: { cdnVideoUrl: row.expectedCdnUrl },
         });
         
         console.log(`✅ Updated ${row.exerciseName} (${row.exerciseId})`);
-        console.log(`   CDN URL: ${row.cdnUrl}`);
+        console.log(`   CDN URL: ${row.expectedCdnUrl}`);
         updatedCount++;
       } else {
         console.log(`⏭️  Skipped ${row.exerciseName} (${row.exerciseId}) - ${row.status}`);

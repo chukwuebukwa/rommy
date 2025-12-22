@@ -1,5 +1,7 @@
 "use client";
 
+import { MentionRenderer } from "./MentionRenderer";
+
 interface Guide {
   id: string;
   title: string;
@@ -54,7 +56,7 @@ function GuideSection({ section }: GuideSectionProps) {
       </div>
 
       <div className="prose max-w-none">
-        <p className="whitespace-pre-wrap">{section.content}</p>
+        <MentionRenderer content={section.content} />
       </div>
 
       {images.length > 0 && (
