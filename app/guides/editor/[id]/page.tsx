@@ -47,10 +47,14 @@ const GET_ALL_EXERCISES = gql`
 
 export default async function GuideEditorPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ page?: string }>;
 }) {
   const { id } = await params;
+  const { page } = await searchParams;
+  const initialPage = page ? parseInt(page, 10) : 0;
 
   // Fetch anatomy nodes and exercises
   const anatomyData = await graphqlQuery(GET_ALL_ANATOMY_NODES, {});
@@ -95,6 +99,7 @@ export default async function GuideEditorPage({
         guide={serializedGuide}
         anatomyNodes={serializedAnatomyNodes}
         exercises={serializedExercises}
+        initialPage={initialPage}
       />
     </div>
   );

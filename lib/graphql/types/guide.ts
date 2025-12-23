@@ -39,8 +39,13 @@ builder.prismaObject('Section', {
       description: 'Array of image paths like ["arms/page9_img1.jpeg"]',
       resolve: (section) => {
         if (!section.images) return null;
+        // Handle both cases: Prisma may return parsed JSON (array) or raw string
+        if (Array.isArray(section.images)) {
+          return section.images as string[];
+        }
         try {
-          return JSON.parse(section.images as string);
+          const parsed = JSON.parse(section.images as string);
+          return Array.isArray(parsed) ? parsed : null;
         } catch {
           return null;
         }
@@ -52,6 +57,10 @@ builder.prismaObject('Section', {
       description: 'Number of images in this section',
       resolve: (section) => {
         if (!section.images) return 0;
+        // Handle both cases: Prisma may return parsed JSON (array) or raw string
+        if (Array.isArray(section.images)) {
+          return section.images.length;
+        }
         try {
           const images = JSON.parse(section.images as string);
           return Array.isArray(images) ? images.length : 0;

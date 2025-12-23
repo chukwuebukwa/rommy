@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MentionRenderer } from "./MentionRenderer";
 
 interface Section {
@@ -32,7 +33,12 @@ interface GuidePaginatedViewProps {
 }
 
 export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
-  const [currentPage, setCurrentPage] = useState(0);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const initialPage = parseInt(searchParams.get("page") || "0", 10);
+  const [currentPage, setCurrentPage] = useState(
+    initialPage >= 0 && initialPage < guide.sections.length ? initialPage : 0
+  );
   const sections = guide.sections.sort((a, b) => a.order - b.order);
   const totalPages = sections.length;
   const currentSection = sections[currentPage];
@@ -89,20 +95,30 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
             Previous
           </button>
 
-          {/* Page Dots */}
+          {/* Page Indicator */}
           <div className="flex items-center gap-2">
-            {sections.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => goToPage(index)}
-                className={`transition-all ${
-                  index === currentPage
-                    ? "w-8 h-2 bg-gray-900"
-                    : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
-                }`}
-                title={`Go to page ${index + 1}`}
-              />
-            ))}
+            {totalPages <= 15 ? (
+              // Show dots for few pages
+              sections.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToPage(index)}
+                  className={`transition-all rounded-sm ${
+                    index === currentPage
+                      ? "w-6 h-2 bg-gray-900"
+                      : "w-2 h-2 bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  title={`Go to page ${index + 1}`}
+                />
+              ))
+            ) : (
+              // Compact pagination for many pages
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-gray-600 font-medium">
+                  {currentPage + 1} / {totalPages}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Next Button */}
@@ -141,9 +157,21 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
             <span className="text-xs text-gray-500 uppercase font-medium">
               {currentSection.kind}
             </span>
-            <span className="text-sm text-gray-500">
-              {currentPage + 1} / {totalPages}
-            </span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => router.push(`/guides/editor/${guide.id}?page=${currentPage}`)}
+                className="text-xs text-blue-600 hover:text-blue-800 flex items-center gap-1 transition"
+                title="Edit this page"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                </svg>
+                Edit
+              </button>
+              <span className="text-sm text-gray-500">
+                {currentPage + 1} / {totalPages}
+              </span>
+            </div>
           </div>
           <h2 className="text-4xl font-bold">
             {currentSection.title}
@@ -210,35 +238,6 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
         </div>
       </div>
 
-      {/* Table of Contents */}
-      <div className="mt-12">
-        <h3 className="font-bold text-lg mb-4">Table of Contents</h3>
-        <div className="space-y-1">
-          {sections.map((section, index) => (
-            <button
-              key={section.id}
-              onClick={() => goToPage(index)}
-              className={`w-full text-left px-3 py-2 transition ${
-                index === currentPage
-                  ? "text-gray-900 font-medium"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-400">
-                  {index + 1}
-                </span>
-                <span className="text-xs text-gray-500 uppercase">
-                  {section.kind}
-                </span>
-                <span className="flex-1">
-                  {section.title}
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }

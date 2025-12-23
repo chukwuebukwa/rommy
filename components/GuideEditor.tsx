@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SectionEditor } from "./SectionEditor";
+import { GuidePaginatedEditor } from "./GuidePaginatedEditor";
 
 interface Section {
   id: string;
@@ -40,9 +41,10 @@ interface GuideEditorProps {
   guide: Guide | null;
   anatomyNodes: AnatomyNode[];
   exercises: Exercise[];
+  initialPage?: number;
 }
 
-export function GuideEditor({ guide, anatomyNodes, exercises }: GuideEditorProps) {
+export function GuideEditor({ guide, anatomyNodes, exercises, initialPage = 0 }: GuideEditorProps) {
   const router = useRouter();
   const [title, setTitle] = useState(guide?.title || "");
   const [slug, setSlug] = useState(guide?.slug || "");
@@ -53,8 +55,27 @@ export function GuideEditor({ guide, anatomyNodes, exercises }: GuideEditorProps
   );
   const [previewMode, setPreviewMode] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [viewMode, setViewMode] = useState<"list" | "paginated">(
+    guide && guide.sections.length > 10 ? "paginated" : "list"
+  );
 
   const regionNodes = anatomyNodes.filter((n) => n.kind === "region");
+
+  // For existing guides with many sections, default to paginated editor
+  if (guide && viewMode === "paginated") {
+    return (
+      <GuidePaginatedEditor
+        guide={{
+          ...guide,
+          sections: sections,
+        }}
+        onSwitchToListView={() => setViewMode("list")}
+        initialPage={initialPage}
+        exercises={exercises}
+        anatomyNodes={anatomyNodes}
+      />
+    );
+  }
 
   const addSection = () => {
     const newSection: Section = {
@@ -198,6 +219,14 @@ export function GuideEditor({ guide, anatomyNodes, exercises }: GuideEditorProps
             {guide ? "✏️ Edit Guide" : "✨ Create New Guide"}
           </h1>
           <div className="flex gap-3">
+            {guide && sections.length > 0 && (
+              <button
+                onClick={() => setViewMode("paginated")}
+                className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition"
+              >
+                📖 Page View
+              </button>
+            )}
             <button
               onClick={() => setPreviewMode(true)}
               className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition"

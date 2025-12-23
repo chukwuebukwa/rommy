@@ -49,14 +49,28 @@ export async function POST(request: NextRequest) {
           author,
           primaryRegionId,
           sections: {
-            create: sections.map((section: any) => ({
-              id: section.id,
-              kind: section.kind,
-              title: section.title,
-              order: section.order,
-              content: section.content,
-              images: section.images || [],
-            })),
+            create: sections.map((section: any) => {
+              // Ensure images is properly formatted for JSON storage
+              let images = section.images;
+              if (!images || (Array.isArray(images) && images.length === 0)) {
+                images = null;
+              } else if (typeof images === 'string') {
+                // Already a JSON string, parse it first to validate
+                try {
+                  images = JSON.parse(images);
+                } catch {
+                  images = null;
+                }
+              }
+              return {
+                id: section.id,
+                kind: section.kind,
+                title: section.title,
+                order: section.order,
+                content: section.content,
+                images: images,
+              };
+            }),
           },
         },
         include: {
@@ -78,14 +92,27 @@ export async function POST(request: NextRequest) {
           author,
           primaryRegionId,
           sections: {
-            create: sections.map((section: any) => ({
-              id: section.id,
-              kind: section.kind,
-              title: section.title,
-              order: section.order,
-              content: section.content,
-              images: section.images || [],
-            })),
+            create: sections.map((section: any) => {
+              // Ensure images is properly formatted for JSON storage
+              let images = section.images;
+              if (!images || (Array.isArray(images) && images.length === 0)) {
+                images = null;
+              } else if (typeof images === 'string') {
+                try {
+                  images = JSON.parse(images);
+                } catch {
+                  images = null;
+                }
+              }
+              return {
+                id: section.id,
+                kind: section.kind,
+                title: section.title,
+                order: section.order,
+                content: section.content,
+                images: images,
+              };
+            }),
           },
         },
         include: {
