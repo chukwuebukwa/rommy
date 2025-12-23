@@ -2,128 +2,71 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
 export default async function Home() {
-  const regions = await prisma.anatomyNode.findMany({
-    where: { kind: "region" },
+  const guides = await prisma.guide.findMany({
+    orderBy: { title: "asc" },
     include: {
       _count: {
-        select: {
-          children: true,
-        },
+        select: { sections: true },
       },
     },
-    orderBy: { name: "asc" },
   });
 
-  const exerciseCount = await prisma.exercise.count();
-  const formulaCount = await prisma.formula.count();
-  const workoutCount = await prisma.workout.count();
-
   return (
-    <div className="space-y-8">
-      <div>
-        <h1 className="text-4xl font-bold text-gray-900 mb-2">Rommy's Workout Guide</h1>
-        <p className="text-gray-600">
-          Wikipedia-style pages with everything on one page. No clicking through - just expand and scroll!
+    <div className="px-4 py-6 md:px-6 md:py-8">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          Training Guides
+        </h1>
+        <p className="text-gray-600 text-sm md:text-base">
+          Complete guides by Uncle Rommy for building strength, muscle, and resilience.
         </p>
       </div>
 
-      {/* Main Navigation */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">🎓 Learn by Region</h2>
-          <p className="text-gray-600 mb-4">
-            Complete learning experience with Uncle Rommy's guides, anatomy breakdown, and exercises - all in one tabbed interface
-          </p>
-          <div className="space-y-2">
-            {regions.map((region) => (
-              <Link
-                key={region.id}
-                href={`/learn/${region.id}`}
-                className="block p-3 border border-gray-200 rounded hover:border-blue-500 hover:bg-blue-50 transition"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-blue-600">{region.name}</span>
-                  <span className="text-xs text-gray-500">
-                    Guide + {region._count.children} muscles + exercises
-                  </span>
+      {/* Guides Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {guides.map((guide) => (
+          <Link
+            key={guide.id}
+            href={`/guides/${guide.id}`}
+            className="group block bg-white rounded-2xl border border-gray-200 overflow-hidden hover:border-blue-500 hover:shadow-lg transition-all duration-200"
+          >
+            {/* Guide Card */}
+            <div className="p-5">
+              <div className="flex items-start justify-between mb-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-md">
+                  {guide.title.charAt(0)}
                 </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <Link
-            href="/exercises"
-            className="block bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:border-green-500 hover:shadow-md transition"
-          >
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">🏋️ Exercises</h2>
-            <p className="text-gray-600 mb-2">
-              Browse all {exerciseCount} exercises with form cues and videos
-            </p>
-            <div className="text-green-600 font-medium text-sm">View all →</div>
+                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
+                  {guide._count.sections} pages
+                </span>
+              </div>
+              
+              <h2 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition mb-1">
+                {guide.title}
+              </h2>
+              
+              {guide.author && (
+                <p className="text-sm text-gray-500">
+                  By {guide.author}
+                </p>
+              )}
+            </div>
+            
+            {/* Bottom accent */}
+            <div className="h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
           </Link>
-
-          <Link
-            href="/formulas"
-            className="block bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:border-purple-500 hover:shadow-md transition"
-          >
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">🧪 Formulas</h2>
-            <p className="text-gray-600 mb-2">
-              {formulaCount} exercise supersets and combinations
-            </p>
-            <div className="text-purple-600 font-medium text-sm">View all →</div>
-          </Link>
-
-          <Link
-            href="/workouts"
-            className="block bg-white border border-gray-200 rounded-lg p-6 shadow-sm hover:border-red-500 hover:shadow-md transition"
-          >
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">📋 Workouts</h2>
-            <p className="text-gray-600 mb-2">
-              {workoutCount} complete training programs
-            </p>
-            <div className="text-red-600 font-medium text-sm">View all →</div>
-          </Link>
-        </div>
+        ))}
       </div>
 
-      {/* Additional Resources */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-gray-900 mb-2">🗄️ Database Explorer</h3>
-          <p className="text-gray-600 mb-3">
-            Explore the raw database with tables, IDs, and relationships
-          </p>
-          <Link
-            href="/db"
-            className="inline-block px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition font-medium text-sm"
-          >
-            Open Database Explorer →
-          </Link>
+      {/* Empty state */}
+      {guides.length === 0 && (
+        <div className="text-center py-16">
+          <div className="text-6xl mb-4">📖</div>
+          <h2 className="text-xl font-semibold text-gray-900 mb-2">No guides yet</h2>
+          <p className="text-gray-500">Check back soon for training guides!</p>
         </div>
-
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-2">📚 Legacy Views</h3>
-          <p className="text-blue-700 mb-3">
-            Access separate anatomy and guide pages (old format)
-          </p>
-          <div className="flex gap-2">
-            <Link
-              href="/anatomy"
-              className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm"
-            >
-              Anatomy Only →
-            </Link>
-            <Link
-              href="/guides"
-              className="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium text-sm"
-            >
-              Guides Only →
-            </Link>
-          </div>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
