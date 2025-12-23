@@ -240,7 +240,7 @@ async function importRawGuide(guideKey: string, options: { dryRun?: boolean; ski
     title: string;
     order: number;
     content: string;
-    images: string | null;
+    images?: string[];
   }[] = [];
   
   for (const page of structuredData.pages) {
@@ -262,7 +262,7 @@ async function importRawGuide(guideKey: string, options: { dryRun?: boolean; ski
       title,
       order: page.page_number,
       content,
-      images: images.length > 0 ? JSON.stringify(images) : null,
+      images: images.length > 0 ? images : undefined,
     };
     
     sections.push(section);
