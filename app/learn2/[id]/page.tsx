@@ -102,7 +102,16 @@ export default async function LearnPage({
   });
 
   // Only anatomy tabs - NO GUIDE tab
+  // Start with the parent region itself, then children
   const tabs = [
+    // Parent region tab (shows all exercises for this region)
+    {
+      id: anatomy.id,
+      label: anatomy.name,
+      type: "anatomy" as const,
+      data: anatomy,
+      isCrossReference: false,
+    },
     // Anatomy group tabs (hierarchical children with content)
     ...meaningfulHierarchicalChildren.map((child: any) => ({
       id: child.id,

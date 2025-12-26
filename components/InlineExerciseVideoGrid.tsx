@@ -78,7 +78,9 @@ function VideoCard({ exercise, onExerciseClick }: { exercise: Exercise; onExerci
               loop
               muted
               playsInline
+              webkit-playsinline="true"
               preload="metadata"
+              crossOrigin="anonymous"
             />
             
             {!isPlaying && (

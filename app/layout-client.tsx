@@ -11,6 +11,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
   const navItems = [
     { href: "/", icon: "🏠", label: "Home" },
     { href: "/guides", icon: "📖", label: "Guides" },
+    { href: "/learn2", icon: "🎓", label: "Learn" },
     { href: "/exercises", icon: "🏋️", label: "Exercises" },
     { href: "/anatomy", icon: "🦾", label: "Anatomy" },
   ];

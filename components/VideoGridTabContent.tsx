@@ -99,10 +99,21 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
   function VideoCard({ exercise }: { exercise: Exercise }) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const [isHovering, setIsHovering] = useState(false);
-    const [loadState, setLoadState] = useState<'unloaded' | 'preloading' | 'loaded'>('unloaded');
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [loadState, setLoadState] = useState<'unloaded' | 'preloading' | 'loaded' | 'error'>('unloaded');
     const [shouldLoad, setShouldLoad] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const embedUrl = getYouTubeEmbedUrl(exercise.videoUrl);
+
+    // Detect mobile
+    useEffect(() => {
+      const checkMobile = () => {
+        setIsMobile(window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window);
+      };
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     // Intersection Observer for lazy loading
     useEffect(() => {
@@ -111,35 +122,14 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
-            // Start loading when video is within 200% of viewport (2 screens away)
-            if (entry.isIntersecting || entry.intersectionRatio > 0) {
+            if (entry.isIntersecting) {
               setShouldLoad(true);
-            } else {
-              // Only unload if really far away (to prevent re-loading on small scrolls)
-              const rect = entry.boundingClientRect;
-              const viewportHeight = window.innerHeight;
-              const distanceFromViewport = Math.min(
-                Math.abs(rect.top),
-                Math.abs(rect.bottom - viewportHeight)
-              );
-              
-              // Unload if more than 3 viewports away
-              if (distanceFromViewport > viewportHeight * 3) {
-                setShouldLoad(false);
-                setLoadState('unloaded');
-                if (videoRef.current) {
-                  videoRef.current.pause();
-                  videoRef.current.src = '';
-                  videoRef.current.load();
-                }
-              }
             }
           });
         },
         {
-          // Start loading 2 screens before entering viewport
-          rootMargin: '200% 0px 200% 0px',
-          threshold: [0, 0.25, 0.5, 0.75, 1.0]
+          rootMargin: '100% 0px 100% 0px',
+          threshold: 0
         }
       );
 
@@ -156,60 +146,96 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
       
       if (loadState === 'unloaded') {
         setLoadState('preloading');
-        video.src = exercise.cdnVideoUrl;
-        // Preload just metadata first for fast initial load
-        video.preload = 'metadata';
-        video.load();
         
-        // Once metadata is loaded, switch to auto preload for smoother playback
-        const handleLoadedMetadata = () => {
+        // Set src directly on the video element for better iOS compatibility
+        video.src = exercise.cdnVideoUrl;
+        
+        const handleLoadedData = () => {
           setLoadState('loaded');
-          video.preload = 'auto';
         };
         
-        video.addEventListener('loadedmetadata', handleLoadedMetadata, { once: true });
+        const handleError = () => {
+          console.error('Video failed to load:', exercise.cdnVideoUrl);
+          setLoadState('error');
+        };
+        
+        video.addEventListener('loadeddata', handleLoadedData, { once: true });
+        video.addEventListener('error', handleError, { once: true });
+        
+        // Trigger load
+        video.load();
         
         return () => {
-          video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+          video.removeEventListener('loadeddata', handleLoadedData);
+          video.removeEventListener('error', handleError);
         };
       }
     }, [shouldLoad, exercise.cdnVideoUrl, loadState]);
 
-    const handleMouseEnter = () => {
-      setIsHovering(true);
-      if (videoRef.current && exercise.cdnVideoUrl && loadState === 'loaded') {
+    // Handle play/pause
+    const togglePlay = () => {
+      if (!videoRef.current || loadState !== 'loaded') return;
+      
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
         videoRef.current.currentTime = 0;
-        videoRef.current.play().catch(() => {
-          // Autoplay might be blocked, that's okay
-        });
+        videoRef.current.play()
+          .then(() => setIsPlaying(true))
+          .catch(() => {
+            // Autoplay blocked - that's okay on iOS
+            setIsPlaying(false);
+          });
+      }
+    };
+
+    // Desktop: hover to play
+    const handleMouseEnter = () => {
+      if (isMobile) return;
+      if (videoRef.current && loadState === 'loaded') {
+        videoRef.current.currentTime = 0;
+        videoRef.current.play()
+          .then(() => setIsPlaying(true))
+          .catch(() => {});
       }
     };
 
     const handleMouseLeave = () => {
-      setIsHovering(false);
+      if (isMobile) return;
       if (videoRef.current) {
         videoRef.current.pause();
         videoRef.current.currentTime = 0;
+        setIsPlaying(false);
       }
+    };
+
+    // Mobile: tap to play/pause
+    const handleClick = () => {
+      if (!isMobile) return;
+      togglePlay();
     };
 
     return (
       <div
         ref={containerRef}
-        className="relative aspect-[9/16] bg-gray-900 overflow-hidden group"
+        className="relative aspect-[9/16] bg-gray-900 overflow-hidden group cursor-pointer"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
       >
         {exercise.cdnVideoUrl ? (
           <>
-            {/* HTML5 Video Player (CDN) - Only load when in viewport */}
+            {/* HTML5 Video Player (CDN) */}
             <video
               ref={videoRef}
               className="absolute inset-0 w-full h-full object-cover"
               loop
               muted
               playsInline
-              preload="none"
+              webkit-playsinline="true"
+              preload="metadata"
+              crossOrigin="anonymous"
             />
             
             {/* Loading indicator */}
@@ -218,9 +244,16 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
                 <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
               </div>
             )}
+
+            {/* Error state */}
+            {loadState === 'error' && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+                <p className="text-white text-xs text-center px-2">Failed to load</p>
+              </div>
+            )}
             
-            {/* Play indicator when not hovering and loaded */}
-            {!isHovering && loadState === 'loaded' && (
+            {/* Play/Pause indicator */}
+            {!isPlaying && loadState === 'loaded' && (
               <div className="absolute inset-0 flex items-center justify-center bg-black/20 pointer-events-none">
                 <div className="w-12 h-12 rounded-full bg-white/80 flex items-center justify-center">
                   <svg className="w-6 h-6 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">

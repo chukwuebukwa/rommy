@@ -157,7 +157,9 @@ export function InlineExerciseVideo({ exerciseId, onExerciseClick }: InlineExerc
               loop
               muted
               playsInline
+              webkit-playsinline="true"
               preload="metadata"
+              crossOrigin="anonymous"
             />
             
             {/* Play indicator */}
