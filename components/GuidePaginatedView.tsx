@@ -12,6 +12,18 @@ interface Section {
   order: number;
   content: string;
   images: string[] | null;
+  parentId?: string | null;
+  parent?: {
+    id: string;
+    title: string;
+    order: number;
+  } | null;
+  children?: {
+    id: string;
+    title: string;
+    order: number;
+    kind: string;
+  }[];
   focusAnatomyLinks?: any[];
   exerciseLinks?: any[];
 }
@@ -63,6 +75,23 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
+
+  // Get breadcrumb trail for current section
+  const getBreadcrumbs = (section: Section): Section[] => {
+    const breadcrumbs: Section[] = [];
+    let current = section;
+    
+    while (current.parent) {
+      const parentSection = sections.find(s => s.id === current.parent!.id);
+      if (!parentSection) break;
+      breadcrumbs.unshift(parentSection);
+      current = parentSection;
+    }
+    
+    return breadcrumbs;
+  };
+
+  const breadcrumbs = getBreadcrumbs(currentSection);
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-8">
@@ -153,6 +182,27 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
       <div className="min-h-[600px]">
         {/* Section Header */}
         <div className="mb-8">
+          {/* Breadcrumb Navigation */}
+          {breadcrumbs.length > 0 && (
+            <nav className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+              {breadcrumbs.map((crumb, idx) => {
+                const crumbIndex = sections.findIndex(s => s.id === crumb.id);
+                return (
+                  <div key={crumb.id} className="flex items-center gap-2">
+                    <button
+                      onClick={() => goToPage(crumbIndex)}
+                      className="hover:text-blue-600 transition"
+                    >
+                      {crumb.title}
+                    </button>
+                    <span className="text-gray-400">/</span>
+                  </div>
+                );
+              })}
+              <span className="text-gray-900 font-medium">{currentSection.title}</span>
+            </nav>
+          )}
+
           <div className="flex items-center justify-between mb-3">
             <span className="text-xs text-gray-500 uppercase font-medium">
               {currentSection.kind}
@@ -177,6 +227,40 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
             {currentSection.title}
           </h2>
         </div>
+
+        {/* Subsections Navigation */}
+        {currentSection.children && currentSection.children.length > 0 && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+            <h3 className="text-sm font-semibold text-blue-900 uppercase mb-3">
+              📑 Subsections
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {currentSection.children.map((child) => {
+                const childIndex = sections.findIndex(s => s.id === child.id);
+                return (
+                  <button
+                    key={child.id}
+                    onClick={() => goToPage(childIndex)}
+                    className="text-left p-3 bg-white rounded-lg border border-blue-200 hover:border-blue-400 hover:shadow-sm transition"
+                  >
+                    <div className="flex items-start gap-2">
+                      <span className="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded uppercase font-semibold mt-0.5">
+                        {child.kind}
+                      </span>
+                      <div className="flex-1">
+                        <div className="font-medium text-gray-900">{child.title}</div>
+                        <div className="text-xs text-gray-500 mt-1">Page {childIndex + 1}</div>
+                      </div>
+                      <svg className="w-5 h-5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Section Content */}
         <div className="space-y-8">

@@ -35,15 +35,16 @@ interface VideoGridTabContentProps {
 
 export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridTabContentProps) {
   // Collect all exercises from this node and all children recursively
-  const collectExercises = (node: AnatomyNode): Exercise[] => {
-    const exercises: Exercise[] = [];
+  // Include both primary and secondary, tracking role for sorting
+  const collectExercises = (node: AnatomyNode): Array<{ exercise: Exercise; role: string }> => {
+    const exercises: Array<{ exercise: Exercise; role: string }> = [];
     
-    // Add exercises from this node
+    // Add exercises from this node with their role
     if (node.exerciseLinks) {
-      node.exerciseLinks.forEach(({ exercise }) => {
-        // Only include exercises with video URLs (CDN or YouTube)
+      node.exerciseLinks.forEach(({ role, exercise }) => {
+        // Include exercises with video URLs (CDN or YouTube)
         if (exercise.cdnVideoUrl || exercise.videoUrl) {
-          exercises.push(exercise);
+          exercises.push({ exercise, role });
         }
       });
     }
@@ -58,11 +59,28 @@ export function VideoGridTabContent({ anatomyNode, selectedFilters }: VideoGridT
     return exercises;
   };
 
-  // Get unique exercises (in case same exercise appears multiple times)
-  const allExercises = collectExercises(anatomyNode);
-  const uniqueExercises = Array.from(
-    new Map(allExercises.map(ex => [ex.id, ex])).values()
-  );
+  // Get all exercises with roles
+  const allExercisesWithRoles = collectExercises(anatomyNode);
+  
+  // Dedupe by exercise id, keeping the best role (primary > secondary)
+  const exerciseMap = new Map<string, { exercise: Exercise; role: string }>();
+  allExercisesWithRoles.forEach(({ exercise, role }) => {
+    const existing = exerciseMap.get(exercise.id);
+    // Keep primary if we already have it, otherwise use what we have
+    if (!existing || (role === 'primary' && existing.role !== 'primary')) {
+      exerciseMap.set(exercise.id, { exercise, role });
+    }
+  });
+  
+  // Sort: primary first, then secondary
+  const sortedExercises = Array.from(exerciseMap.values()).sort((a, b) => {
+    if (a.role === 'primary' && b.role !== 'primary') return -1;
+    if (a.role !== 'primary' && b.role === 'primary') return 1;
+    return 0;
+  });
+  
+  const uniqueExercises = sortedExercises.map(e => e.exercise);
+
 
   // Filter exercises based on selected anatomy filters
   const filteredExercises = selectedFilters.size === 0 

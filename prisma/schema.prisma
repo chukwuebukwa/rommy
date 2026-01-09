@@ -73,6 +73,11 @@ model Section {
   content  String                                   // full Uncle Rommy text (can be long)
   images   Json?                                    // Array of namespaced image paths like ["arms/page3_img1.jpeg"]
 
+  // Hierarchical sections (parent-child relationship for subpages)
+  parentId String?
+  parent   Section?  @relation("SectionHierarchy", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children Section[] @relation("SectionHierarchy")
+
   focusAnatomyLinks SectionAnatomy[]
   exerciseLinks     SectionExercise[]
 }

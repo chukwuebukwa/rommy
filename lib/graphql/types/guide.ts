@@ -31,6 +31,7 @@ builder.prismaObject('Section', {
     title: t.exposeString('title'),
     order: t.exposeInt('order', { description: 'Display order within the guide' }),
     content: t.exposeString('content', { description: 'Full text content' }),
+    parentId: t.exposeString('parentId', { nullable: true, description: 'ID of parent section for hierarchical navigation' }),
     
     // ✨ Images field - parse JSON array to return string[]
     images: t.field({
@@ -81,6 +82,16 @@ builder.prismaObject('Section', {
     
     exerciseLinks: t.relation('exerciseLinks', {
       description: 'Exercises mentioned in this section',
+    }),
+    
+    // Hierarchical structure for subpages
+    parent: t.relation('parent', {
+      nullable: true,
+      description: 'Parent section (for subpages/subsections)',
+    }),
+    
+    children: t.relation('children', {
+      description: 'Child sections (subpages)',
     }),
   }),
 });

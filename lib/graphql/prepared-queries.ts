@@ -261,6 +261,20 @@ export const GET_GUIDE_DETAIL = `
         images
         imageCount
         
+        # Hierarchical structure
+        parentId
+        parent {
+          id
+          title
+          order
+        }
+        children {
+          id
+          title
+          order
+          kind
+        }
+        
         focusAnatomyLinks {
           anatomy {
             id

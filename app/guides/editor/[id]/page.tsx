@@ -20,6 +20,7 @@ const GET_GUIDE_FOR_EDITOR = gql`
         order
         content
         images
+        parentId
       }
     }
   }

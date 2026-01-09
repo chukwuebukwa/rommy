@@ -27,7 +27,7 @@ export function LearnTabs2({
 
   const currentTab = tabs.find((t) => t.id === activeTab);
 
-  // Collect all unique anatomy targets from current tab's exercises
+  // Collect all unique anatomy targets from current tab's exercises (primary + secondary)
   const availableFilters = useMemo(() => {
     if (!currentTab?.data) return [];
     

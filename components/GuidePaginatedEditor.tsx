@@ -12,6 +12,8 @@ interface Section {
   order: number;
   content: string;
   images: string[] | null;
+  parentId?: string | null;
+  children?: Section[];
 }
 
 interface Guide {
@@ -216,6 +218,7 @@ export function GuidePaginatedEditor({
       order: currentPage + 1,
       content: "",
       images: [],
+      parentId: null,
     };
 
     const newSections = [
@@ -227,6 +230,59 @@ export function GuidePaginatedEditor({
     setSections(newSections);
     setHasChanges(true);
     setCurrentPage(currentPage + 1);
+  };
+
+  const addSubsectionToCurrentSection = () => {
+    // Find all children of the current section
+    const childrenIndices = sections
+      .map((s, i) => ({ section: s, index: i }))
+      .filter(({ section }) => section.parentId === currentSection.id)
+      .map(({ index }) => index);
+    
+    // Insert after the last child, or after the parent if no children exist
+    const insertAfterIndex = childrenIndices.length > 0 
+      ? Math.max(...childrenIndices)
+      : currentPage;
+
+    const newSection: Section = {
+      id: `section_${Date.now()}`,
+      kind: "content",
+      title: "New Subsection",
+      order: insertAfterIndex + 1,
+      content: "",
+      images: [],
+      parentId: currentSection.id,
+    };
+
+    const newSections = [
+      ...sections.slice(0, insertAfterIndex + 1),
+      newSection,
+      ...sections.slice(insertAfterIndex + 1),
+    ].map((s, i) => ({ ...s, order: i }));
+
+    setSections(newSections);
+    setHasChanges(true);
+    setCurrentPage(insertAfterIndex + 1);
+  };
+
+  // Helper function to check if a section is a child/descendant
+  const isChildOf = (potentialChild: Section, potentialParent: Section): boolean => {
+    if (potentialChild.id === potentialParent.id) return true;
+    if (!potentialChild.parentId) return false;
+    
+    const parent = sections.find(s => s.id === potentialChild.parentId);
+    if (!parent) return false;
+    
+    return isChildOf(parent, potentialParent);
+  };
+
+  // Get available parent sections (excluding self and descendants)
+  const getAvailableParentSections = () => {
+    return sections.filter(s => {
+      if (s.id === currentSection.id) return false; // Can't be parent of itself
+      if (isChildOf(s, currentSection)) return false; // Can't be parent if it's a descendant
+      return true;
+    });
   };
 
   if (!currentSection) {
@@ -244,22 +300,40 @@ export function GuidePaginatedEditor({
             </h3>
           </div>
           <div className="py-2">
-            {sections.map((section, index) => (
-              <button
-                key={section.id}
-                onClick={() => goToPage(index)}
-                className={`w-full text-left px-4 py-2 text-sm transition flex items-start gap-2 ${
-                  index === currentPage
-                    ? "bg-blue-600 text-white"
-                    : "text-gray-300 hover:bg-gray-800"
-                }`}
-              >
-                <span className="text-gray-500 w-6 flex-shrink-0 text-right">
-                  {index + 1}
-                </span>
-                <span className="truncate flex-1">{section.title}</span>
-              </button>
-            ))}
+            {sections.map((section, index) => {
+              const depth = (() => {
+                let d = 0;
+                let current = section;
+                while (current.parentId) {
+                  d++;
+                  const parent = sections.find(s => s.id === current.parentId);
+                  if (!parent) break;
+                  current = parent;
+                }
+                return d;
+              })();
+              
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => goToPage(index)}
+                  className={`w-full text-left px-4 py-2 text-sm transition flex items-start gap-2 ${
+                    index === currentPage
+                      ? "bg-blue-600 text-white"
+                      : "text-gray-300 hover:bg-gray-800"
+                  }`}
+                  style={{ paddingLeft: `${16 + depth * 16}px` }}
+                >
+                  <span className="text-gray-500 w-6 flex-shrink-0 text-right">
+                    {index + 1}
+                  </span>
+                  <span className="truncate flex-1">
+                    {depth > 0 && "└ "}
+                    {section.title}
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
@@ -374,8 +448,16 @@ export function GuidePaginatedEditor({
                   <button
                     onClick={addSectionAfterCurrent}
                     className="px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 rounded"
+                    title="Add a new section after this one"
                   >
                     ➕ Add After
+                  </button>
+                  <button
+                    onClick={addSubsectionToCurrentSection}
+                    className="px-3 py-1 text-sm text-purple-600 hover:bg-purple-50 rounded"
+                    title="Add a subsection (child) to this section"
+                  >
+                    📑 Add Subsection
                   </button>
                   <button
                     onClick={deleteCurrentSection}
@@ -386,7 +468,7 @@ export function GuidePaginatedEditor({
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-600 mb-1">
                     Title
@@ -412,6 +494,24 @@ export function GuidePaginatedEditor({
                     {SECTION_KINDS.map((kind) => (
                       <option key={kind} value={kind}>
                         {kind.charAt(0).toUpperCase() + kind.slice(1)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-1">
+                    Parent Section
+                  </label>
+                  <select
+                    value={currentSection.parentId || ""}
+                    onChange={(e) => updateCurrentSection({ parentId: e.target.value || null })}
+                    className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  >
+                    <option value="">None (Top Level)</option>
+                    {getAvailableParentSections().map((section) => (
+                      <option key={section.id} value={section.id}>
+                        {section.title}
                       </option>
                     ))}
                   </select>

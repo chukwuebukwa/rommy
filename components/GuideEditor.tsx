@@ -12,6 +12,7 @@ interface Section {
   order: number;
   content: string;
   images: string[] | null;
+  parentId?: string | null;
 }
 
 interface Guide {
@@ -85,6 +86,7 @@ export function GuideEditor({ guide, anatomyNodes, exercises, initialPage = 0 }:
       order: sections.length,
       content: "",
       images: [],
+      parentId: null,
     };
     setSections([...sections, newSection]);
   };

@@ -69,6 +69,7 @@ export async function POST(request: NextRequest) {
                 order: section.order,
                 content: section.content,
                 images: images,
+                parentId: section.parentId || null,
               };
             }),
           },
@@ -111,6 +112,7 @@ export async function POST(request: NextRequest) {
                 order: section.order,
                 content: section.content,
                 images: images,
+                parentId: section.parentId || null,
               };
             }),
           },
