@@ -94,6 +94,15 @@ const GUIDE_CONFIGS: Record<string, GuideConfig> = {
     exportPath: 'full-exports/shoulder_export/structured_data_shoulders.json',
     imageNamespace: 'shoulders',
   },
+  legs: {
+    id: 'legs',
+    slug: 'leg-day-guide',
+    title: 'LEGS - The Leg Day Guide',
+    author: 'Uncle Rommy',
+    primaryRegionId: 'legs',
+    exportPath: 'full-exports/leg_export/structured_data.json',
+    imageNamespace: 'legs',
+  },
 };
 
 // Attempt to detect section kind based on content
