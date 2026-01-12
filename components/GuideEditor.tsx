@@ -129,8 +129,13 @@ export function GuideEditor({ guide, anatomyNodes, exercises, initialPage = 0 }:
         author,
         primaryRegionId: primaryRegionId || null,
         sections: sections.map((s, i) => ({
-          ...s,
+          id: s.id,
+          kind: s.kind,
+          title: s.title,
           order: i,
+          content: s.content,
+          images: s.images ?? null, // ✨ EXPLICITLY preserve images - fixes the bug!
+          parentId: s.parentId || null,
           guideId: guide?.id || slug.toLowerCase().replace(/\s+/g, "_"),
         })),
       };

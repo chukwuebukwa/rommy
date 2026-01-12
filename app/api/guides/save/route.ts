@@ -52,16 +52,25 @@ export async function POST(request: NextRequest) {
             create: sections.map((section: any) => {
               // Ensure images is properly formatted for JSON storage
               let images = section.images;
-              if (!images || (Array.isArray(images) && images.length === 0)) {
-                images = null;
-              } else if (typeof images === 'string') {
-                // Already a JSON string, parse it first to validate
-                try {
-                  images = JSON.parse(images);
-                } catch {
+              
+              // ✨ CRITICAL: Only process if images is explicitly provided (not undefined)
+              if (images !== undefined) {
+                if (images === null || (Array.isArray(images) && images.length === 0)) {
                   images = null;
+                } else if (typeof images === 'string') {
+                  // Already a JSON string, parse it first to validate
+                  try {
+                    images = JSON.parse(images);
+                  } catch {
+                    images = null;
+                  }
                 }
+                // If it's already an array with items, keep it as-is
+              } else {
+                // ⚠️ images was undefined - this should never happen now, but default to null if it does
+                images = null;
               }
+              
               return {
                 id: section.id,
                 kind: section.kind,
@@ -96,15 +105,24 @@ export async function POST(request: NextRequest) {
             create: sections.map((section: any) => {
               // Ensure images is properly formatted for JSON storage
               let images = section.images;
-              if (!images || (Array.isArray(images) && images.length === 0)) {
-                images = null;
-              } else if (typeof images === 'string') {
-                try {
-                  images = JSON.parse(images);
-                } catch {
+              
+              // ✨ CRITICAL: Only process if images is explicitly provided (not undefined)
+              if (images !== undefined) {
+                if (images === null || (Array.isArray(images) && images.length === 0)) {
                   images = null;
+                } else if (typeof images === 'string') {
+                  try {
+                    images = JSON.parse(images);
+                  } catch {
+                    images = null;
+                  }
                 }
+                // If it's already an array with items, keep it as-is
+              } else {
+                // ⚠️ images was undefined - this should never happen now, but default to null if it does
+                images = null;
               }
+              
               return {
                 id: section.id,
                 kind: section.kind,

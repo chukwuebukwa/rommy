@@ -161,8 +161,13 @@ export function GuidePaginatedEditor({
         author: guide.author,
         primaryRegionId: guide.primaryRegion?.id || null,
         sections: sections.map((s, i) => ({
-          ...s,
+          id: s.id,
+          kind: s.kind,
+          title: s.title,
           order: i,
+          content: s.content,
+          images: s.images ?? null, // ✨ EXPLICITLY preserve images - fixes the bug!
+          parentId: s.parentId || null,
           guideId: guide.id,
         })),
       };
