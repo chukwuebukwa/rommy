@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SectionEditor } from "./SectionEditor";
 import { GuidePaginatedEditor } from "./GuidePaginatedEditor";
+import { useToast } from "./Toast";
 
 interface Section {
   id: string;
@@ -59,6 +60,7 @@ export function GuideEditor({ guide, anatomyNodes, exercises, initialPage = 0 }:
   const [viewMode, setViewMode] = useState<"list" | "paginated">(
     guide && guide.sections.length > 10 ? "paginated" : "list"
   );
+  const { showToast, ToastContainer } = useToast();
 
   const regionNodes = anatomyNodes.filter((n) => n.kind === "region");
 
@@ -148,11 +150,13 @@ export function GuideEditor({ guide, anatomyNodes, exercises, initialPage = 0 }:
 
       if (!response.ok) throw new Error("Failed to save guide");
 
-      alert("Guide saved successfully! ✨");
-      router.push(`/guides/${guideData.id}`);
+      showToast("Guide saved successfully!", "success");
+      setTimeout(() => {
+        router.push(`/guides/${guideData.id}`);
+      }, 1000);
     } catch (error) {
       console.error("Error saving guide:", error);
-      alert("Failed to save guide. Check console for details.");
+      showToast("Failed to save guide. Check console for details.", "error");
     } finally {
       setSaving(false);
     }
@@ -160,7 +164,9 @@ export function GuideEditor({ guide, anatomyNodes, exercises, initialPage = 0 }:
 
   if (previewMode) {
     return (
-      <div className="space-y-8">
+      <>
+        {ToastContainer}
+        <div className="space-y-8">
         {/* Preview Header */}
         <div className="bg-white border border-gray-200 rounded-lg p-6 flex items-center justify-between sticky top-0 z-10 shadow-md">
           <h1 className="text-2xl font-bold">👁️ Preview Mode</h1>
@@ -214,11 +220,14 @@ export function GuideEditor({ guide, anatomyNodes, exercises, initialPage = 0 }:
           ))}
         </div>
       </div>
+      </>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <>
+      {ToastContainer}
+      <div className="space-y-6">
       {/* Header */}
       <div className="bg-white border border-gray-200 rounded-lg p-6 sticky top-0 z-10 shadow-md">
         <div className="flex items-center justify-between mb-4">
@@ -331,6 +340,7 @@ export function GuideEditor({ guide, anatomyNodes, exercises, initialPage = 0 }:
         ➕ Add New Section
       </button>
     </div>
+    </>
   );
 }
 

@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { MentionTextarea } from "./MentionTextarea";
 import { MentionRenderer } from "./MentionRenderer";
+import { useToast } from "./Toast";
 
 interface Section {
   id: string;
@@ -96,6 +97,7 @@ export function GuidePaginatedEditor({
   const [saving, setSaving] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
   const [showToc, setShowToc] = useState(true);
+  const { showToast, ToastContainer } = useToast();
 
   const totalPages = sections.length;
   const currentSection = sections[currentPage];
@@ -108,22 +110,15 @@ export function GuidePaginatedEditor({
         e.target instanceof HTMLInputElement ||
         e.target instanceof HTMLTextAreaElement
       ) {
-        // Ctrl+Arrow for navigation while editing
-        if (e.ctrlKey || e.metaKey) {
-          if (e.key === "ArrowLeft" && currentPage > 0) {
-            e.preventDefault();
-            goToPage(currentPage - 1);
-          } else if (e.key === "ArrowRight" && currentPage < totalPages - 1) {
-            e.preventDefault();
-            goToPage(currentPage + 1);
-          } else if (e.key === "s") {
-            e.preventDefault();
-            handleSave();
-          }
+        // Only keep Cmd+S for saving when in text fields
+        if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+          e.preventDefault();
+          handleSave();
         }
         return;
       }
 
+      // Arrow keys work outside of text inputs
       if (e.key === "ArrowLeft" && currentPage > 0) {
         goToPage(currentPage - 1);
       } else if (e.key === "ArrowRight" && currentPage < totalPages - 1) {
@@ -181,17 +176,10 @@ export function GuidePaginatedEditor({
       if (!response.ok) throw new Error("Failed to save guide");
 
       setHasChanges(false);
-      // Brief success feedback
-      const btn = document.getElementById("save-btn");
-      if (btn) {
-        btn.textContent = "✓ Saved!";
-        setTimeout(() => {
-          btn.textContent = "💾 Save";
-        }, 1500);
-      }
+      showToast("Guide saved successfully!", "success");
     } catch (error) {
       console.error("Error saving guide:", error);
-      alert("Failed to save. Check console.");
+      showToast("Failed to save guide. Check console for details.", "error");
     } finally {
       setSaving(false);
     }
@@ -295,9 +283,11 @@ export function GuidePaginatedEditor({
   }
 
   return (
-    <div className="flex h-[calc(100vh-120px)]">
-      {/* Table of Contents Sidebar */}
-      {showToc && (
+    <>
+      {ToastContainer}
+      <div className="flex h-[calc(100vh-120px)]">
+        {/* Table of Contents Sidebar */}
+        {showToc && (
         <div className="w-64 bg-gray-900 text-white overflow-y-auto flex-shrink-0">
           <div className="p-4 border-b border-gray-700 sticky top-0 bg-gray-900">
             <h3 className="font-bold text-sm uppercase text-gray-400">
@@ -604,7 +594,8 @@ export function GuidePaginatedEditor({
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
