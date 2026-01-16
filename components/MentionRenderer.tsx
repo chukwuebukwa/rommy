@@ -43,7 +43,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
                 id,
               })
             }
-            className="text-blue-600 hover:underline cursor-pointer font-medium"
+            className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer font-medium"
             title={`${type}: ${name}`}
           >
             {name}
@@ -81,7 +81,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
+            className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             {linkText}
           </a>
@@ -123,7 +123,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
         parts.push(
           <code
             key={`${keyPrefix}-${key++}`}
-            className="bg-gray-100 px-1.5 py-0.5 rounded text-sm font-mono text-pink-600"
+            className="bg-gray-100 dark:bg-gray-800 px-1.5 py-0.5 rounded text-sm font-mono text-pink-600 dark:text-pink-400"
           >
             {codeText}
           </code>
@@ -165,7 +165,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
       // Heading 1: # text
       if (line.startsWith("# ")) {
         elements.push(
-          <h1 key={key} className="text-3xl font-bold mt-10 mb-4 tracking-tight text-gray-900">
+          <h1 key={key} className="text-3xl font-bold mt-10 mb-4 tracking-tight text-gray-900 dark:text-gray-100">
             {renderInline(line.slice(2), key)}
           </h1>
         );
@@ -175,7 +175,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
       // Heading 2: ## text
       if (line.startsWith("## ")) {
         elements.push(
-          <h2 key={key} className="text-2xl font-bold mt-8 mb-3 tracking-tight text-gray-900">
+          <h2 key={key} className="text-2xl font-bold mt-8 mb-3 tracking-tight text-gray-900 dark:text-gray-100">
             {renderInline(line.slice(3), key)}
           </h2>
         );
@@ -185,7 +185,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
       // Heading 3: ### text
       if (line.startsWith("### ")) {
         elements.push(
-          <h3 key={key} className="text-xl font-semibold mt-6 mb-2 text-gray-800">
+          <h3 key={key} className="text-xl font-semibold mt-6 mb-2 text-gray-800 dark:text-gray-200">
             {renderInline(line.slice(4), key)}
           </h3>
         );
@@ -195,7 +195,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
       // Heading 4: #### text
       if (line.startsWith("#### ")) {
         elements.push(
-          <h4 key={key} className="text-lg font-semibold mt-5 mb-2 text-gray-800">
+          <h4 key={key} className="text-lg font-semibold mt-5 mb-2 text-gray-800 dark:text-gray-200">
             {renderInline(line.slice(5), key)}
           </h4>
         );
@@ -204,7 +204,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
 
       // Horizontal rule: --- or ***
       if (/^(-{3,}|\*{3,})$/.test(line.trim())) {
-        elements.push(<hr key={key} className="my-6 border-gray-300" />);
+        elements.push(<hr key={key} className="my-6 border-gray-300 dark:border-gray-700" />);
         continue;
       }
 
@@ -242,7 +242,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
       // Bullet list: - item or * item
       if (/^[-*]\s/.test(line)) {
         elements.push(
-          <li key={key} className="ml-5 list-disc text-gray-700 leading-relaxed">
+          <li key={key} className="ml-5 list-disc text-gray-700 dark:text-gray-300 leading-relaxed">
             {renderInline(line.slice(2), key)}
           </li>
         );
@@ -253,7 +253,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
       if (/^\d+\.\s/.test(line)) {
         const textStart = line.indexOf(". ") + 2;
         elements.push(
-          <li key={key} className="ml-5 list-decimal text-gray-700 leading-relaxed">
+          <li key={key} className="ml-5 list-decimal text-gray-700 dark:text-gray-300 leading-relaxed">
             {renderInline(line.slice(textStart), key)}
           </li>
         );
@@ -268,7 +268,7 @@ export function MentionRenderer({ content }: MentionRendererProps) {
 
       // Regular paragraph with inline formatting
       elements.push(
-        <p key={key} className="mb-3 text-gray-700 leading-relaxed">
+        <p key={key} className="mb-3 text-gray-700 dark:text-gray-300 leading-relaxed">
           {renderInline(line, key)}
         </p>
       );

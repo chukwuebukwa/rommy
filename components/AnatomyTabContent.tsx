@@ -35,13 +35,13 @@ export function AnatomyTabContent({ anatomyNode }: AnatomyTabContentProps) {
     <div className="space-y-8">
       {/* Group Overview */}
       <div>
-        <h2 className="text-2xl font-bold mb-2">{anatomyNode.name}</h2>
+        <h2 className="text-2xl font-bold text-gray-100 mb-2">{anatomyNode.name}</h2>
         {anatomyNode.description && (
-          <p className="text-gray-700">{anatomyNode.description}</p>
+          <p className="text-gray-300">{anatomyNode.description}</p>
         )}
         {anatomyNode.roleSummary && (
-          <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-            <p className="italic text-blue-900">{anatomyNode.roleSummary}</p>
+          <div className="mt-4 p-4 bg-blue-900/30 rounded-lg border border-blue-700">
+            <p className="italic text-blue-200">{anatomyNode.roleSummary}</p>
           </div>
         )}
       </div>
@@ -104,25 +104,25 @@ function AnatomySection({
     <div className="space-y-4">
       {!hideTitle && (
         <HeadingTag
-          className={`font-bold ${level === 2 ? "text-xl" : "text-lg"}`}
+          className={`font-bold text-gray-100 ${level === 2 ? "text-xl" : "text-lg"}`}
         >
           {node.name}
-          <span className="ml-2 text-xs bg-gray-200 px-2 py-1 rounded uppercase">
+          <span className="ml-2 text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded uppercase">
             {node.kind}
           </span>
         </HeadingTag>
       )}
 
       {!hideTitle && node.description && (
-        <p className="text-gray-700">{node.description}</p>
+        <p className="text-gray-300">{node.description}</p>
       )}
 
       {/* Functions & Notes */}
       <div className="grid md:grid-cols-2 gap-4">
         {primaryFunctions.length > 0 && (
           <div>
-            <h4 className="font-semibold mb-2">Primary Functions</h4>
-            <ul className="list-disc list-inside space-y-1 text-sm">
+            <h4 className="font-semibold text-gray-100 mb-2">Primary Functions</h4>
+            <ul className="list-disc list-inside space-y-1 text-sm text-gray-300">
               {primaryFunctions.map((fn, i) => (
                 <li key={i}>{fn}</li>
               ))}
@@ -131,8 +131,8 @@ function AnatomySection({
         )}
         {aestheticNotes.length > 0 && (
           <div>
-            <h4 className="font-semibold mb-2">Aesthetic Notes</h4>
-            <ul className="list-disc list-inside space-y-1 text-sm">
+            <h4 className="font-semibold text-gray-100 mb-2">Aesthetic Notes</h4>
+            <ul className="list-disc list-inside space-y-1 text-sm text-gray-300">
               {aestheticNotes.map((note, i) => (
                 <li key={i}>{note}</li>
               ))}
@@ -144,21 +144,21 @@ function AnatomySection({
       {/* Exercises for this specific anatomy part */}
       {exercises.length > 0 && (
         <div>
-          <h4 className="font-semibold mb-3">
+          <h4 className="font-semibold text-gray-100 mb-3">
             Exercises Targeting {node.name}
           </h4>
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 list-disc list-inside">
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-2 list-disc list-inside text-gray-300">
             {exercises.map(({ role, exercise }) => (
               <li key={exercise.id} className="text-sm">
                 <button
                   onClick={() => onExerciseClick(exercise)}
-                  className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
+                  className="text-blue-400 hover:text-blue-300 hover:underline font-medium"
                 >
                   {exercise.name}
                 </button>
                 <span className={`ml-1 text-xs ${
-                  role === 'primary' 
-                    ? 'text-green-700' 
+                  role === 'primary'
+                    ? 'text-green-400'
                     : 'text-gray-500'
                 }`}>
                   ({role})
@@ -171,7 +171,7 @@ function AnatomySection({
 
       {/* Nested children (muscle heads/parts) */}
       {node.children?.map((child) => (
-        <div key={child.id} className="ml-6 border-l-2 border-gray-200 pl-6">
+        <div key={child.id} className="ml-6 border-l-2 border-gray-700 pl-6">
           <AnatomySection
             node={child}
             onExerciseClick={onExerciseClick}

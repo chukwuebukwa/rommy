@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* iOS Safe Area support */
 .safe-area-bottom {
   padding-bottom: env(safe-area-inset-bottom, 0px);

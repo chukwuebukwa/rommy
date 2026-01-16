@@ -148,7 +148,7 @@ export default async function LearnPage({
           allRegions={allRegions}
         />
 
-        <div className="bg-white border border-gray-200 rounded-lg">
+        <div className="bg-gray-800 border border-gray-700 rounded-lg">
           <LearnTabs
             regionName={anatomy.name}
             regionDescription={anatomy.description}

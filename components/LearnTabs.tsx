@@ -30,15 +30,15 @@ export function LearnTabs({
   return (
     <div>
       {/* Header */}
-      <div className="p-6 border-b">
-        <h1 className="text-3xl font-bold">{regionName}</h1>
+      <div className="p-6 border-b border-gray-700">
+        <h1 className="text-3xl font-bold text-gray-100">{regionName}</h1>
         {regionDescription && (
-          <p className="text-gray-600 mt-2">{regionDescription}</p>
+          <p className="text-gray-400 mt-2">{regionDescription}</p>
         )}
       </div>
 
       {/* Horizontal Tab Navigation */}
-      <div className="border-b">
+      <div className="border-b border-gray-700">
         <nav className="flex gap-1 px-6" aria-label="Tabs">
           {tabs.map((tab) => (
             <button
@@ -48,14 +48,14 @@ export function LearnTabs({
                 px-6 py-3 font-medium border-b-2 transition relative
                 ${
                   activeTab === tab.id
-                    ? "border-blue-500 text-blue-600"
-                    : "border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300"
+                    ? "border-blue-500 text-blue-400"
+                    : "border-transparent text-gray-400 hover:text-gray-200 hover:border-gray-500"
                 }
               `}
             >
               {tab.label}
               {tab.isCrossReference && (
-                <span className="ml-1 text-xs text-purple-600" title="Also covered in this guide">
+                <span className="ml-1 text-xs text-purple-400" title="Also covered in this guide">
                   ✦
                 </span>
               )}

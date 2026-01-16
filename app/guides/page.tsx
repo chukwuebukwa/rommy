@@ -30,11 +30,11 @@ export default async function GuidesManagementPage() {
     return (
       <div className="container mx-auto py-8 px-4 space-y-8">
         {/* Header */}
-        <div className="bg-white border border-gray-200 rounded-lg p-8">
+        <div className="bg-gray-800 border border-gray-700 rounded-lg p-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold mb-2">📚 Guide CMS</h1>
-              <p className="text-gray-600">
+              <h1 className="text-4xl font-bold text-gray-100 mb-2">📚 Guide CMS</h1>
+              <p className="text-gray-400">
                 Create and manage beautiful guides with full control over content, images,
                 and layout.
               </p>
@@ -69,16 +69,16 @@ export default async function GuidesManagementPage() {
         </div>
 
         {/* Guides List */}
-        <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-2xl font-bold">Your Guides</h2>
+        <div className="bg-gray-800 border border-gray-700 rounded-lg overflow-hidden">
+          <div className="p-6 border-b border-gray-700">
+            <h2 className="text-2xl font-bold text-gray-100">Your Guides</h2>
           </div>
 
           {guides.length === 0 ? (
-            <div className="p-12 text-center text-gray-400">
+            <div className="p-12 text-center text-gray-500">
               <div className="text-6xl mb-4">📝</div>
-              <h3 className="text-xl font-semibold mb-2">No guides yet</h3>
-              <p className="mb-6">Create your first guide to get started!</p>
+              <h3 className="text-xl font-semibold text-gray-100 mb-2">No guides yet</h3>
+              <p className="mb-6 text-gray-400">Create your first guide to get started!</p>
               <Link
                 href="/guides/editor/new"
                 className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
@@ -87,29 +87,29 @@ export default async function GuidesManagementPage() {
               </Link>
             </div>
           ) : (
-            <div className="divide-y divide-gray-200">
+            <div className="divide-y divide-gray-700">
               {guides.map((guide) => (
                 <div
                   key={guide.id}
-                  className="p-6 hover:bg-gray-50 transition group"
+                  className="p-6 hover:bg-gray-700 transition group"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
-                        <h3 className="text-xl font-bold group-hover:text-blue-600 transition">
+                        <h3 className="text-xl font-bold text-gray-100 group-hover:text-blue-400 transition">
                           {guide.title}
                         </h3>
                         {guide.primaryRegion && (
-                          <span className="text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded uppercase font-semibold">
+                          <span className="text-xs bg-purple-900 text-purple-300 px-2 py-1 rounded uppercase font-semibold">
                             {guide.primaryRegion.name}
                           </span>
                         )}
                       </div>
 
-                      <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <div className="flex items-center gap-4 text-sm text-gray-400 mb-3">
                         {guide.author && <span>✍️ {guide.author}</span>}
                         <span>📄 {guide.sections?.length || 0} sections</span>
-                        <span className="text-gray-400">ID: {guide.id}</span>
+                        <span className="text-gray-500">ID: {guide.id}</span>
                       </div>
 
                       <div className="flex gap-2">
@@ -121,13 +121,13 @@ export default async function GuidesManagementPage() {
                         </Link>
                         <Link
                           href={`/guides/${guide.id}`}
-                          className="px-4 py-2 bg-gray-100 text-gray-700 text-sm rounded-lg hover:bg-gray-200 transition"
+                          className="px-4 py-2 bg-gray-700 text-gray-200 text-sm rounded-lg hover:bg-gray-600 transition"
                         >
                           👁️ View
                         </Link>
                         <Link
                           href={`/learn/${guide.primaryRegion?.id || guide.id}`}
-                          className="px-4 py-2 bg-purple-100 text-purple-700 text-sm rounded-lg hover:bg-purple-200 transition"
+                          className="px-4 py-2 bg-purple-900 text-purple-300 text-sm rounded-lg hover:bg-purple-800 transition"
                         >
                           🎓 View in Learn
                         </Link>
@@ -141,9 +141,9 @@ export default async function GuidesManagementPage() {
         </div>
 
         {/* Quick Tips */}
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6">
-          <h3 className="font-bold text-lg mb-3">💡 Quick Tips</h3>
-          <ul className="space-y-2 text-sm text-gray-700">
+        <div className="bg-gradient-to-r from-blue-900/50 to-purple-900/50 border border-blue-700 rounded-lg p-6">
+          <h3 className="font-bold text-lg text-gray-100 mb-3">💡 Quick Tips</h3>
+          <ul className="space-y-2 text-sm text-gray-300">
             <li>✨ Use the section editor to craft beautiful, image-rich content</li>
             <li>🖼️ Images are organized by muscle group (arms, back, chest, shoulders)</li>
             <li>👁️ Preview your guide before saving to see how it looks</li>
@@ -157,9 +157,9 @@ export default async function GuidesManagementPage() {
     console.error("Error loading guides:", error);
     return (
       <div className="container mx-auto py-8 px-4">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-8">
-          <h1 className="text-2xl font-bold text-red-800 mb-4">Error Loading Guides</h1>
-          <p className="text-red-600">
+        <div className="bg-red-900/50 border border-red-700 rounded-lg p-8">
+          <h1 className="text-2xl font-bold text-red-300 mb-4">Error Loading Guides</h1>
+          <p className="text-red-400">
             Unable to load guides. Please check your database connection.
           </p>
         </div>

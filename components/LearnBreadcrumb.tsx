@@ -53,23 +53,23 @@ export function LearnBreadcrumb({ currentRegion, allRegions, basePath = "/learn"
     <nav className="flex items-center space-x-2 text-sm">
       <Link
         href="/"
-        className="text-gray-500 hover:text-gray-700 transition"
+        className="text-gray-400 hover:text-gray-200 transition"
       >
         Home
       </Link>
-      <span className="text-gray-400">/</span>
-      
+      <span className="text-gray-600">/</span>
+
       <div className="relative" data-dropdown>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-1 text-gray-900 font-medium hover:text-blue-600 transition"
+          className="flex items-center gap-1 text-gray-100 font-medium hover:text-blue-400 transition"
         >
           <span>{emojiMap[currentRegion.id] || "🦾"}</span>
           <span>{currentRegion.name}</span>
-          <svg 
+          <svg
             className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-            fill="none" 
-            stroke="currentColor" 
+            fill="none"
+            stroke="currentColor"
             viewBox="0 0 24 24"
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -77,7 +77,7 @@ export function LearnBreadcrumb({ currentRegion, allRegions, basePath = "/learn"
         </button>
 
         {isOpen && (
-          <div className="absolute left-0 top-full mt-1 w-56 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+          <div className="absolute left-0 top-full mt-1 w-56 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-50">
             <div className="py-1">
               {allRegions.map((region) => (
                 <button
@@ -86,8 +86,8 @@ export function LearnBreadcrumb({ currentRegion, allRegions, basePath = "/learn"
                     router.push(`${basePath}/${region.id}`);
                     setIsOpen(false);
                   }}
-                  className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-50 transition flex items-center gap-2 ${
-                    region.id === currentRegion.id ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-700'
+                  className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-700 transition flex items-center gap-2 ${
+                    region.id === currentRegion.id ? 'bg-gray-700 text-blue-400 font-medium' : 'text-gray-300'
                   }`}
                 >
                   <span>{emojiMap[region.id] || "🦾"}</span>

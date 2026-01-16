@@ -46,9 +46,9 @@ interface WorkoutBlockCardProps {
 }
 
 const schemeStyleLabels: Record<string, { label: string; color: string }> = {
-  drop_set: { label: "Drop Set", color: "bg-red-100 text-red-700 border-red-300" },
-  superset: { label: "Superset", color: "bg-purple-100 text-purple-700 border-purple-300" },
-  straight_sets: { label: "Straight Sets", color: "bg-blue-100 text-blue-700 border-blue-300" },
+  drop_set: { label: "Drop Set", color: "bg-red-900 text-red-300 border-red-700" },
+  superset: { label: "Superset", color: "bg-purple-900 text-purple-300 border-purple-700" },
+  straight_sets: { label: "Straight Sets", color: "bg-blue-900 text-blue-300 border-blue-700" },
 };
 
 export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) {
@@ -72,7 +72,7 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
   // Get scheme style info
   const schemeInfo = schemeStyleLabels[block.schemeStyle] || {
     label: block.schemeStyle,
-    color: "bg-gray-100 text-gray-700 border-gray-300"
+    color: "bg-gray-700 text-gray-300 border-gray-600"
   };
 
   // Get unique anatomy targets from all exercises
@@ -106,12 +106,12 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
   // Render a single exercise button
   const renderExerciseButton = (wbe: WorkoutBlockExercise) => {
     const typeColors = wbe.exercise.type === "isolation"
-      ? "bg-purple-50 border-purple-200"
-      : "bg-orange-50 border-orange-200";
+      ? "bg-purple-900/50 border-purple-700"
+      : "bg-orange-900/50 border-orange-700";
 
     const typeBadgeColors = wbe.exercise.type === "isolation"
-      ? "bg-purple-100 text-purple-700"
-      : "bg-orange-100 text-orange-700";
+      ? "bg-purple-800 text-purple-200"
+      : "bg-orange-800 text-orange-200";
 
     const anatomyTargets = getAnatomyTargets(wbe.exercise);
 
@@ -119,14 +119,14 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
       <button
         key={wbe.exercise.id}
         onClick={() => openExerciseDrawer(wbe.exercise)}
-        className={`w-full text-left p-3 rounded-lg border-2 hover:border-green-400 hover:shadow-md transition cursor-pointer ${typeColors}`}
+        className={`w-full text-left p-3 rounded-lg border-2 hover:border-green-500 hover:shadow-md transition cursor-pointer ${typeColors}`}
       >
         <div className="flex items-start justify-between gap-2 mb-2">
-          <h4 className="font-semibold text-gray-900 leading-tight text-sm">
+          <h4 className="font-semibold text-gray-100 leading-tight text-sm">
             {wbe.exercise.name}
           </h4>
           {wbe.exercise.videoUrl && (
-            <span className="text-blue-500 flex-shrink-0">
+            <span className="text-blue-400 flex-shrink-0">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" />
               </svg>
@@ -141,7 +141,7 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
           {anatomyTargets.slice(0, 2).map((target, idx) => (
             <span
               key={idx}
-              className="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-xs"
+              className="px-2 py-0.5 bg-gray-700 text-gray-300 rounded text-xs"
             >
               {target}
             </span>
@@ -159,7 +159,7 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
         onClose={closeExerciseDrawer}
       />
 
-      <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-gray-800 border border-gray-700 rounded-xl shadow-sm overflow-hidden">
         {/* Block Header */}
         <div className="bg-gradient-to-r from-gray-900 to-gray-800 px-4 py-3">
           <div className="flex items-center justify-between">
@@ -178,8 +178,8 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
         </div>
 
         {/* Scheme Description */}
-        <div className="px-4 py-3 bg-amber-50 border-b border-amber-100">
-          <div className="text-sm text-amber-900 whitespace-pre-line leading-relaxed">
+        <div className="px-4 py-3 bg-amber-900/30 border-b border-amber-800">
+          <div className="text-sm text-amber-200 whitespace-pre-line leading-relaxed">
             {block.schemeDesc}
           </div>
         </div>
@@ -190,16 +190,16 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
             // SUPERSET LAYOUT: Show Set A and Set B grouped
             <div className="space-y-4">
               {/* Set A - Compound */}
-              <div className="border-l-4 border-orange-400 pl-4">
+              <div className="border-l-4 border-orange-500 pl-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-bold text-orange-600 uppercase tracking-wider">Set A</span>
-                  <span className="text-xs text-gray-500">Compound</span>
+                  <span className="text-xs font-bold text-orange-400 uppercase tracking-wider">Set A</span>
+                  <span className="text-xs text-gray-400">Compound</span>
                   {repRanges.setA && (
-                    <span className="px-2 py-0.5 bg-orange-100 text-orange-700 rounded text-xs font-medium">
+                    <span className="px-2 py-0.5 bg-orange-800 text-orange-200 rounded text-xs font-medium">
                       {repRanges.setA} reps
                     </span>
                   )}
-                  <span className="text-xs text-gray-400">Pick 1:</span>
+                  <span className="text-xs text-gray-500">Pick 1:</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {compoundExercises.map(renderExerciseButton)}
@@ -220,16 +220,16 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
               </div>
 
               {/* Set B - Isolation */}
-              <div className="border-l-4 border-purple-400 pl-4">
+              <div className="border-l-4 border-purple-500 pl-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-bold text-purple-600 uppercase tracking-wider">Set B</span>
-                  <span className="text-xs text-gray-500">Isolation</span>
+                  <span className="text-xs font-bold text-purple-400 uppercase tracking-wider">Set B</span>
+                  <span className="text-xs text-gray-400">Isolation</span>
                   {repRanges.setB && (
-                    <span className="px-2 py-0.5 bg-purple-100 text-purple-700 rounded text-xs font-medium">
+                    <span className="px-2 py-0.5 bg-purple-800 text-purple-200 rounded text-xs font-medium">
                       {repRanges.setB} reps
                     </span>
                   )}
-                  <span className="text-xs text-gray-400">Pick 1:</span>
+                  <span className="text-xs text-gray-500">Pick 1:</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {isolationExercises.map(renderExerciseButton)}
@@ -240,7 +240,7 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
             // REGULAR LAYOUT: Flat grid
             <>
               {block.exercises.length > 1 && (
-                <p className="text-sm text-gray-600 mb-3 font-medium">
+                <p className="text-sm text-gray-400 mb-3 font-medium">
                   Pick 1 from {block.exercises.length} options:
                 </p>
               )}
@@ -253,8 +253,8 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
 
         {/* Notes (if any) */}
         {block.notes && (
-          <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
-            <p className="text-xs text-gray-600 italic">{block.notes}</p>
+          <div className="px-4 py-3 bg-gray-900 border-t border-gray-700">
+            <p className="text-xs text-gray-400 italic">{block.notes}</p>
           </div>
         )}
       </div>

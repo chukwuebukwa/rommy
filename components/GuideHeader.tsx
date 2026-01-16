@@ -34,28 +34,28 @@ export function GuideHeader({ guide }: GuideHeaderProps) {
 
   return createPortal(
     <div className="flex items-center gap-4">
-      <h1 className="text-lg font-bold">{guide.title}</h1>
+      <h1 className="text-lg font-bold text-gray-100">{guide.title}</h1>
       {guide.author && (
         <>
-          <span className="text-gray-300">•</span>
-          <span className="text-sm text-gray-600">By {guide.author}</span>
+          <span className="text-gray-600">•</span>
+          <span className="text-sm text-gray-400">By {guide.author}</span>
         </>
       )}
       {guide.primaryRegion && (
         <>
-          <span className="text-gray-300">•</span>
+          <span className="text-gray-600">•</span>
           <Link
             href={`/learn/${guide.primaryRegion.id}`}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-sm text-blue-400 hover:underline"
           >
             {guide.primaryRegion.name}
           </Link>
         </>
       )}
-      <span className="text-gray-300">•</span>
+      <span className="text-gray-600">•</span>
       <Link
         href={`/guides/editor/${guide.id}`}
-        className="text-sm text-gray-600 hover:text-gray-900"
+        className="text-sm text-gray-400 hover:text-gray-200"
       >
         Edit
       </Link>

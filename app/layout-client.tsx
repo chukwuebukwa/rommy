@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "@/components/ThemeProvider";
 
 export function LayoutClient({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
   const navItems = [
     { href: "/", icon: "🏠", label: "Home" },
@@ -126,6 +128,31 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
               Database
             </Link>
           </div>
+
+          {/* Dark Mode Toggle */}
+          <div className="pt-6 mt-6 border-t border-gray-800">
+            <button
+              onClick={toggleTheme}
+              className="w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition text-gray-300 hover:bg-gray-800 hover:text-white"
+            >
+              <div className="flex items-center">
+                <span className="mr-3 text-lg">{theme === "dark" ? "🌙" : "☀️"}</span>
+                <span>Dark Mode</span>
+              </div>
+              {/* Toggle Switch */}
+              <div
+                className={`relative w-11 h-6 rounded-full transition-colors ${
+                  theme === "dark" ? "bg-blue-600" : "bg-gray-600"
+                }`}
+              >
+                <div
+                  className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${
+                    theme === "dark" ? "translate-x-5" : "translate-x-0.5"
+                  }`}
+                />
+              </div>
+            </button>
+          </div>
         </nav>
       </aside>
 
@@ -139,7 +166,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
         </main>
 
         {/* iOS-style Bottom Navigation - mobile only */}
-        <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-white/80 backdrop-blur-lg border-t border-gray-200 z-40 safe-area-bottom">
+        <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg border-t border-gray-200 dark:border-gray-700 z-40 safe-area-bottom">
           <div className="flex items-center justify-around h-16 px-2">
             {navItems.map((item) => (
               <Link
@@ -147,13 +174,13 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
                 href={item.href}
                 className={`flex flex-col items-center justify-center flex-1 py-1 transition ${
                   isActive(item.href)
-                    ? "text-blue-600"
-                    : "text-gray-500"
+                    ? "text-blue-600 dark:text-blue-400"
+                    : "text-gray-500 dark:text-gray-400"
                 }`}
               >
                 <span className="text-2xl mb-0.5">{item.icon}</span>
                 <span className={`text-[10px] font-medium ${
-                  isActive(item.href) ? "text-blue-600" : "text-gray-500"
+                  isActive(item.href) ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-400"
                 }`}>
                   {item.label}
                 </span>
@@ -161,7 +188,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
             ))}
           </div>
           {/* Safe area spacer for iOS home indicator */}
-          <div className="h-safe-area-bottom bg-white/80" />
+          <div className="h-safe-area-bottom bg-white/90 dark:bg-gray-900/90" />
         </nav>
       </div>
     </div>

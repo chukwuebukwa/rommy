@@ -108,26 +108,26 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
 
       {/* Drawer */}
       <div
-        className={`${drawerClasses} bg-white shadow-xl z-50 transition-transform duration-300 ease-in-out overflow-y-auto`}
+        className={`${drawerClasses} bg-gray-900 shadow-xl z-50 transition-transform duration-300 ease-in-out overflow-y-auto`}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 z-10">
+        <div className="sticky top-0 bg-gray-900 border-b border-gray-700 px-6 py-4 z-10">
           <div className="flex items-start justify-between gap-4 mb-3">
             <div className="flex-1">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">{exercise.name}</h2>
+              <h2 className="text-2xl font-bold text-gray-100 mb-2">{exercise.name}</h2>
               <a
                 href={`/exercises/${exercise.id}`}
-                className="inline-flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition"
+                className="inline-flex items-center gap-1 text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline transition"
               >
                 View full exercise page →
               </a>
             </div>
             <button
               onClick={onClose}
-              className="flex-shrink-0 p-2 hover:bg-gray-100 rounded-full transition"
+              className="flex-shrink-0 p-2 hover:bg-gray-800 rounded-full transition"
             >
               <svg
-                className="w-6 h-6 text-gray-600"
+                className="w-6 h-6 text-gray-400"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -141,19 +141,19 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
               </svg>
             </button>
           </div>
-          
+
           <div className="flex flex-wrap gap-2">
-            <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs font-semibold uppercase">
+            <span className="px-2 py-1 bg-blue-900 text-blue-300 rounded text-xs font-semibold uppercase">
               {exercise.type}
             </span>
-            <span className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs">
+            <span className="px-2 py-1 bg-gray-700 text-gray-300 rounded text-xs">
               {exercise.movementPattern}
             </span>
             {primaryMuscles.map((link) => (
               <a
                 key={link.anatomy.id}
                 href={`/anatomy/${link.anatomy.id}`}
-                className="px-2 py-1 bg-green-100 text-green-700 rounded text-xs font-medium hover:bg-green-200 transition"
+                className="px-2 py-1 bg-green-900 text-green-300 rounded text-xs font-medium hover:bg-green-800 transition"
               >
                 {link.anatomy.name}
               </a>
@@ -162,7 +162,7 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
               <a
                 key={link.anatomy.id}
                 href={`/anatomy/${link.anatomy.id}`}
-                className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-medium hover:bg-yellow-200 transition"
+                className="px-2 py-1 bg-yellow-900 text-yellow-300 rounded text-xs font-medium hover:bg-yellow-800 transition"
               >
                 {link.anatomy.name}
               </a>
@@ -175,7 +175,7 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
           {/* Video Embed */}
           {embedUrl ? (
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Video Tutorial</h3>
+              <h3 className="font-semibold text-gray-100 mb-3">Video Tutorial</h3>
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
                 <iframe
                   src={embedUrl}
@@ -202,34 +202,34 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
 
           {/* Form Cues */}
           {exercise.cueSummary && (
-            <div className="p-4 bg-blue-50 border-l-4 border-blue-500 rounded">
-              <h3 className="font-semibold text-blue-900 mb-2">Form Cues</h3>
-              <p className="text-gray-700">{exercise.cueSummary}</p>
+            <div className="p-4 bg-blue-900/30 border-l-4 border-blue-500 rounded">
+              <h3 className="font-semibold text-blue-300 mb-2">Form Cues</h3>
+              <p className="text-gray-300">{exercise.cueSummary}</p>
             </div>
           )}
 
           {/* Anatomy Targets */}
           {exercise.anatomyLinks && exercise.anatomyLinks.length > 0 && (
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Targets</h3>
+              <h3 className="font-semibold text-gray-100 mb-3">Targets</h3>
               <div className="space-y-2">
                 {exercise.anatomyLinks.map((link) => (
                   <div
                     key={link.anatomy.id}
-                    className="flex items-center gap-2 p-2 bg-gray-50 rounded"
+                    className="flex items-center gap-2 p-2 bg-gray-800 rounded"
                   >
                     <span
                       className={`text-xs px-2 py-1 rounded font-semibold ${
                         link.role === "primary"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-yellow-100 text-yellow-800"
+                          ? "bg-green-900 text-green-300"
+                          : "bg-yellow-900 text-yellow-300"
                       }`}
                     >
                       {link.role}
                     </span>
                     <a
                       href={`/anatomy/${link.anatomy.id}`}
-                      className="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
+                      className="text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline"
                     >
                       {link.anatomy.name}
                     </a>
@@ -242,12 +242,12 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
           {/* Equipment */}
           {equipment.length > 0 && (
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3">Equipment Needed</h3>
+              <h3 className="font-semibold text-gray-100 mb-3">Equipment Needed</h3>
               <div className="flex flex-wrap gap-2">
                 {equipment.map((item: string) => (
                   <span
                     key={item}
-                    className="px-3 py-1 bg-gray-100 text-gray-700 rounded font-medium"
+                    className="px-3 py-1 bg-gray-700 text-gray-300 rounded font-medium"
                   >
                     {item}
                   </span>
@@ -257,7 +257,7 @@ export function ExerciseDrawer({ exercise, isOpen, onClose }: ExerciseDrawerProp
           )}
 
           {/* ID for reference */}
-          <div className="pt-4 border-t border-gray-200">
+          <div className="pt-4 border-t border-gray-700">
             <div className="text-sm text-gray-500">
               <span className="font-mono">{exercise.id}</span>
             </div>

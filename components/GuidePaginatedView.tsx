@@ -116,7 +116,7 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
   return (
     <div className="flex min-h-screen">
       {/* Desktop Sidebar */}
-      <aside className="hidden md:block w-60 shrink-0 border-r border-gray-200 bg-gray-50/50">
+      <aside className="hidden md:block w-60 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50">
         <div className="sticky top-0 h-screen overflow-y-auto">
           <GuideSectionNav
             sections={sections}
@@ -138,8 +138,8 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
                 disabled={currentPage === 0}
                 className={`flex items-center gap-1 font-medium transition ${
                   currentPage === 0
-                    ? "text-gray-300 cursor-not-allowed"
-                    : "text-gray-900 hover:text-blue-600"
+                    ? "text-gray-300 dark:text-gray-600 cursor-not-allowed"
+                    : "text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
                 }`}
               >
                 <svg
@@ -159,7 +159,7 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
               </button>
 
               {/* Page Indicator - simplified on desktop since we have sidebar */}
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-500 dark:text-gray-400">
                 {currentPage + 1} / {totalPages}
               </span>
 
@@ -169,8 +169,8 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
                 disabled={currentPage === totalPages - 1}
                 className={`flex items-center gap-1 font-medium transition ${
                   currentPage === totalPages - 1
-                    ? "text-gray-300 cursor-not-allowed"
-                    : "text-gray-900 hover:text-blue-600"
+                    ? "text-gray-300 dark:text-gray-600 cursor-not-allowed"
+                    : "text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400"
                 }`}
               >
                 Next
@@ -197,40 +197,40 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
         <div className="mb-8">
           {/* Breadcrumb Navigation */}
           {breadcrumbs.length > 0 && (
-            <nav className="flex items-center gap-2 text-sm text-gray-600 mb-3">
+            <nav className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 mb-3">
               {breadcrumbs.map((crumb, idx) => {
                 const crumbIndex = sections.findIndex(s => s.id === crumb.id);
                 return (
                   <div key={crumb.id} className="flex items-center gap-2">
                     <button
                       onClick={() => goToPage(crumbIndex)}
-                      className="hover:text-blue-600 transition"
+                      className="hover:text-blue-600 dark:hover:text-blue-400 transition"
                     >
                       {crumb.title}
                     </button>
-                    <span className="text-gray-400">/</span>
+                    <span className="text-gray-400 dark:text-gray-600">/</span>
                   </div>
                 );
               })}
-              <span className="text-gray-900 font-medium">{currentSection.title}</span>
+              <span className="text-gray-900 dark:text-gray-100 font-medium">{currentSection.title}</span>
             </nav>
           )}
 
           <div className="flex items-center justify-between mb-4">
             <span className={`text-xs uppercase font-semibold tracking-wider px-2 py-1 rounded ${
-              currentSection.kind === 'anatomy' ? 'bg-teal-50 text-teal-700' :
-              currentSection.kind === 'mindset' ? 'bg-purple-50 text-purple-700' :
-              currentSection.kind === 'program' ? 'bg-orange-50 text-orange-700' :
-              currentSection.kind === 'intro' ? 'bg-blue-50 text-blue-700' :
-              currentSection.kind === 'cover' ? 'bg-gray-900 text-white' :
-              'bg-gray-100 text-gray-600'
+              currentSection.kind === 'anatomy' ? 'bg-teal-100 text-teal-700 dark:bg-teal-900 dark:text-teal-300' :
+              currentSection.kind === 'mindset' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300' :
+              currentSection.kind === 'program' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300' :
+              currentSection.kind === 'intro' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' :
+              currentSection.kind === 'cover' ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900' :
+              'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
             }`}>
               {currentSection.kind}
             </span>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => router.push(`/guides/editor/${guide.id}?page=${currentPage}`)}
-                className="text-xs text-gray-500 hover:text-gray-700 flex items-center gap-1 transition"
+                className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center gap-1 transition"
                 title="Edit this page"
               >
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +240,7 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
               </button>
             </div>
           </div>
-          <h2 className="text-4xl font-bold tracking-tight text-gray-900">
+          <h2 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
             {currentSection.title}
           </h2>
         </div>
@@ -248,19 +248,19 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
         {/* Subsections Navigation - compact inline list */}
         {currentSection.children && currentSection.children.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 mb-6 text-sm">
-            <span className="text-gray-500">In this section:</span>
+            <span className="text-gray-500 dark:text-gray-400">In this section:</span>
             {currentSection.children.map((child, idx) => {
               const childIndex = sections.findIndex(s => s.id === child.id);
               return (
                 <span key={child.id} className="flex items-center">
                   <button
                     onClick={() => goToPage(childIndex)}
-                    className="text-blue-600 hover:text-blue-800 hover:underline"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:underline"
                   >
                     {child.title}
                   </button>
                   {idx < currentSection.children!.length - 1 && (
-                    <span className="text-gray-300 ml-2">•</span>
+                    <span className="text-gray-300 dark:text-gray-600 ml-2">•</span>
                   )}
                 </span>
               );
@@ -279,10 +279,10 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
             />
           ) : currentSection.kind === "program" && workoutLoading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-gray-100"></div>
             </div>
           ) : (
-            <div className="prose prose-lg max-w-none">
+            <div className="prose prose-lg dark:prose-invert max-w-none">
               <MentionRenderer content={currentSection.content} />
             </div>
           )}
@@ -298,7 +298,7 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
                     : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
               }`}>
                 {currentSection.images.map((imagePath) => (
-                  <div key={imagePath} className="overflow-hidden rounded-xl shadow-sm border border-gray-100">
+                  <div key={imagePath} className="overflow-hidden rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                     <img
                       src={`/guides/${imagePath}`}
                       alt={currentSection.title}

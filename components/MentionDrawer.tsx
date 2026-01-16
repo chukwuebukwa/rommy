@@ -51,7 +51,7 @@ export function MentionDrawer({ isOpen, onClose, type, id }: MentionDrawerProps)
         <div className="flex items-center justify-center py-12">
           <div className="text-center">
             <div className="text-4xl mb-4 animate-pulse">⏳</div>
-            <p className="text-gray-500">Loading details...</p>
+            <p className="text-gray-400">Loading details...</p>
           </div>
         </div>
       ) : data ? (
@@ -63,7 +63,7 @@ export function MentionDrawer({ isOpen, onClose, type, id }: MentionDrawerProps)
           )}
         </>
       ) : (
-        <div className="text-center py-12 text-gray-500">
+        <div className="text-center py-12 text-gray-400">
           No data available
         </div>
       )}
@@ -78,10 +78,10 @@ export function MentionDrawer({ isOpen, onClose, type, id }: MentionDrawerProps)
       <Drawer.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/50 z-40" />
-          <Drawer.Content className="fixed bottom-0 left-0 right-0 bg-white rounded-t-2xl z-50 flex flex-col max-h-[90vh]">
+          <Drawer.Content className="fixed bottom-0 left-0 right-0 bg-gray-900 rounded-t-2xl z-50 flex flex-col max-h-[90vh]">
             {/* Drag Handle */}
-            <div className="flex justify-center py-3 border-b">
-              <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
+            <div className="flex justify-center py-3 border-b border-gray-700">
+              <div className="w-12 h-1.5 bg-gray-600 rounded-full" />
             </div>
 
             {/* Header */}
@@ -152,7 +152,7 @@ export function MentionDrawer({ isOpen, onClose, type, id }: MentionDrawerProps)
       />
 
       {/* Drawer */}
-      <div className="fixed right-0 top-0 bottom-0 w-[600px] bg-white shadow-2xl z-50 overflow-y-auto transition-transform duration-300 ease-in-out">
+      <div className="fixed right-0 top-0 bottom-0 w-[600px] bg-gray-900 shadow-2xl z-50 overflow-y-auto transition-transform duration-300 ease-in-out">
         {/* Header */}
         <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 shadow-lg z-10">
           <div className="flex items-center justify-between">
@@ -266,13 +266,13 @@ function ExerciseDetails({ exercise }: { exercise: any }) {
 
       {/* Basic Info */}
       <div className="grid grid-cols-2 gap-4">
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <div className="text-sm text-gray-600 mb-1">Type</div>
-          <div className="font-semibold capitalize">{exercise.type}</div>
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <div className="text-sm text-gray-400 mb-1">Type</div>
+          <div className="font-semibold capitalize text-gray-100">{exercise.type}</div>
         </div>
-        <div className="bg-gray-50 p-4 rounded-lg">
-          <div className="text-sm text-gray-600 mb-1">Pattern</div>
-          <div className="font-semibold capitalize">
+        <div className="bg-gray-800 p-4 rounded-lg">
+          <div className="text-sm text-gray-400 mb-1">Pattern</div>
+          <div className="font-semibold capitalize text-gray-100">
             {exercise.movementPattern?.replace(/_/g, " ")}
           </div>
         </div>
@@ -281,12 +281,12 @@ function ExerciseDetails({ exercise }: { exercise: any }) {
       {/* Equipment */}
       {exercise.equipment && exercise.equipment.length > 0 && (
         <div>
-          <h3 className="font-semibold mb-2">🏋️ Equipment</h3>
+          <h3 className="font-semibold text-gray-100 mb-2">🏋️ Equipment</h3>
           <div className="flex flex-wrap gap-2">
             {exercise.equipment.map((item: string) => (
               <span
                 key={item}
-                className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm"
+                className="px-3 py-1 bg-green-900 text-green-300 rounded-full text-sm"
               >
                 {item}
               </span>
@@ -297,28 +297,28 @@ function ExerciseDetails({ exercise }: { exercise: any }) {
 
       {/* Form Cues */}
       {exercise.cueSummary && (
-        <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
-          <h3 className="font-semibold mb-2 text-yellow-900">💡 Form Cues</h3>
-          <p className="text-yellow-900">{exercise.cueSummary}</p>
+        <div className="bg-yellow-900/30 border-l-4 border-yellow-500 p-4 rounded">
+          <h3 className="font-semibold mb-2 text-yellow-300">💡 Form Cues</h3>
+          <p className="text-yellow-200">{exercise.cueSummary}</p>
         </div>
       )}
 
       {/* Targeted Anatomy */}
       {exercise.anatomyLinks && exercise.anatomyLinks.length > 0 && (
         <div>
-          <h3 className="font-semibold mb-3">🎯 Targets</h3>
+          <h3 className="font-semibold text-gray-100 mb-3">🎯 Targets</h3>
           <div className="space-y-2">
             {exercise.anatomyLinks.map((link: any) => (
               <div
                 key={link.anatomy.id}
                 className={`p-3 rounded-lg ${
                   link.role === "primary"
-                    ? "bg-blue-100 border-2 border-blue-300"
-                    : "bg-gray-100"
+                    ? "bg-blue-900/50 border-2 border-blue-700"
+                    : "bg-gray-800"
                 }`}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-medium">{link.anatomy.name}</span>
+                  <span className="font-medium text-gray-100">{link.anatomy.name}</span>
                   <span
                     className={`text-xs px-2 py-1 rounded ${
                       link.role === "primary"
@@ -578,16 +578,16 @@ function AnatomyDetails({ anatomy }: { anatomy: any }) {
       )}
 
       {/* Basic Info */}
-      <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-lg">
+      <div className="bg-gradient-to-br from-blue-900/30 to-purple-900/30 p-6 rounded-lg">
         <div className="flex items-center gap-3 mb-4">
           <span className="px-3 py-1 bg-blue-600 text-white rounded-full text-sm font-semibold">
             {anatomy.kind}
           </span>
-          <span className="text-gray-600">ID: {anatomy.id}</span>
+          <span className="text-gray-400">ID: {anatomy.id}</span>
         </div>
-        
+
         {anatomy.description && (
-          <p className="text-gray-700 leading-relaxed">{anatomy.description}</p>
+          <p className="text-gray-300 leading-relaxed">{anatomy.description}</p>
         )}
       </div>
 
@@ -619,20 +619,20 @@ function AnatomyDetails({ anatomy }: { anatomy: any }) {
 
       {/* Role Summary */}
       {anatomy.roleSummary && (
-        <div className="bg-purple-50 border-l-4 border-purple-400 p-4 rounded">
-          <h3 className="font-semibold mb-2 text-purple-900">📋 Role</h3>
-          <p className="text-purple-900">{anatomy.roleSummary}</p>
+        <div className="bg-purple-900/30 border-l-4 border-purple-500 p-4 rounded">
+          <h3 className="font-semibold mb-2 text-purple-300">📋 Role</h3>
+          <p className="text-purple-200">{anatomy.roleSummary}</p>
         </div>
       )}
 
       {/* Primary Functions */}
       {anatomy.primaryFunctions && anatomy.primaryFunctions.length > 0 && (
         <div>
-          <h3 className="font-semibold mb-2">⚡ Primary Functions</h3>
+          <h3 className="font-semibold text-gray-100 mb-2">⚡ Primary Functions</h3>
           <ul className="space-y-2">
             {anatomy.primaryFunctions.map((func: string, i: number) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="text-green-600 mt-1">✓</span>
+              <li key={i} className="flex items-start gap-2 text-gray-300">
+                <span className="text-green-400 mt-1">✓</span>
                 <span>{func}</span>
               </li>
             ))}
@@ -643,11 +643,11 @@ function AnatomyDetails({ anatomy }: { anatomy: any }) {
       {/* Aesthetic Notes */}
       {anatomy.aestheticNotes && anatomy.aestheticNotes.length > 0 && (
         <div>
-          <h3 className="font-semibold mb-2">💪 Aesthetic Notes</h3>
+          <h3 className="font-semibold text-gray-100 mb-2">💪 Aesthetic Notes</h3>
           <ul className="space-y-2">
             {anatomy.aestheticNotes.map((note: string, i: number) => (
-              <li key={i} className="flex items-start gap-2">
-                <span className="text-blue-600 mt-1">•</span>
+              <li key={i} className="flex items-start gap-2 text-gray-300">
+                <span className="text-blue-400 mt-1">•</span>
                 <span>{note}</span>
               </li>
             ))}
@@ -658,7 +658,7 @@ function AnatomyDetails({ anatomy }: { anatomy: any }) {
       {/* Related Exercises - Video Grid */}
       {anatomy.exerciseLinks && anatomy.exerciseLinks.length > 0 && (
         <div>
-          <h3 className="font-semibold mb-3">🏋️ Related Exercises ({anatomy.exerciseLinks.length})</h3>
+          <h3 className="font-semibold text-gray-100 mb-3">🏋️ Related Exercises ({anatomy.exerciseLinks.length})</h3>
           <ExerciseVideoGrid exerciseLinks={anatomy.exerciseLinks} />
         </div>
       )}
@@ -666,15 +666,15 @@ function AnatomyDetails({ anatomy }: { anatomy: any }) {
       {/* Children */}
       {anatomy.children && anatomy.children.length > 0 && (
         <div>
-          <h3 className="font-semibold mb-3">🔗 Sub-parts ({anatomy.children.length})</h3>
+          <h3 className="font-semibold text-gray-100 mb-3">🔗 Sub-parts ({anatomy.children.length})</h3>
           <div className="grid grid-cols-1 gap-2">
             {anatomy.children.map((child: any) => (
               <div
                 key={child.id}
-                className="p-3 bg-blue-50 rounded-lg border border-blue-200"
+                className="p-3 bg-blue-900/30 rounded-lg border border-blue-800"
               >
-                <div className="font-medium">{child.name}</div>
-                <div className="text-sm text-gray-600">{child.kind}</div>
+                <div className="font-medium text-gray-100">{child.name}</div>
+                <div className="text-sm text-gray-400">{child.kind}</div>
               </div>
             ))}
           </div>

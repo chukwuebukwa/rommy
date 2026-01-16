@@ -48,16 +48,16 @@ export function GuideMobileSheet({
         }`}
       >
         {/* Sheet container */}
-        <div className="bg-white rounded-t-2xl shadow-2xl border-t border-gray-200 max-h-[70vh] flex flex-col">
+        <div className="bg-white dark:bg-gray-900 rounded-t-2xl shadow-2xl border-t border-gray-200 dark:border-gray-700 max-h-[70vh] flex flex-col">
           {/* Collapsed bar / Header */}
           <button
             onClick={onToggle}
-            className="flex items-center justify-between px-4 py-4 border-b border-gray-100"
+            className="flex items-center justify-between px-4 py-4 border-b border-gray-100 dark:border-gray-800"
           >
             <div className="flex items-center gap-2">
               <span className="text-lg">📑</span>
-              <span className="font-medium text-gray-900">Sections</span>
-              <span className="text-sm text-gray-500">
+              <span className="font-medium text-gray-900 dark:text-gray-100">Sections</span>
+              <span className="text-sm text-gray-500 dark:text-gray-400">
                 ({currentPage + 1}/{totalPages})
               </span>
             </div>
@@ -65,12 +65,12 @@ export function GuideMobileSheet({
             {/* Toggle icon */}
             <div className="flex items-center gap-2">
               {!isOpen && (
-                <span className="text-sm text-gray-500 truncate max-w-[120px]">
+                <span className="text-sm text-gray-500 dark:text-gray-400 truncate max-w-[120px]">
                   {currentTitle}
                 </span>
               )}
               <svg
-                className={`w-5 h-5 text-gray-400 transition-transform ${
+                className={`w-5 h-5 text-gray-400 dark:text-gray-500 transition-transform ${
                   isOpen ? "rotate-180" : ""
                 }`}
                 fill="none"
