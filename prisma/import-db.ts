@@ -119,11 +119,24 @@ async function importDatabase(filePath?: string) {
       }
     }
 
-    // 3. Sections
+    // 3. Sections (two-pass for parent hierarchy, like AnatomyNodes)
     if (data.sections && data.sections.length > 0) {
       console.log('   - Sections...');
+
+      // First pass: create all sections without parent relationships
       for (const section of data.sections) {
-        await prisma.section.create({ data: section });
+        const { parentId, ...sectionWithoutParent } = section;
+        await prisma.section.create({ data: sectionWithoutParent });
+      }
+
+      // Second pass: update parent relationships
+      for (const section of data.sections) {
+        if (section.parentId) {
+          await prisma.section.update({
+            where: { id: section.id },
+            data: { parentId: section.parentId }
+          });
+        }
       }
     }
 
