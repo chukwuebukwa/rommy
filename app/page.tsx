@@ -1,6 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 
+// Body part config
+const GUIDE_CONFIG: Record<string, { icon: string; color: string }> = {
+  arms: { icon: "💪", color: "bg-orange-500" },
+  chest: { icon: "🫁", color: "bg-sky-500" },
+  back: { icon: "🦍", color: "bg-purple-500" },
+  legs: { icon: "🦵", color: "bg-emerald-500" },
+  shoulders: { icon: "🎯", color: "bg-amber-500" },
+};
+
 export default async function Home() {
   const guides = await prisma.guide.findMany({
     orderBy: { title: "asc" },
@@ -8,55 +17,65 @@ export default async function Home() {
       _count: {
         select: { sections: true },
       },
+      sections: {
+        where: { kind: "program" },
+        orderBy: { order: "asc" },
+        take: 1,
+        select: { id: true, title: true, order: true },
+      },
     },
   });
 
   return (
     <div className="px-4 py-6 md:px-6 md:py-8">
-      {/* Header */}
+      {/* Hero */}
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-          Training Guides
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+          Training Programs
         </h1>
-        <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base">
-          Complete guides by Uncle Rommy for building strength, muscle, and resilience.
+        <p className="text-gray-500 dark:text-gray-400">
+          by Uncle Rommy
         </p>
       </div>
 
-      {/* Guides Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {guides.map((guide) => (
-          <Link
-            key={guide.id}
-            href={`/guides/${guide.id}`}
-            className="group block bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 overflow-hidden hover:border-blue-500 hover:shadow-lg transition-all duration-200"
-          >
-            {/* Guide Card */}
-            <div className="p-5">
-              <div className="flex items-start justify-between mb-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white text-xl font-bold shadow-md">
-                  {guide.title.charAt(0)}
-                </div>
-                <span className="text-xs text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
-                  {guide._count.sections} pages
-                </span>
-              </div>
-              
-              <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition mb-1">
-                {guide.title}
-              </h2>
+      {/* Guide List - Clean iOS Style */}
+      <div className="space-y-3">
+        {guides.map((guide) => {
+          const config = GUIDE_CONFIG[guide.id] || { icon: "📖", color: "bg-gray-500" };
+          const programSection = guide.sections[0];
+          // Primary action: go to workout if available, otherwise guide start
+          const primaryHref = programSection
+            ? `/guides/${guide.id}?page=${programSection.order}`
+            : `/guides/${guide.id}`;
 
-              {guide.author && (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  By {guide.author}
+          return (
+            <Link
+              key={guide.id}
+              href={primaryHref}
+              className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800/60 rounded-2xl active:scale-[0.98] transition-transform"
+            >
+              {/* Icon */}
+              <div className={`w-12 h-12 ${config.color} rounded-xl flex items-center justify-center text-2xl`}>
+                {config.icon}
+              </div>
+
+              {/* Content */}
+              <div className="flex-1 min-w-0">
+                <h2 className="font-semibold text-gray-900 dark:text-gray-100">
+                  {guide.id.charAt(0).toUpperCase() + guide.id.slice(1)}
+                </h2>
+                <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
+                  {guide.title.replace(/^[A-Z]+ - /, '')}
                 </p>
-              )}
-            </div>
-            
-            {/* Bottom accent */}
-            <div className="h-1 bg-gradient-to-r from-blue-500 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
-          </Link>
-        ))}
+              </div>
+
+              {/* Chevron */}
+              <svg className="w-5 h-5 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </Link>
+          );
+        })}
       </div>
 
       {/* Empty state */}

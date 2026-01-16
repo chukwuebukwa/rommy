@@ -207,6 +207,7 @@ model WorkoutBlockExercise {
   blockId    String
   exerciseId String
   kind       String                                 // "option" | "required"
+  setLabel   String?                                // "A" | "B" for supersets
 
   block    WorkoutBlock @relation(fields: [blockId], references: [id])
   exercise Exercise     @relation(fields: [exerciseId], references: [id])

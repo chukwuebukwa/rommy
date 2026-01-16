@@ -35,6 +35,7 @@ interface WorkoutBlock {
   notes: string | null;
   exercises: Array<{
     kind: string;
+    setLabel: string | null;
     exercise: Exercise;
   }>;
 }

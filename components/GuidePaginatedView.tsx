@@ -7,6 +7,7 @@ import { MentionRenderer } from "./MentionRenderer";
 import { GuideSectionNav } from "./GuideSectionNav";
 import { GuideMobileSheet } from "./GuideMobileSheet";
 import { WorkoutProgramView } from "./WorkoutProgramView";
+import { useTheme } from "./ThemeProvider";
 
 interface Section {
   id: string;
@@ -50,16 +51,23 @@ interface GuidePaginatedViewProps {
 export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { theme, toggleTheme } = useTheme();
   const initialPage = parseInt(searchParams.get("page") || "0", 10);
   const [currentPage, setCurrentPage] = useState(
     initialPage >= 0 && initialPage < guide.sections.length ? initialPage : 0
   );
   const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [workoutData, setWorkoutData] = useState<any>(null);
   const [workoutLoading, setWorkoutLoading] = useState(false);
   const sections = guide.sections.sort((a, b) => a.order - b.order);
   const totalPages = sections.length;
   const currentSection = sections[currentPage];
+
+  // Close menu when navigating
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [currentPage]);
 
   // Fetch workout data when on a program section
   useEffect(() => {
@@ -113,8 +121,108 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
 
   const breadcrumbs = getBreadcrumbs(currentSection);
 
+  const navItems = [
+    { href: "/", icon: "🏠", label: "Home" },
+    { href: "/guides", icon: "📖", label: "Guides" },
+    { href: "/learn2", icon: "🎓", label: "Learn" },
+    { href: "/exercises", icon: "🏋️", label: "Exercises" },
+    { href: "/anatomy", icon: "🦾", label: "Anatomy" },
+  ];
+
   return (
     <div className="flex min-h-screen">
+      {/* Mobile Menu Overlay */}
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-50 md:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Slide-out Menu - Main Nav Only */}
+      <div
+        className={`fixed inset-y-0 left-0 w-72 bg-gray-900 z-50 transform transition-transform duration-300 ease-out md:hidden ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <div className="flex flex-col h-full">
+          {/* Menu Header */}
+          <div className="flex items-center justify-between p-4 border-b border-gray-800">
+            <Link href="/" className="flex items-center gap-2">
+              <span className="text-2xl">💪</span>
+              <span className="font-bold text-white">Rommy's Guide</span>
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2 text-gray-400 hover:text-white"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Navigation Items */}
+          <nav className="flex-1 overflow-y-auto p-4">
+            <div className="space-y-1">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="flex items-center gap-3 px-3 py-2.5 text-gray-300 hover:bg-gray-800 hover:text-white rounded-lg transition"
+                >
+                  <span className="text-xl">{item.icon}</span>
+                  <span className="font-medium">{item.label}</span>
+                </Link>
+              ))}
+            </div>
+
+            {/* Guide Quick Links */}
+            <div className="mt-6 pt-6 border-t border-gray-800">
+              <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-3 mb-3">
+                Guides
+              </div>
+              {[
+                { id: "arms", icon: "💪", label: "Arms" },
+                { id: "chest", icon: "🫁", label: "Chest" },
+                { id: "back", icon: "🦍", label: "Back" },
+                { id: "legs", icon: "🦵", label: "Legs" },
+                { id: "shoulders", icon: "🎯", label: "Shoulders" },
+              ].map((g) => (
+                <Link
+                  key={g.id}
+                  href={`/guides/${g.id}`}
+                  className={`flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition ${
+                    guide.id === g.id
+                      ? "bg-gray-800 text-white"
+                      : "text-gray-400 hover:bg-gray-800 hover:text-white"
+                  }`}
+                >
+                  <span>{g.icon}</span>
+                  <span>{g.label}</span>
+                </Link>
+              ))}
+            </div>
+          </nav>
+
+          {/* Dark Mode Toggle */}
+          <div className="p-4 border-t border-gray-800">
+            <button
+              onClick={toggleTheme}
+              className="w-full flex items-center justify-between px-3 py-2.5 text-gray-300 hover:bg-gray-800 rounded-lg transition"
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-xl">{theme === "dark" ? "🌙" : "☀️"}</span>
+                <span className="font-medium">Dark Mode</span>
+              </div>
+              <div className={`relative w-11 h-6 rounded-full transition-colors ${theme === "dark" ? "bg-blue-600" : "bg-gray-600"}`}>
+                <div className={`absolute top-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform ${theme === "dark" ? "translate-x-5" : "translate-x-0.5"}`} />
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+
       {/* Desktop Sidebar */}
       <aside className="hidden md:block w-60 shrink-0 border-r border-gray-200 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-900/50">
         <div className="sticky top-0 h-screen overflow-y-auto">
@@ -128,9 +236,36 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
 
       {/* Main Content */}
       <main className="flex-1 min-w-0">
+        {/* Mobile Header - Clean iOS style */}
+        <div className="sticky top-0 z-40 md:hidden bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-gray-700/50">
+          <div className="flex items-center px-4 h-12">
+            {/* Back / Menu */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="p-1.5 -ml-1.5 text-gray-600 dark:text-gray-400"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
+            {/* Title - centered */}
+            <div className="flex-1 text-center">
+              <span className="text-sm font-medium text-gray-900 dark:text-gray-100 truncate">
+                {currentSection.title}
+              </span>
+            </div>
+
+            {/* Page count */}
+            <span className="text-xs text-gray-400 dark:text-gray-500 tabular-nums">
+              {currentPage + 1}/{totalPages}
+            </span>
+          </div>
+        </div>
+
         <div className="max-w-3xl px-6 py-8 pb-24 md:pb-8 md:px-10">
-          {/* Navigation Controls */}
-          <div className="mb-8">
+          {/* Desktop Navigation Controls */}
+          <div className="hidden md:block mb-8">
             <div className="flex items-center justify-between">
               {/* Previous Button */}
               <button
@@ -158,7 +293,7 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
                 Previous
               </button>
 
-              {/* Page Indicator - simplified on desktop since we have sidebar */}
+              {/* Page Indicator */}
               <span className="text-sm text-gray-500 dark:text-gray-400">
                 {currentPage + 1} / {totalPages}
               </span>
@@ -350,7 +485,7 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
         </div>
       </main>
 
-      {/* Mobile Bottom Sheet */}
+      {/* Mobile Bottom Sheet for Guide Sections */}
       <GuideMobileSheet
         isOpen={mobileSheetOpen}
         onToggle={() => setMobileSheetOpen(!mobileSheetOpen)}
