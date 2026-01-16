@@ -260,7 +260,7 @@ async function main() {
           title: data.spec.title,
           order: data.spec.order,
           content: data.mergedContent,
-          images: data.mergedImages.length > 0 ? data.mergedImages : null,
+          images: data.mergedImages.length > 0 ? data.mergedImages : undefined,
           parentId: null, // Set in second pass
         }
       });
