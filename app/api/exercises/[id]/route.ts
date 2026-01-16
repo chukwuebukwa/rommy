@@ -1,6 +1,34 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const exercise = await prisma.exercise.findUnique({
+      where: { id },
+      include: {
+        anatomyLinks: {
+          include: {
+            anatomy: true,
+          },
+        },
+      },
+    });
+
+    if (!exercise) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(exercise);
+  } catch (error) {
+    console.error("Error fetching exercise:", error);
+    return NextResponse.json({ error: "Failed to fetch" }, { status: 500 });
+  }
+}
+
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
