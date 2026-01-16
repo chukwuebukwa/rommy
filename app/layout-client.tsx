@@ -102,8 +102,23 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
             </div>
             
             <Link
+              href="/anatomy-explorer"
+              className={`flex items-center px-3 py-2 text-sm rounded-lg transition ${
+                pathname === "/anatomy-explorer"
+                  ? "bg-gray-800 text-white"
+                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
+              }`}
+            >
+              <span className="mr-2">🔗</span>
+              Anatomy Explorer
+            </Link>
+            <Link
               href="/db"
-              className="flex items-center px-3 py-2 text-sm rounded-lg text-gray-400 hover:bg-gray-800 hover:text-white transition"
+              className={`flex items-center px-3 py-2 text-sm rounded-lg transition ${
+                pathname === "/db"
+                  ? "bg-gray-800 text-white"
+                  : "text-gray-400 hover:bg-gray-800 hover:text-white"
+              }`}
             >
               <span className="mr-2">🗄️</span>
               Database
