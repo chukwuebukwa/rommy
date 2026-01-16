@@ -215,18 +215,24 @@ function formatPageContent(page: Page): string {
   return lines.join('\n\n');
 }
 
-async function importRawGuide(guideKey: string, options: { dryRun?: boolean; skipImages?: boolean } = {}) {
-  const { dryRun = false, skipImages = false } = options;
-  
+async function importRawGuide(guideKey: string, options: { dryRun?: boolean; skipImages?: boolean; rawMode?: boolean } = {}) {
+  const { dryRun = false, skipImages = false, rawMode = false } = options;
+
   const config = GUIDE_CONFIGS[guideKey];
   if (!config) {
     console.error(`❌ Unknown guide: ${guideKey}`);
     console.log(`Available guides: ${Object.keys(GUIDE_CONFIGS).join(', ')}`);
     process.exit(1);
   }
-  
-  console.log(`\n📖 Importing raw guide: ${config.title}`);
+
+  // In raw mode, append -raw to ID/slug to avoid overwriting reorganized guides
+  const effectiveId = rawMode ? `${config.id}-raw` : config.id;
+  const effectiveSlug = rawMode ? `${config.slug}-raw` : config.slug;
+  const effectiveTitle = rawMode ? `${config.title} (Raw Import)` : config.title;
+
+  console.log(`\n📖 Importing raw guide: ${effectiveTitle}`);
   console.log(`   Export path: ${config.exportPath}`);
+  if (rawMode) console.log('   📋 RAW MODE - importing as separate guide with -raw suffix');
   if (dryRun) console.log('   🧪 DRY RUN - no database changes will be made\n');
   
   // Load structured data
@@ -265,8 +271,8 @@ async function importRawGuide(guideKey: string, options: { dryRun?: boolean; ski
     });
     
     const section = {
-      id: `${config.id}-page-${page.page_number}`,
-      guideId: config.id,
+      id: `${effectiveId}-page-${page.page_number}`,
+      guideId: effectiveId,
       kind,
       title,
       order: page.page_number,
@@ -281,42 +287,42 @@ async function importRawGuide(guideKey: string, options: { dryRun?: boolean; ski
   
   if (dryRun) {
     console.log('\n🧪 DRY RUN complete. No changes made.');
-    console.log(`   Would create/update guide: ${config.id}`);
+    console.log(`   Would create/update guide: ${effectiveId}`);
     console.log(`   Would create ${sections.length} sections`);
     return;
   }
-  
+
   // Database operations
   console.log('\n📥 Updating database...');
-  
+
   // Check if guide exists
-  const existingGuide = await prisma.guide.findUnique({ where: { id: config.id } });
-  
+  const existingGuide = await prisma.guide.findUnique({ where: { id: effectiveId } });
+
   if (existingGuide) {
-    console.log(`   Guide "${config.id}" exists. Deleting old sections...`);
-    
+    console.log(`   Guide "${effectiveId}" exists. Deleting old sections...`);
+
     // Delete related records first (section links)
-    await prisma.sectionExercise.deleteMany({ where: { section: { guideId: config.id } } });
-    await prisma.sectionAnatomy.deleteMany({ where: { section: { guideId: config.id } } });
-    await prisma.section.deleteMany({ where: { guideId: config.id } });
-    
+    await prisma.sectionExercise.deleteMany({ where: { section: { guideId: effectiveId } } });
+    await prisma.sectionAnatomy.deleteMany({ where: { section: { guideId: effectiveId } } });
+    await prisma.section.deleteMany({ where: { guideId: effectiveId } });
+
     // Update guide metadata
     await prisma.guide.update({
-      where: { id: config.id },
+      where: { id: effectiveId },
       data: {
-        slug: config.slug,
-        title: config.title,
+        slug: effectiveSlug,
+        title: effectiveTitle,
         author: config.author,
         primaryRegionId: config.primaryRegionId,
       },
     });
   } else {
-    console.log(`   Creating new guide: ${config.id}`);
+    console.log(`   Creating new guide: ${effectiveId}`);
     await prisma.guide.create({
       data: {
-        id: config.id,
-        slug: config.slug,
-        title: config.title,
+        id: effectiveId,
+        slug: effectiveSlug,
+        title: effectiveTitle,
         author: config.author,
         primaryRegionId: config.primaryRegionId,
       },
@@ -362,9 +368,9 @@ async function importRawGuide(guideKey: string, options: { dryRun?: boolean; ski
   }
   
   console.log('\n✅ Import complete!');
-  console.log(`   Guide: ${config.title}`);
+  console.log(`   Guide: ${effectiveTitle}`);
   console.log(`   Sections: ${sections.length}`);
-  console.log(`   View at: /guides/${config.id}`);
+  console.log(`   View at: /guides/${effectiveId}`);
 }
 
 // CLI
@@ -373,17 +379,22 @@ if (require.main === module) {
   const guideKey = args[0];
   const dryRun = args.includes('--dry-run');
   const skipImages = args.includes('--skip-images');
-  
+  const rawMode = args.includes('--raw');
+
   if (!guideKey) {
-    console.log('Usage: bun run prisma/import-raw-guide.ts <guide> [--dry-run] [--skip-images]');
+    console.log('Usage: bun run prisma/import-raw-guide.ts <guide> [--dry-run] [--skip-images] [--raw]');
+    console.log('\nOptions:');
+    console.log('  --dry-run      Preview changes without modifying database');
+    console.log('  --skip-images  Skip copying images to public folder');
+    console.log('  --raw          Import as separate guide with -raw suffix (preserves existing guides)');
     console.log('\nAvailable guides:');
     Object.entries(GUIDE_CONFIGS).forEach(([key, config]) => {
       console.log(`  ${key.padEnd(12)} - ${config.title}`);
     });
     process.exit(1);
   }
-  
-  importRawGuide(guideKey, { dryRun, skipImages })
+
+  importRawGuide(guideKey, { dryRun, skipImages, rawMode })
     .then(() => prisma.$disconnect())
     .catch((error) => {
       console.error('❌ Error:', error);
