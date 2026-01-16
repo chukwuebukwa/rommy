@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { MentionRenderer } from "./MentionRenderer";
 import { GuideSectionNav } from "./GuideSectionNav";
 import { GuideMobileSheet } from "./GuideMobileSheet";
+import { WorkoutProgramView } from "./WorkoutProgramView";
 
 interface Section {
   id: string;
@@ -54,9 +55,25 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
     initialPage >= 0 && initialPage < guide.sections.length ? initialPage : 0
   );
   const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
+  const [workoutData, setWorkoutData] = useState<any>(null);
+  const [workoutLoading, setWorkoutLoading] = useState(false);
   const sections = guide.sections.sort((a, b) => a.order - b.order);
   const totalPages = sections.length;
   const currentSection = sections[currentPage];
+
+  // Fetch workout data when on a program section
+  useEffect(() => {
+    if (currentSection?.kind === "program" && !workoutData) {
+      setWorkoutLoading(true);
+      fetch(`/api/workouts/by-guide/${guide.id}`)
+        .then(res => res.ok ? res.json() : null)
+        .then(data => {
+          setWorkoutData(data);
+          setWorkoutLoading(false);
+        })
+        .catch(() => setWorkoutLoading(false));
+    }
+  }, [currentSection?.kind, guide.id, workoutData]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -253,9 +270,22 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
 
         {/* Section Content */}
         <div className="space-y-8">
-          <div className="prose prose-lg max-w-none">
-            <MentionRenderer content={currentSection.content} />
-          </div>
+          {/* Program sections get special treatment with WorkoutProgramView */}
+          {currentSection.kind === "program" && workoutData ? (
+            <WorkoutProgramView
+              workout={workoutData}
+              introContent={currentSection.content}
+              guideId={guide.id}
+            />
+          ) : currentSection.kind === "program" && workoutLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            </div>
+          ) : (
+            <div className="prose prose-lg max-w-none">
+              <MentionRenderer content={currentSection.content} />
+            </div>
+          )}
 
           {/* Images */}
           {currentSection.images && currentSection.images.length > 0 && (
