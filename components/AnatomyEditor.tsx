@@ -16,9 +16,10 @@ interface AnatomyEditorProps {
     aestheticNotes: string[] | null;
     meta: any;
   };
+  onClose?: () => void;
 }
 
-export function AnatomyEditor({ anatomy }: AnatomyEditorProps) {
+export function AnatomyEditor({ anatomy, onClose }: AnatomyEditorProps) {
   const router = useRouter();
   const [name, setName] = useState(anatomy.name);
   const [description, setDescription] = useState(anatomy.description || "");
@@ -61,6 +62,9 @@ export function AnatomyEditor({ anatomy }: AnatomyEditorProps) {
 
       alert("Saved successfully!");
       router.refresh();
+      if (onClose) {
+        onClose();
+      }
     } catch (error) {
       console.error("Error saving:", error);
       alert("Error saving anatomy");
@@ -109,7 +113,7 @@ export function AnatomyEditor({ anatomy }: AnatomyEditorProps) {
         </div>
         <div className="flex gap-3">
           <button
-            onClick={() => router.push(`/anatomy/${anatomy.id}`)}
+            onClick={() => (onClose ? onClose() : router.push(`/anatomy/${anatomy.id}`))}
             className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
           >
             Cancel
@@ -286,4 +290,3 @@ export function AnatomyEditor({ anatomy }: AnatomyEditorProps) {
     </div>
   );
 }
-

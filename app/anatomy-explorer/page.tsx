@@ -10,7 +10,7 @@ async function computeCrossRegionConnections() {
       parent: true,
       children: { select: { id: true } },
       exerciseLinks: {
-        include: { exercise: { select: { id: true, name: true } } }
+        include: { exercise: { select: { id: true, name: true, type: true, cdnVideoUrl: true } } }
       }
     }
   });
@@ -79,18 +79,22 @@ function buildTree(nodes: Awaited<ReturnType<typeof computeCrossRegionConnection
     kind: string;
     description: string | null;
     exerciseCount: number;
+    totalExerciseCount: number;
     children: TreeNode[];
   }
 
   function buildNode(node: typeof nodes[0]): TreeNode {
     const children = nodes.filter(n => n.parentId === node.id);
+    const childNodes = children.map(c => buildNode(c)).sort((a, b) => a.name.localeCompare(b.name));
+    const childrenTotal = childNodes.reduce((sum, c) => sum + c.totalExerciseCount, 0);
     return {
       id: node.id,
       name: node.name,
       kind: node.kind,
       description: node.description,
       exerciseCount: node.exerciseLinks.length,
-      children: children.map(c => buildNode(c)).sort((a, b) => a.name.localeCompare(b.name))
+      totalExerciseCount: node.exerciseLinks.length + childrenTotal,
+      children: childNodes
     };
   }
 
@@ -103,13 +107,37 @@ export default async function AnatomyExplorerPage() {
   const tree = buildTree(nodes);
 
   // Create a flat lookup for the client
+  interface ExerciseInfo {
+    id: string;
+    name: string;
+    type: string;
+    role: string;
+    cdnVideoUrl: string | null;
+  }
+
+  interface AggregatedExercise extends ExerciseInfo {
+    sourceNodeId: string;
+    sourceNodeName: string;
+  }
+
+  interface ExerciseSource {
+    id: string;
+    name: string;
+    count: number;
+  }
+
   const nodeLookup: Record<string, {
     id: string;
     name: string;
     kind: string;
+    parentId: string | null;
     regionId: string;
     regionName: string;
     exerciseCount: number;
+    totalExerciseCount: number;
+    exercises: ExerciseInfo[];
+    aggregatedExercises: AggregatedExercise[];
+    exerciseSources: ExerciseSource[];
   }> = {};
 
   const byId: Record<string, typeof nodes[0]> = {};
@@ -123,15 +151,74 @@ export default async function AnatomyExplorerPage() {
     return current;
   }
 
+  // Get all descendant IDs for a node (recursive)
+  function getAllDescendantIds(nodeId: string): string[] {
+    const descendants: string[] = [];
+    const children = nodes.filter(n => n.parentId === nodeId);
+    for (const child of children) {
+      descendants.push(child.id);
+      descendants.push(...getAllDescendantIds(child.id));
+    }
+    return descendants;
+  }
+
   nodes.forEach(n => {
     const region = getRegion(n);
+    const descendantIds = getAllDescendantIds(n.id);
+    const allNodeIds = [n.id, ...descendantIds];
+
+    // Collect exercises from self + all descendants
+    const exerciseMap = new Map<string, AggregatedExercise>();
+    const sources: ExerciseSource[] = [];
+
+    for (const nodeId of allNodeIds) {
+      const sourceNode = byId[nodeId];
+      if (!sourceNode) continue;
+
+      const nodeExercises = sourceNode.exerciseLinks;
+      if (nodeExercises.length > 0) {
+        sources.push({
+          id: nodeId,
+          name: sourceNode.name,
+          count: nodeExercises.length
+        });
+      }
+
+      for (const link of nodeExercises) {
+        // Use compound key for exercise + role to handle same exercise with different roles
+        const key = `${link.exercise.id}-${link.role}`;
+        if (!exerciseMap.has(key)) {
+          exerciseMap.set(key, {
+            id: link.exercise.id,
+            name: link.exercise.name,
+            type: link.exercise.type,
+            role: link.role,
+            cdnVideoUrl: link.exercise.cdnVideoUrl,
+            sourceNodeId: nodeId,
+            sourceNodeName: sourceNode.name
+          });
+        }
+      }
+    }
+
     nodeLookup[n.id] = {
       id: n.id,
       name: n.name,
       kind: n.kind,
+      parentId: n.parentId,
       regionId: region.id,
       regionName: region.name,
-      exerciseCount: n.exerciseLinks.length
+      exerciseCount: n.exerciseLinks.length,
+      totalExerciseCount: exerciseMap.size,
+      exercises: n.exerciseLinks.map(link => ({
+        id: link.exercise.id,
+        name: link.exercise.name,
+        type: link.exercise.type,
+        role: link.role,
+        cdnVideoUrl: link.exercise.cdnVideoUrl
+      })),
+      aggregatedExercises: Array.from(exerciseMap.values()),
+      exerciseSources: sources
     };
   });
 

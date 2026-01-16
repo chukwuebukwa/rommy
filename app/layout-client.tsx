@@ -21,6 +21,8 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
     return pathname.startsWith(href);
   };
 
+  const isFullWidth = pathname === "/anatomy-explorer";
+
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Mobile overlay */}
@@ -131,7 +133,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Content - add bottom padding on mobile for bottom nav */}
         <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
-          <div className="max-w-7xl mx-auto">
+          <div className={isFullWidth ? "w-full" : "max-w-7xl mx-auto"}>
             {children}
           </div>
         </main>

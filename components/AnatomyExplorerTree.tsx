@@ -6,6 +6,7 @@ export interface TreeNode {
   kind: string;
   description: string | null;
   exerciseCount: number;
+  totalExerciseCount: number;
   children: TreeNode[];
 }
 
@@ -101,11 +102,14 @@ function TreeNodeComponent({
         </span>
 
         {/* Exercise count */}
-        {node.exerciseCount > 0 && (
+        {(node.exerciseCount > 0 || node.totalExerciseCount > 0) && (
           <span className={`text-xs px-1.5 py-0.5 rounded ${
             isSelected ? "bg-blue-400 text-white" : "bg-gray-200 text-gray-600"
           }`}>
             {node.exerciseCount} ex
+            {node.totalExerciseCount > node.exerciseCount && (
+              <span className="opacity-60"> ({node.totalExerciseCount})</span>
+            )}
           </span>
         )}
 

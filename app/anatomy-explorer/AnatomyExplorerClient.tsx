@@ -12,13 +12,37 @@ interface Connection {
   sharedExercises: number;
 }
 
+interface ExerciseInfo {
+  id: string;
+  name: string;
+  type: string;
+  role: string;
+  cdnVideoUrl: string | null;
+}
+
+interface AggregatedExercise extends ExerciseInfo {
+  sourceNodeId: string;
+  sourceNodeName: string;
+}
+
+interface ExerciseSource {
+  id: string;
+  name: string;
+  count: number;
+}
+
 interface NodeInfo {
   id: string;
   name: string;
   kind: string;
+  parentId: string | null;
   regionId: string;
   regionName: string;
   exerciseCount: number;
+  totalExerciseCount: number;
+  exercises: ExerciseInfo[];
+  aggregatedExercises: AggregatedExercise[];
+  exerciseSources: ExerciseSource[];
 }
 
 interface Props {
@@ -85,7 +109,7 @@ export function AnatomyExplorerClient({ tree, connections, nodeLookup }: Props) 
   return (
     <div className="flex-1 flex overflow-hidden">
       {/* Left Panel: Tree */}
-      <div className="w-1/2 border-r overflow-y-auto bg-gray-50 p-4">
+      <div className="w-[400px] md:w-[440px] xl:w-[480px] border-r overflow-y-auto bg-gray-50 p-3 flex-shrink-0">
         <AnatomyExplorerTree
           nodes={tree}
           selectedId={selectedNodeId}
@@ -97,7 +121,7 @@ export function AnatomyExplorerClient({ tree, connections, nodeLookup }: Props) 
       </div>
 
       {/* Right Panel: Graph */}
-      <div className="w-1/2 bg-white">
+      <div className="flex-1 bg-white min-w-0">
         {selectedNode ? (
           <AnatomyExplorerGraph
             selectedNode={selectedNode}
