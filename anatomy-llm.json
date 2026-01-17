@@ -1,0 +1,4312 @@
+{
+  "regions": {
+    "arms": {
+      "name": "Arms",
+      "muscles": {
+        "biceps_brachii": {
+          "name": "Biceps Brachii",
+          "kind": "muscle",
+          "parent": "biceps_group",
+          "primary": [
+            "Waiter Curls",
+            "Uncle Rommy Curls"
+          ],
+          "secondary": [
+            "Double Hammer Curls",
+            "Single Arm Hammer Curls",
+            "Wide Dumbbell Curls",
+            "Wide Grip Barbell Curl",
+            "Waiter Curls"
+          ]
+        },
+        "biceps_group": {
+          "name": "Biceps",
+          "kind": "group",
+          "parent": "arms",
+          "primary": [],
+          "secondary": []
+        },
+        "brachialis": {
+          "name": "Brachialis",
+          "kind": "muscle",
+          "parent": "biceps_group",
+          "primary": [
+            "Reverse Dumbbell Curls",
+            "Double Hammer Curls",
+            "Single Arm Hammer Curls",
+            "Preacher Machine Hammer Curl",
+            "Single Arm Brachialis Cable Curls",
+            "Reverse Barbell Curls",
+            "Reverse Plate Curls",
+            "Double Arm Hammer Curls",
+            "Reverse Barbell/EZ Bar Curls"
+          ],
+          "secondary": [
+            "Drag Curls",
+            "Close Grip Bar Curl",
+            "Waiter Curls",
+            "Uncle Rommy Curls",
+            "Dumbbell Forearm Circuit",
+            "Sledgehammer Forearm Sequence",
+            "Dead Hangs",
+            "Farmer Carries + Shrugs",
+            "Single Arm Farmer Carries",
+            "Barbell/EZ Bar Curl",
+            "Cable Curls",
+            "Incline Dumbbell Curls"
+          ]
+        },
+        "brachioradialis": {
+          "name": "Brachioradialis",
+          "kind": "muscle",
+          "parent": "forearms_group",
+          "primary": [
+            "Reverse Dumbbell Curls",
+            "Double Hammer Curls",
+            "Single Arm Hammer Curls",
+            "Reverse Barbell Curls",
+            "Reverse Plate Curls",
+            "Dumbbell Forearm Circuit",
+            "Sledgehammer Forearm Sequence",
+            "Dead Hangs",
+            "Farmer Carries + Shrugs",
+            "Single Arm Farmer Carries",
+            "Reverse Barbell/EZ Bar Curls"
+          ],
+          "secondary": [
+            "Preacher Machine Hammer Curl",
+            "Single Arm Brachialis Cable Curls",
+            "Double Hammer Curls",
+            "Double Arm Hammer Curls",
+            "Single Arm Hammer Curls"
+          ]
+        },
+        "forearms_group": {
+          "name": "Forearms",
+          "kind": "group",
+          "parent": "arms",
+          "primary": [],
+          "secondary": []
+        },
+        "triceps_group": {
+          "name": "Triceps",
+          "kind": "group",
+          "parent": "arms",
+          "primary": [],
+          "secondary": []
+        },
+        "triceps_medial_head": {
+          "name": "Triceps Medial Head",
+          "kind": "part",
+          "parent": "triceps_brachii",
+          "primary": [
+            "Close Grip Bench Press",
+            "Incline Close Grip Bench Press",
+            "Reverse Grip Pushdowns",
+            "JM Press",
+            "Dumbbell JM Press"
+          ],
+          "secondary": [
+            "Skull Crushers",
+            "Triangle Attachment Pushdowns",
+            "Dumbbell Tricep Lying Extensions",
+            "Dumbbell Tricep Lying Extensions with Twist",
+            "Single Arm Tricep Extensions (DB Overhead)",
+            "Rope Attachment Tricep Superset",
+            "Criss Cross Cable Pushdowns",
+            "Hammer Strength Tricep Extensions",
+            "Dumbbell Tricep Extensions",
+            "Incline Dumbbell Power Bombs",
+            "JM Press",
+            "Dumbbell JM Press",
+            "Triangle Attachment Tricep Superset"
+          ]
+        },
+        "triceps_brachii": {
+          "name": "Triceps Brachii",
+          "kind": "muscle",
+          "parent": "triceps_group",
+          "primary": [],
+          "secondary": [
+            "Incline Dumbbell Press",
+            "Incline Barbell Press",
+            "Incline Press Hammer Strength",
+            "Feet Elevated Push-Ups",
+            "Feet Elevated Plate Push-Ups",
+            "Landmine Chest Press",
+            "Banded INCLINE Dumbbell Presses",
+            "Flat Dumbbell Press",
+            "Flat Barbell Bench",
+            "Flat Press Hammer Strength",
+            "Push-Ups",
+            "Flat Plate Push-Ups",
+            "Floor Press",
+            "Reverse Grip Bench",
+            "Banded FLAT Dumbbell Presses",
+            "Push-Up Circuit",
+            "Chest Dips",
+            "Weighted Dips",
+            "Decline Dumbbell Press",
+            "The Double Dip",
+            "Single Arm Decline Cable Presses",
+            "Banded DECLINE Dumbbell Presses"
+          ]
+        },
+        "triceps_long_head": {
+          "name": "Triceps Long Head",
+          "kind": "part",
+          "parent": "triceps_brachii",
+          "primary": [
+            "Close Grip Bench Press",
+            "Incline Close Grip Bench Press",
+            "Skull Crushers",
+            "Single Arm DB Extensions",
+            "Upright Dips (Tricep Dips)",
+            "JM Press",
+            "Dumbbell JM Press",
+            "Dumbbell Tricep Lying Extensions",
+            "Dumbbell Tricep Lying Extensions with Twist",
+            "Single Arm Tricep Extensions (DB Overhead)",
+            "Hammer Strength Tricep Extensions",
+            "Dumbbell Tricep Extensions",
+            "Incline Dumbbell Power Bombs",
+            "Single Arm DB Overhead Extensions",
+            "Dumbbell Tricep Lying Extensions (with Twist)",
+            "Rope Attachment Tricep Superset",
+            "Dips",
+            "Weighted Dips (Upright)"
+          ],
+          "secondary": [
+            "Dumbbell Kickbacks"
+          ]
+        },
+        "triceps_lateral_head": {
+          "name": "Triceps Lateral Head",
+          "kind": "part",
+          "parent": "triceps_brachii",
+          "primary": [
+            "Triangle Attachment Pushdowns",
+            "Upright Dips (Tricep Dips)",
+            "Rope Attachment Tricep Superset",
+            "Criss Cross Cable Pushdowns",
+            "Dumbbell Kickbacks",
+            "Triangle Attachment Tricep Superset",
+            "Dips",
+            "Weighted Dips (Upright)"
+          ],
+          "secondary": [
+            "Hammer Strength Tricep Extensions",
+            "Rope Attachment Tricep Superset"
+          ]
+        },
+        "biceps_long_head": {
+          "name": "Biceps Long Head",
+          "kind": "part",
+          "parent": "biceps_brachii",
+          "primary": [
+            "Drag Curls",
+            "Close Grip Bar Curl",
+            "Uncle Rommy Curls",
+            "Wide Dumbbell Curls",
+            "Barbell/EZ Bar Curl",
+            "Cable Curls",
+            "Incline Dumbbell Curls"
+          ],
+          "secondary": [
+            "Preacher Bar Curls",
+            "Preacher Curl Machine"
+          ]
+        },
+        "biceps_short_head": {
+          "name": "Biceps Short Head",
+          "kind": "part",
+          "parent": "biceps_brachii",
+          "primary": [
+            "Preacher Bar Curls",
+            "Preacher Machine Hammer Curl",
+            "Wide Dumbbell Curls",
+            "Wide Grip Barbell Curl",
+            "Uncle Rommy Curls",
+            "Waiter Curls",
+            "Barbell/EZ Bar Curl",
+            "Cable Curls",
+            "Preacher Curl Machine"
+          ],
+          "secondary": [
+            "Preacher Machine Hammer Curl"
+          ]
+        }
+      }
+    },
+    "back": {
+      "name": "Back",
+      "muscles": {
+        "erector_spinae_group": {
+          "name": "Erector Spinae",
+          "kind": "group",
+          "parent": "back",
+          "primary": [],
+          "secondary": []
+        },
+        "latissimus_dorsi": {
+          "name": "Latissimus Dorsi (Lats)",
+          "kind": "muscle",
+          "parent": "lats_group",
+          "primary": [
+            "Regular Pull Ups",
+            "Lat Pulldowns",
+            "T-Bar Rows",
+            "Supinated Barbell Rows",
+            "Supinated Dumbbell Rows",
+            "Neutral Grip Dumbbell Rows",
+            "Dead Hangs",
+            "Active Hangs",
+            "Dead Rows",
+            "Close Grip Pull-Ups",
+            "High to Low Cable Rows",
+            "Neutral Grip Hammer Strength Row",
+            "Single Arm Cable Row",
+            "Super Wide Pulldowns",
+            "Underhand Pulldown",
+            "Wide Grip Hammer Strength Row",
+            "Barbell/EZ Bar Pullovers",
+            "Weighted Pull Ups",
+            "Wide Grip Pull Ups",
+            "Wide Neutral Grip Pull Ups",
+            "Neutral Grip Barbell Rows",
+            "Lat Pull Ins",
+            "Neutral Grip Pulldown",
+            "Regular Lat Pulldowns"
+          ],
+          "secondary": [
+            "Chest Supported Rows",
+            "Rack Pulls",
+            "Hyperextension Rows",
+            "High Elbow Hammer Strength Rows"
+          ]
+        },
+        "lats_group": {
+          "name": "Lats & Lat Complex",
+          "kind": "group",
+          "parent": "back",
+          "primary": [],
+          "secondary": [
+            "Dumbbell Pullovers"
+          ]
+        },
+        "lower_traps": {
+          "name": "Lower Traps",
+          "kind": "part",
+          "parent": "trapezius",
+          "primary": [
+            "Supermans",
+            "Y Raises",
+            "Active Hangs",
+            "PVC Pipe Shoulder Sequence",
+            "Wall Drags"
+          ],
+          "secondary": [
+            "Seated Cable Rows",
+            "Turtle Raises",
+            "Chest Supported Rows",
+            "Face Pulls",
+            "Face Pulls (Back-Focused)",
+            "T Raises"
+          ]
+        },
+        "middle_traps": {
+          "name": "Middle Traps",
+          "kind": "part",
+          "parent": "trapezius",
+          "primary": [
+            "Seated Cable Rows",
+            "Chest Supported Rows",
+            "Reverse Incline Flyes",
+            "Upper Back Barbell Rows",
+            "Upper Back Dumbbell Rows",
+            "Standing Reverse Incline Flyes",
+            "Seated Reverse Incline Flyes",
+            "High Elbow Hammer Strength Rows",
+            "High Elbow Rows",
+            "Rope Attachment Upright Rows",
+            "T Raises",
+            "Upright Rows (Straight Bar/EZ Bar)",
+            "Chest Supported Shrugs"
+          ],
+          "secondary": [
+            "Triple Rear Delt Delight",
+            "Reverse Pec Dec Flyes",
+            "Supermans",
+            "Y Raises",
+            "T-Bar Rows",
+            "Face Pulls",
+            "Face Pulls (Back-Focused)",
+            "Wide Grip Hammer Strength Row",
+            "High Elbow Cable Rows"
+          ]
+        },
+        "rhomboid_group": {
+          "name": "Rhomboid Complex",
+          "kind": "group",
+          "parent": "back",
+          "primary": [],
+          "secondary": []
+        },
+        "rhomboids": {
+          "name": "Rhomboids (Major & Minor)",
+          "kind": "muscle",
+          "parent": "rhomboid_group",
+          "primary": [
+            "Seated Cable Rows",
+            "Turtle Raises",
+            "Chest Supported Rows",
+            "T-Bar Rows",
+            "Upper Back Barbell Rows",
+            "Upper Back Dumbbell Rows",
+            "Dead Rows",
+            "Face Pulls",
+            "Face Pulls (Back-Focused)",
+            "Hyperextension Rows",
+            "High Elbow Hammer Strength Rows",
+            "High Elbow Rows",
+            "Neutral Grip Hammer Strength Row",
+            "Wide Grip Hammer Strength Row",
+            "High Elbow Cable Rows",
+            "Neutral Grip Barbell Rows"
+          ],
+          "secondary": [
+            "Regular Pull Ups",
+            "Supinated Barbell Rows",
+            "Supinated Dumbbell Rows",
+            "Neutral Grip Dumbbell Rows",
+            "High to Low Cable Rows",
+            "Inverted Raises",
+            "Single Arm Cable Row",
+            "Super Wide Pulldowns",
+            "Underhand Pulldown",
+            "Hip Huggers",
+            "Weighted Pull Ups",
+            "Wide Grip Pull Ups",
+            "Wide Neutral Grip Pull Ups"
+          ]
+        },
+        "teres_major": {
+          "name": "Teres Major",
+          "kind": "muscle",
+          "parent": "lats_group",
+          "primary": [
+            "Supinated Barbell Rows",
+            "High to Low Cable Rows",
+            "Underhand Pulldown",
+            "Weighted Pull Ups",
+            "Wide Neutral Grip Pull Ups"
+          ],
+          "secondary": [
+            "Regular Pull Ups",
+            "Lat Pulldowns",
+            "Supinated Dumbbell Rows",
+            "Close Grip Pull-Ups",
+            "Barbell/EZ Bar Pullovers",
+            "Wide Grip Pull Ups",
+            "Lat Pull Ins",
+            "Neutral Grip Pulldown"
+          ]
+        },
+        "trapezius": {
+          "name": "Trapezius (Traps)",
+          "kind": "muscle",
+          "parent": "traps_group",
+          "primary": [
+            "Overhead Squat / Snatch Holds",
+            "Handstand Holds",
+            "Overhead Barbell Press Holds",
+            "Inverted Raises",
+            "Ring Around The Rommy’s"
+          ],
+          "secondary": [
+            "Standing Barbell Press",
+            "Seated Dumbbell Press",
+            "Seated Barbell Press",
+            "Hammer Strength Shoulder Press",
+            "Arnold Press",
+            "Modified Bradford Press",
+            "Behind Neck Press",
+            "Behind the Ankle Barbell Raise",
+            "Single Arm Dumbbell Press (Standing Overhead)",
+            "Handstand Push-Ups"
+          ]
+        },
+        "traps_group": {
+          "name": "Trapezius Group",
+          "kind": "group",
+          "parent": "back",
+          "primary": [],
+          "secondary": []
+        },
+        "erector_spinae": {
+          "name": "Erector Spinae (Spinal Erectors)",
+          "kind": "muscle",
+          "parent": "erector_spinae_group",
+          "primary": [
+            "Rack Pulls",
+            "Supermans",
+            "Back Bridges",
+            "Overhead Squat / Snatch Holds",
+            "Hyperextension Rows",
+            "Standing Good Mornings",
+            "Barbell Good Mornings",
+            "Cable Good Mornings",
+            "Deadlifts",
+            "Dumbbell Deadlifts",
+            "Weighted Plate Mobility",
+            "Reverse Hyperextensions",
+            "Seated Barbell Good Mornings",
+            "Seated Dumbbell Good Mornings"
+          ],
+          "secondary": [
+            "T-Bar Rows",
+            "Dead Rows",
+            "Neutral Grip Hammer Strength Row",
+            "Front Squats",
+            "Zercher Squats",
+            "Sumo Deadlift",
+            "Romanian Deadlift",
+            "Zercher Deadlifts",
+            "Zercher RDLs",
+            "Deficit Deadlifts",
+            "Weighted Pull Ups",
+            "Reverse Hyperextensions",
+            "Neutral Grip Barbell Rows"
+          ]
+        },
+        "upper_back_group": {
+          "name": "Upper Back & Scapular",
+          "kind": "group",
+          "parent": "back",
+          "primary": [],
+          "secondary": []
+        },
+        "upper_traps": {
+          "name": "Upper Traps",
+          "kind": "part",
+          "parent": "trapezius",
+          "primary": [
+            "Neck Bridges",
+            "Rope Attachment Upright Rows",
+            "Upright Rows (Straight Bar/EZ Bar)",
+            "Upright Rows (Straight Bar / EZ Bar)",
+            "Behind the Arse Upright Rows (Straight Bar / EZ Bar)",
+            "Behind the Arse Cable Upright Rows (Straight Bar Attachment)",
+            "Chest Supported Shrugs"
+          ],
+          "secondary": [
+            "Dead Hangs",
+            "Reverse Grip Barbell Press",
+            "Behind the Arse Bar Raise",
+            "Inverted Raises"
+          ]
+        },
+        "scapular_control_complex": {
+          "name": "Scapular Control Complex",
+          "kind": "group",
+          "parent": "back",
+          "primary": [
+            "Full Body Mobility Movement",
+            "Mobility Wall Routine"
+          ],
+          "secondary": []
+        }
+      }
+    },
+    "chest": {
+      "name": "Chest",
+      "muscles": {
+        "chest_sternocostal_head": {
+          "name": "Mid Chest (Sternocostal Head)",
+          "kind": "part",
+          "parent": "pectoralis_major",
+          "primary": [
+            "Flat Dumbbell Press",
+            "Flat Barbell Bench",
+            "Flat Press Hammer Strength",
+            "Flat Cable Flyes",
+            "Pec Dec Flyes",
+            "Push-Ups",
+            "Flat Plate Push-Ups",
+            "Floor Flyes",
+            "Floor Press",
+            "Reverse Grip Bench",
+            "Dumbbell Pullovers",
+            "Banded FLAT Dumbbell Presses",
+            "Push-Up Circuit"
+          ],
+          "secondary": [
+            "Close Grip Bench Press",
+            "Upright Dips (Tricep Dips)",
+            "JM Press",
+            "Dips",
+            "Weighted Dips (Upright)"
+          ]
+        },
+        "upper_chest_clavicular": {
+          "name": "Upper Chest (Clavicular Head)",
+          "kind": "part",
+          "parent": "pectoralis_major",
+          "primary": [
+            "Incline Dumbbell Press",
+            "Incline Barbell Press",
+            "Incline Press Hammer Strength",
+            "Cable Upper Chest Flyes",
+            "Feet Elevated Push-Ups",
+            "Feet Elevated Plate Push-Ups",
+            "Landmine Chest Press",
+            "Banded INCLINE Dumbbell Presses",
+            "Reverse Grip Bench"
+          ],
+          "secondary": [
+            "Incline Close Grip Bench Press",
+            "Push-Up Circuit"
+          ]
+        },
+        "pectoralis_minor": {
+          "name": "Pectoralis Minor",
+          "kind": "muscle",
+          "parent": "chest",
+          "primary": [
+            "Dumbbell Pullovers"
+          ],
+          "secondary": []
+        },
+        "pectoralis_major": {
+          "name": "Pectoralis Major",
+          "kind": "muscle",
+          "parent": "chest",
+          "primary": [],
+          "secondary": []
+        },
+        "chest_abdominal_head": {
+          "name": "Lower Chest (Abdominal Head)",
+          "kind": "part",
+          "parent": "pectoralis_major",
+          "primary": [
+            "Chest Dips",
+            "Weighted Dips",
+            "Decline Dumbbell Press",
+            "The Double Dip",
+            "Decline Cable Crossovers",
+            "Dog Pounds",
+            "Single Arm Decline Cable Presses",
+            "Banded DECLINE Dumbbell Presses"
+          ],
+          "secondary": [
+            "Push-Up Circuit"
+          ]
+        }
+      }
+    },
+    "legs": {
+      "name": "Legs",
+      "muscles": {
+        "adductor_group": {
+          "name": "Adductor Complex",
+          "kind": "muscle",
+          "parent": "hip_adductors_group",
+          "primary": [
+            "Cossack Dumbbell Squat",
+            "Wide Stance Box Squats",
+            "Sumo Deadlift",
+            "Copenhagen Planks",
+            "Hip Adduction Machine",
+            "Cossack Barbell Squats"
+          ],
+          "secondary": [
+            "Deficit Deadlifts"
+          ]
+        },
+        "anterior_shin_group": {
+          "name": "Anterior Shin",
+          "kind": "group",
+          "parent": "legs",
+          "primary": [],
+          "secondary": []
+        },
+        "biceps_femoris_long_head": {
+          "name": "Biceps Femoris (Long Head)",
+          "kind": "muscle",
+          "parent": "hamstrings_group",
+          "primary": [
+            "Romanian Deadlift",
+            "Nordic Curls"
+          ],
+          "secondary": []
+        },
+        "biceps_femoris_short_head": {
+          "name": "Biceps Femoris (Short Head)",
+          "kind": "muscle",
+          "parent": "hamstrings_group",
+          "primary": [
+            "Leg Curls"
+          ],
+          "secondary": []
+        },
+        "calves_group": {
+          "name": "Calves & Achilles Complex",
+          "kind": "group",
+          "parent": "legs",
+          "primary": [
+            "Hindu Squats",
+            "Backward Walking on the Treadmill"
+          ],
+          "secondary": [
+            "Full Body Mobility Movement",
+            "Full ROM Back Squats",
+            "Weighted Plate Mobility"
+          ]
+        },
+        "gastrocnemius": {
+          "name": "Gastrocnemius",
+          "kind": "muscle",
+          "parent": "calves_group",
+          "primary": [
+            "Standing Calf Raises"
+          ],
+          "secondary": []
+        },
+        "glutes_group": {
+          "name": "Glute Complex",
+          "kind": "group",
+          "parent": "legs",
+          "primary": [
+            "Weighted Plate Mobility"
+          ],
+          "secondary": [
+            "Full Body Mobility Movement"
+          ]
+        },
+        "gluteus_maximus": {
+          "name": "Gluteus Maximus",
+          "kind": "muscle",
+          "parent": "glutes_group",
+          "primary": [
+            "Wide Stance Box Squats",
+            "Zercher Squats",
+            "Sumo Deadlift",
+            "Barbell Hip Thrusts",
+            "Standing Good Mornings",
+            "Glute Bridge (Feet Elevated)",
+            "Hyperextension Rows",
+            "Zercher Deadlifts",
+            "Zercher RDLs",
+            "Reverse Lunges",
+            "Barbell Split Squats",
+            "Bulgarian Split Squats",
+            "Single‑Leg DB RDLs",
+            "Pistol Squats",
+            "DB RDLs",
+            "Deficit Deadlifts",
+            "Full ROM Back Squats",
+            "Leg Press Machine",
+            "Reverse Hyperextensions"
+          ],
+          "secondary": [
+            "Front Squats",
+            "Romanian Deadlift",
+            "Heel Elevated Squats",
+            "Seated Barbell Good Mornings"
+          ]
+        },
+        "gluteus_medius": {
+          "name": "Gluteus Medius",
+          "kind": "muscle",
+          "parent": "glutes_group",
+          "primary": [
+            "Sumo Deadlift",
+            "Side‑Lying Leg Lift"
+          ],
+          "secondary": [
+            "Cossack Dumbbell Squat",
+            "Side-Lying Leg Raises",
+            "Single‑Leg DB RDLs",
+            "Cossack Barbell Squats"
+          ]
+        },
+        "gluteus_minimus": {
+          "name": "Gluteus Minimus",
+          "kind": "muscle",
+          "parent": "glutes_group",
+          "primary": [
+            "Side‑Lying Leg Lift",
+            "Side-Lying Leg Raises"
+          ],
+          "secondary": [
+            "Cossack Dumbbell Squat",
+            "Cossack Barbell Squats"
+          ]
+        },
+        "gracilis": {
+          "name": "Gracilis",
+          "kind": "muscle",
+          "parent": "hip_adductors_group",
+          "primary": [],
+          "secondary": [
+            "Copenhagen Planks"
+          ]
+        },
+        "hamstrings_group": {
+          "name": "Hamstring Complex",
+          "kind": "group",
+          "parent": "legs",
+          "primary": [
+            "Full Body Mobility Movement",
+            "Wide Stance Box Squats",
+            "Standing Good Mornings",
+            "Leg Curls",
+            "Zercher Deadlifts",
+            "Zercher RDLs",
+            "Single‑Leg DB RDLs",
+            "Cable Hamstring Curls",
+            "DB RDLs",
+            "Deficit Deadlifts",
+            "Reverse Hyperextensions"
+          ],
+          "secondary": [
+            "Sumo Deadlift",
+            "Barbell Hip Thrusts",
+            "Glute Bridge (Feet Elevated)",
+            "Hyperextension Rows",
+            "Reverse Lunges",
+            "Barbell Split Squats",
+            "Bulgarian Split Squats",
+            "Pistol Squats",
+            "Full ROM Back Squats",
+            "Weighted Plate Mobility",
+            "Leg Press Machine"
+          ]
+        },
+        "hip_abductors_group": {
+          "name": "Hip Abductors & TFL",
+          "kind": "group",
+          "parent": "legs",
+          "primary": [
+            "Hip Abduction Machine"
+          ],
+          "secondary": [
+            "Barbell Split Squats",
+            "Pistol Squats"
+          ]
+        },
+        "hip_adductors_group": {
+          "name": "Hip Adductors & Groin",
+          "kind": "group",
+          "parent": "legs",
+          "primary": [],
+          "secondary": []
+        },
+        "hip_flexors_group": {
+          "name": "Hip Flexors (Psoas & Iliacus)",
+          "kind": "group",
+          "parent": "legs",
+          "primary": [
+            "Full Body Mobility Movement",
+            "Weighted Plate Mobility"
+          ],
+          "secondary": [
+            "Zercher Squats"
+          ]
+        },
+        "iliacus": {
+          "name": "Iliacus",
+          "kind": "muscle",
+          "parent": "hip_flexors_group",
+          "primary": [],
+          "secondary": [
+            "Reverse Lunges",
+            "Reverse Squats"
+          ]
+        },
+        "psoas": {
+          "name": "Psoas",
+          "kind": "muscle",
+          "parent": "hip_flexors_group",
+          "primary": [
+            "Reverse Squats"
+          ],
+          "secondary": []
+        },
+        "quads_group": {
+          "name": "Quadriceps",
+          "kind": "group",
+          "parent": "legs",
+          "primary": [
+            "Full Body Mobility Movement",
+            "Front Squats",
+            "Zercher Squats",
+            "Zercher Deadlifts",
+            "Reverse Lunges",
+            "Barbell Split Squats",
+            "Bulgarian Split Squats",
+            "Heel Elevated Squats",
+            "Pistol Squats",
+            "Cossack Barbell Squats",
+            "Hindu Squats",
+            "Full ROM Back Squats",
+            "Weighted Plate Mobility",
+            "Leg Press Machine",
+            "Backward Walking on the Treadmill"
+          ],
+          "secondary": [
+            "Wide Stance Box Squats"
+          ]
+        },
+        "rectus_femoris": {
+          "name": "Rectus Femoris",
+          "kind": "muscle",
+          "parent": "quads_group",
+          "primary": [
+            "Front Squats",
+            "Sissy Squats",
+            "Reverse Nordics"
+          ],
+          "secondary": [
+            "Reverse Squats"
+          ]
+        },
+        "semimembranosus": {
+          "name": "Semimembranosus",
+          "kind": "muscle",
+          "parent": "hamstrings_group",
+          "primary": [
+            "Romanian Deadlift",
+            "Glute Bridge (Feet Elevated)",
+            "Nordic Curls",
+            "Seated Barbell Good Mornings"
+          ],
+          "secondary": []
+        },
+        "semitendinosus": {
+          "name": "Semitendinosus",
+          "kind": "muscle",
+          "parent": "hamstrings_group",
+          "primary": [
+            "Romanian Deadlift",
+            "Nordic Curls",
+            "Seated Barbell Good Mornings"
+          ],
+          "secondary": []
+        },
+        "soleus": {
+          "name": "Soleus",
+          "kind": "muscle",
+          "parent": "calves_group",
+          "primary": [
+            "Standing Calf Raises"
+          ],
+          "secondary": []
+        },
+        "tensor_fasciae_latae": {
+          "name": "Tensor Fasciae Latae (TFL)",
+          "kind": "muscle",
+          "parent": "hip_abductors_group",
+          "primary": [
+            "Side-Lying Leg Raises"
+          ],
+          "secondary": [
+            "Side‑Lying Leg Lift",
+            "Hip Abduction Machine"
+          ]
+        },
+        "tibialis_anterior": {
+          "name": "Tibialis Anterior",
+          "kind": "muscle",
+          "parent": "anterior_shin_group",
+          "primary": [
+            "Kettlebell Toe Raises",
+            "Backward Walking on the Treadmill"
+          ],
+          "secondary": []
+        },
+        "achilles_tendon": {
+          "name": "Achilles Tendon",
+          "kind": "tendon",
+          "parent": "calves_group",
+          "primary": [],
+          "secondary": []
+        },
+        "vastus_intermedius": {
+          "name": "Vastus Intermedius",
+          "kind": "muscle",
+          "parent": "quads_group",
+          "primary": [
+            "Sissy Squats",
+            "Reverse Nordics",
+            "Leg Extensions"
+          ],
+          "secondary": []
+        },
+        "vastus_lateralis": {
+          "name": "Vastus Lateralis",
+          "kind": "muscle",
+          "parent": "quads_group",
+          "primary": [
+            "Cossack Dumbbell Squat",
+            "Cossack Barbell Squats"
+          ],
+          "secondary": []
+        },
+        "vastus_medialis": {
+          "name": "Vastus Medialis",
+          "kind": "muscle",
+          "parent": "quads_group",
+          "primary": [
+            "Heel Elevated Squats",
+            "Leg Extensions"
+          ],
+          "secondary": []
+        },
+        "vmo": {
+          "name": "Vastus Medialis Oblique (VMO)",
+          "kind": "part",
+          "parent": "quads_group",
+          "primary": [
+            "Front Squats",
+            "Heel Elevated Squats",
+            "Sissy Squats",
+            "Leg Extensions"
+          ],
+          "secondary": [
+            "Reverse Nordics"
+          ]
+        }
+      }
+    },
+    "shoulders": {
+      "name": "Shoulders (Deltoid & Cuff Complex)",
+      "muscles": {
+        "front_delts": {
+          "name": "Front Delts (Anterior Deltoid)",
+          "kind": "muscle",
+          "parent": "shoulders",
+          "primary": [
+            "Standing Barbell Press",
+            "Seated Dumbbell Press",
+            "Seated Barbell Press",
+            "Hammer Strength Shoulder Press",
+            "Arnold Press",
+            "Reverse Grip Barbell Press",
+            "Modified Bradford Press",
+            "Front Dumbbell Raises (Incline)",
+            "Front Dumbbell Raises (Standing)",
+            "Front Dumbbell Raises (Seated)",
+            "Front Plate Raise",
+            "Front Dumbbell Raises to the Sky",
+            "Front Cable Raises",
+            "21’s (Shoulder)",
+            "Single Arm Dumbbell Press (Standing Overhead)",
+            "Handstand Push-Ups",
+            "Double Trouble"
+          ],
+          "secondary": [
+            "Upright Dips (Tricep Dips)",
+            "Weighted Dips (Upright)",
+            "Incline Dumbbell Press",
+            "Incline Barbell Press",
+            "Incline Press Hammer Strength",
+            "Feet Elevated Push-Ups",
+            "Feet Elevated Plate Push-Ups",
+            "Landmine Chest Press",
+            "Banded INCLINE Dumbbell Presses",
+            "Flat Dumbbell Press",
+            "Flat Barbell Bench",
+            "Flat Press Hammer Strength",
+            "Push-Ups",
+            "Flat Plate Push-Ups",
+            "Banded FLAT Dumbbell Presses",
+            "Chest Dips",
+            "Weighted Dips",
+            "Decline Dumbbell Press",
+            "The Double Dip",
+            "Single Arm Decline Cable Presses",
+            "Banded DECLINE Dumbbell Presses"
+          ]
+        },
+        "rear_delts": {
+          "name": "Rear Delts (Posterior Deltoid)",
+          "kind": "muscle",
+          "parent": "shoulders",
+          "primary": [
+            "Triple Rear Delt Delight",
+            "Reverse Pec Dec Flyes",
+            "Y Raises",
+            "Reverse Incline Flyes",
+            "Standing Reverse Incline Flyes",
+            "Shoulder Elixir Potion",
+            "Face Pulls",
+            "Face Pulls (Back-Focused)",
+            "Seated Reverse Incline Flyes",
+            "T Raises",
+            "Behind Neck Press",
+            "High Elbow Cable Rows",
+            "Hip Huggers",
+            "Behind the Ankle Barbell Raise",
+            "Behind the Arse Bar Raise",
+            "Inverted Raises",
+            "Powell Raises",
+            "LU Raises"
+          ],
+          "secondary": [
+            "Turtle Raises",
+            "Upper Back Barbell Rows",
+            "Upper Back Dumbbell Rows",
+            "High Elbow Hammer Strength Rows",
+            "High Elbow Rows",
+            "Inverted Raises",
+            "Rope Attachment Upright Rows",
+            "Upright Rows (Straight Bar/EZ Bar)",
+            "Behind Ass Lateral Raises",
+            "Behind the Arse Upright Rows (Straight Bar / EZ Bar)"
+          ]
+        },
+        "rotator_cuff_group": {
+          "name": "Rotator Cuff",
+          "kind": "group",
+          "parent": "shoulders",
+          "primary": [
+            "Shoulder Elixir Potion",
+            "Handstand Holds",
+            "PVC Pipe Shoulder Sequence",
+            "Overhead Barbell Press Holds",
+            "Mobility Wall Routine",
+            "Ring Around The Rommy’s",
+            "Powell Raises",
+            "LU Raises",
+            "Wall Drags"
+          ],
+          "secondary": [
+            "Dead Hangs",
+            "Active Hangs",
+            "Overhead Squat / Snatch Holds",
+            "Standing Barbell Press",
+            "Single Arm Dumbbell Press (Standing Overhead)",
+            "Handstand Push-Ups",
+            "Dumbbell Shoulder External Rotations"
+          ]
+        },
+        "subscapularis": {
+          "name": "Subscapularis",
+          "kind": "muscle",
+          "parent": "rotator_cuff_group",
+          "primary": [
+            "Cable Handle Internal Rotations"
+          ],
+          "secondary": []
+        },
+        "supraspinatus": {
+          "name": "Supraspinatus",
+          "kind": "muscle",
+          "parent": "rotator_cuff_group",
+          "primary": [],
+          "secondary": []
+        },
+        "teres_minor": {
+          "name": "Teres Minor",
+          "kind": "muscle",
+          "parent": "rotator_cuff_group",
+          "primary": [
+            "Super Wide Pulldowns",
+            "Cable Handle External Rotations",
+            "Dumbbell Shoulder External Rotations"
+          ],
+          "secondary": [
+            "Lat Pulldowns",
+            "Close Grip Pull-Ups",
+            "Neutral Grip Pulldown",
+            "Regular Lat Pulldowns"
+          ]
+        },
+        "infraspinatus": {
+          "name": "Infraspinatus",
+          "kind": "muscle",
+          "parent": "rotator_cuff_group",
+          "primary": [
+            "Cable Handle External Rotations",
+            "Dumbbell Shoulder External Rotations"
+          ],
+          "secondary": []
+        },
+        "side_delts": {
+          "name": "Side Delts (Lateral Deltoid)",
+          "kind": "muscle",
+          "parent": "shoulders",
+          "primary": [
+            "Standing Barbell Press",
+            "Seated Dumbbell Press",
+            "Seated Barbell Press",
+            "Hammer Strength Shoulder Press",
+            "Arnold Press",
+            "Modified Bradford Press",
+            "Behind Neck Press",
+            "Lateral Raises",
+            "Chest Supported Lateral Raises",
+            "Behind Ass Lateral Raises",
+            "Single Arm Incline Lateral Raise",
+            "Upright Rows (Straight Bar / EZ Bar)",
+            "Behind the Arse Upright Rows (Straight Bar / EZ Bar)",
+            "Behind the Arse Cable Upright Rows (Straight Bar Attachment)",
+            "21’s (Shoulder)",
+            "Mid Delt Drop Set",
+            "Inverted Raises",
+            "Rope Attachment Upright Rows",
+            "Single Arm Dumbbell Press (Standing Overhead)",
+            "Handstand Push-Ups",
+            "Double Trouble"
+          ],
+          "secondary": []
+        }
+      }
+    }
+  },
+  "exercises": {
+    "arnold_press": {
+      "name": "Arnold Press",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)"
+      ]
+    },
+    "back_bridges": {
+      "name": "Back Bridges",
+      "type": "isolation",
+      "pattern": "bridge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": []
+    },
+    "barbell_ez_bar_curl": {
+      "name": "Barbell/EZ Bar Curl",
+      "type": "compound",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Long Head",
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "barbell_hip_thrusts": {
+      "name": "Barbell Hip Thrusts",
+      "type": "compound",
+      "pattern": "bridge",
+      "primary": [
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Hamstring Complex"
+      ]
+    },
+    "barbell_split_squats": {
+      "name": "Barbell Split Squats",
+      "type": "compound",
+      "pattern": "lunge",
+      "primary": [
+        "Quadriceps",
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Hamstring Complex",
+        "Hip Abductors & TFL"
+      ]
+    },
+    "behind_ankle_barbell_raise": {
+      "name": "Behind the Ankle Barbell Raise",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)"
+      ]
+    },
+    "behind_arse_bar_raise": {
+      "name": "Behind the Arse Bar Raise",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Upper Traps"
+      ]
+    },
+    "behind_arse_upright_rows_bar": {
+      "name": "Behind the Arse Upright Rows (Straight Bar / EZ Bar)",
+      "type": "compound",
+      "pattern": "upright_row",
+      "primary": [
+        "Side Delts (Lateral Deltoid)",
+        "Upper Traps"
+      ],
+      "secondary": [
+        "Rear Delts (Posterior Deltoid)"
+      ]
+    },
+    "behind_ass_lateral_raises": {
+      "name": "Behind Ass Lateral Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Rear Delts (Posterior Deltoid)"
+      ]
+    },
+    "behind_neck_press": {
+      "name": "Behind Neck Press",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Side Delts (Lateral Deltoid)",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)"
+      ]
+    },
+    "bulgarian_split_squats": {
+      "name": "Bulgarian Split Squats",
+      "type": "compound",
+      "pattern": "lunge",
+      "primary": [
+        "Quadriceps",
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Hamstring Complex"
+      ]
+    },
+    "cable_curl": {
+      "name": "Cable Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Long Head",
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "cable_handle_external_rotation": {
+      "name": "Cable Handle External Rotations",
+      "type": "isolation",
+      "pattern": "rotation",
+      "primary": [
+        "Infraspinatus",
+        "Teres Minor"
+      ],
+      "secondary": []
+    },
+    "chest_supported_lateral_raises": {
+      "name": "Chest Supported Lateral Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": []
+    },
+    "close_grip_bar_curl": {
+      "name": "Close Grip Bar Curl",
+      "type": "compound",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Long Head"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "close_grip_bench_press": {
+      "name": "Close Grip Bench Press",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Triceps Long Head",
+        "Triceps Medial Head"
+      ],
+      "secondary": [
+        "Mid Chest (Sternocostal Head)"
+      ]
+    },
+    "cable_good_mornings": {
+      "name": "Cable Good Mornings",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": []
+    },
+    "cable_handle_internal_rotation": {
+      "name": "Cable Handle Internal Rotations",
+      "type": "isolation",
+      "pattern": "rotation",
+      "primary": [
+        "Subscapularis"
+      ],
+      "secondary": []
+    },
+    "barbell_good_mornings": {
+      "name": "Barbell Good Mornings",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": []
+    },
+    "chest_supported_shrugs": {
+      "name": "Chest Supported Shrugs",
+      "type": "isolation",
+      "pattern": "shrug",
+      "primary": [
+        "Middle Traps",
+        "Upper Traps"
+      ],
+      "secondary": []
+    },
+    "active_hangs": {
+      "name": "Active Hangs",
+      "type": "isolation",
+      "pattern": "hang",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Lower Traps"
+      ],
+      "secondary": [
+        "Rotator Cuff"
+      ]
+    },
+    "cable_hamstring_curls": {
+      "name": "Cable Hamstring Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Hamstring Complex"
+      ],
+      "secondary": []
+    },
+    "backward_treadmill_walk": {
+      "name": "Backward Walking on the Treadmill",
+      "type": "mobility",
+      "pattern": "walk",
+      "primary": [
+        "Calves & Achilles Complex",
+        "Quadriceps",
+        "Tibialis Anterior"
+      ],
+      "secondary": []
+    },
+    "behind_arse_cable_upright_rows": {
+      "name": "Behind the Arse Cable Upright Rows (Straight Bar Attachment)",
+      "type": "compound",
+      "pattern": "upright_row",
+      "primary": [
+        "Side Delts (Lateral Deltoid)",
+        "Upper Traps"
+      ],
+      "secondary": []
+    },
+    "chest_supported_rows": {
+      "name": "Chest Supported Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rhomboids (Major & Minor)",
+        "Middle Traps"
+      ],
+      "secondary": [
+        "Lower Traps",
+        "Latissimus Dorsi (Lats)"
+      ]
+    },
+    "close_grip_pull_ups": {
+      "name": "Close Grip Pull-Ups",
+      "type": "compound",
+      "pattern": "pull_up",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Teres Major",
+        "Teres Minor"
+      ]
+    },
+    "copenhagen_planks": {
+      "name": "Copenhagen Planks",
+      "type": "mobility",
+      "pattern": "hold",
+      "primary": [
+        "Adductor Complex"
+      ],
+      "secondary": [
+        "Gracilis"
+      ]
+    },
+    "cossack_dumbbell_squat": {
+      "name": "Cossack Dumbbell Squat",
+      "type": "mobility",
+      "pattern": "squat",
+      "primary": [
+        "Vastus Lateralis",
+        "Adductor Complex"
+      ],
+      "secondary": [
+        "Gluteus Medius",
+        "Gluteus Minimus"
+      ]
+    },
+    "criss_cross_cable_pushdown": {
+      "name": "Criss Cross Cable Pushdowns",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Lateral Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "dead_hang": {
+      "name": "Dead Hangs",
+      "type": "compound",
+      "pattern": "hang",
+      "primary": [
+        "Brachioradialis"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "dead_hangs": {
+      "name": "Dead Hangs",
+      "type": "isolation",
+      "pattern": "hang",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Rotator Cuff",
+        "Upper Traps"
+      ]
+    },
+    "dead_rows": {
+      "name": "Dead Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Rhomboids (Major & Minor)"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "double_arm_hammer_curls": {
+      "name": "Double Arm Hammer Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis"
+      ],
+      "secondary": [
+        "Brachioradialis"
+      ]
+    },
+    "double_hammer_curl": {
+      "name": "Double Hammer Curls",
+      "type": "compound",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Brachioradialis"
+      ],
+      "secondary": [
+        "Biceps Brachii"
+      ]
+    },
+    "double_hammer_curls": {
+      "name": "Double Hammer Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis"
+      ],
+      "secondary": [
+        "Brachioradialis",
+        "Biceps Brachii"
+      ]
+    },
+    "double_trouble": {
+      "name": "Double Trouble",
+      "type": "intensity_technique",
+      "pattern": "raise",
+      "primary": [
+        "Side Delts (Lateral Deltoid)",
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "drag_curl": {
+      "name": "Drag Curls",
+      "type": "compound",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Long Head"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "dumbbell_jm_press": {
+      "name": "Dumbbell JM Press",
+      "type": "compound",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head",
+        "Triceps Medial Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "dumbbell_kickbacks": {
+      "name": "Dumbbell Kickbacks",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Lateral Head"
+      ],
+      "secondary": [
+        "Triceps Long Head"
+      ]
+    },
+    "dumbbell_shoulder_external_rotations": {
+      "name": "Dumbbell Shoulder External Rotations",
+      "type": "isolation",
+      "pattern": "rotation",
+      "primary": [
+        "Infraspinatus",
+        "Teres Minor"
+      ],
+      "secondary": [
+        "Rotator Cuff"
+      ]
+    },
+    "dumbbell_tricep_extensions": {
+      "name": "Dumbbell Tricep Extensions",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "dumbbell_tricep_lying_extension": {
+      "name": "Dumbbell Tricep Lying Extensions",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "dumbbell_tricep_lying_extension_twist": {
+      "name": "Dumbbell Tricep Lying Extensions with Twist",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "dumbbell_tricep_lying_extensions": {
+      "name": "Dumbbell Tricep Lying Extensions",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": []
+    },
+    "deficit_deadlifts": {
+      "name": "Deficit Deadlifts",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Gluteus Maximus",
+        "Hamstring Complex"
+      ],
+      "secondary": [
+        "Adductor Complex",
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "deadlifts": {
+      "name": "Deadlifts",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": []
+    },
+    "dumbbell_deadlifts": {
+      "name": "Dumbbell Deadlifts",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": []
+    },
+    "criss_cross_cable_pushdowns": {
+      "name": "Criss Cross Cable Pushdowns",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Lateral Head"
+      ],
+      "secondary": []
+    },
+    "db_rdls": {
+      "name": "DB RDLs",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Gluteus Maximus",
+        "Hamstring Complex"
+      ],
+      "secondary": []
+    },
+    "dumbbell_forearm_circuit": {
+      "name": "Dumbbell Forearm Circuit",
+      "type": "isolation",
+      "pattern": "forearm_circuit",
+      "primary": [
+        "Brachioradialis"
+      ],
+      "secondary": []
+    },
+    "dips": {
+      "name": "Dips",
+      "type": "compound",
+      "pattern": "dip",
+      "primary": [
+        "Triceps Lateral Head",
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Mid Chest (Sternocostal Head)"
+      ]
+    },
+    "dumbbell_tricep_lying_extensions_twist": {
+      "name": "Dumbbell Tricep Lying Extensions (with Twist)",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": []
+    },
+    "face_pulls_back": {
+      "name": "Face Pulls (Back-Focused)",
+      "type": "isolation",
+      "pattern": "row",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)",
+        "Rhomboids (Major & Minor)"
+      ],
+      "secondary": [
+        "Lower Traps",
+        "Middle Traps"
+      ]
+    },
+    "farmer_carries_shrugs": {
+      "name": "Farmer Carries + Shrugs",
+      "type": "compound",
+      "pattern": "carry",
+      "primary": [
+        "Brachioradialis"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "forearm_dumbbell_circuit": {
+      "name": "Dumbbell Forearm Circuit",
+      "type": "compound",
+      "pattern": "forearm_circuit",
+      "primary": [
+        "Brachioradialis"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "forearm_sledgehammer_sequence": {
+      "name": "Sledgehammer Forearm Sequence",
+      "type": "compound",
+      "pattern": "forearm_circuit",
+      "primary": [
+        "Brachioradialis"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "front_cable_raises": {
+      "name": "Front Cable Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "front_dumbbell_raise_incline": {
+      "name": "Front Dumbbell Raises (Incline)",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "front_dumbbell_raise_seated": {
+      "name": "Front Dumbbell Raises (Seated)",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "front_dumbbell_raise_standing": {
+      "name": "Front Dumbbell Raises (Standing)",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "front_dumbbell_raises_to_the_sky": {
+      "name": "Front Dumbbell Raises to the Sky",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "front_plate_raise": {
+      "name": "Front Plate Raise",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "front_squats": {
+      "name": "Front Squats",
+      "type": "compound",
+      "pattern": "squat",
+      "primary": [
+        "Quadriceps",
+        "Vastus Medialis Oblique (VMO)",
+        "Rectus Femoris"
+      ],
+      "secondary": [
+        "Gluteus Maximus",
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "full_body_mobility_movement": {
+      "name": "Full Body Mobility Movement",
+      "type": "mobility",
+      "pattern": "sequence",
+      "primary": [
+        "Scapular Control Complex",
+        "Quadriceps",
+        "Hamstring Complex",
+        "Hip Flexors (Psoas & Iliacus)"
+      ],
+      "secondary": [
+        "Glute Complex",
+        "Calves & Achilles Complex"
+      ]
+    },
+    "glute_bridge_feet_elevated": {
+      "name": "Glute Bridge (Feet Elevated)",
+      "type": "compound",
+      "pattern": "bridge",
+      "primary": [
+        "Semimembranosus",
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Hamstring Complex"
+      ]
+    },
+    "hammer_strength_shoulder_press": {
+      "name": "Hammer Strength Shoulder Press",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)"
+      ]
+    },
+    "hammer_strength_tricep_extension": {
+      "name": "Hammer Strength Tricep Extensions",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head",
+        "Triceps Lateral Head"
+      ]
+    },
+    "hammer_strength_tricep_extensions": {
+      "name": "Hammer Strength Tricep Extensions",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "handstand_holds": {
+      "name": "Handstand Holds",
+      "type": "isolation",
+      "pattern": "hold",
+      "primary": [
+        "Rotator Cuff",
+        "Trapezius (Traps)"
+      ],
+      "secondary": []
+    },
+    "handstand_push_ups": {
+      "name": "Handstand Push-Ups",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)",
+        "Rotator Cuff"
+      ]
+    },
+    "high_elbow_cable_rows": {
+      "name": "High Elbow Cable Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)",
+        "Rhomboids (Major & Minor)"
+      ],
+      "secondary": [
+        "Middle Traps"
+      ]
+    },
+    "heel_elevated_squats": {
+      "name": "Heel Elevated Squats",
+      "type": "compound",
+      "pattern": "squat",
+      "primary": [
+        "Vastus Medialis Oblique (VMO)",
+        "Vastus Medialis",
+        "Quadriceps"
+      ],
+      "secondary": [
+        "Gluteus Maximus"
+      ]
+    },
+    "high_elbow_rows": {
+      "name": "High Elbow Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rhomboids (Major & Minor)",
+        "Middle Traps"
+      ],
+      "secondary": [
+        "Rear Delts (Posterior Deltoid)"
+      ]
+    },
+    "high_elbow_hammer_strength_rows": {
+      "name": "High Elbow Hammer Strength Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rhomboids (Major & Minor)",
+        "Middle Traps"
+      ],
+      "secondary": [
+        "Rear Delts (Posterior Deltoid)",
+        "Latissimus Dorsi (Lats)"
+      ]
+    },
+    "face_pulls": {
+      "name": "Face Pulls",
+      "type": "isolation",
+      "pattern": "row",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)",
+        "Rhomboids (Major & Minor)"
+      ],
+      "secondary": [
+        "Lower Traps",
+        "Middle Traps"
+      ]
+    },
+    "hip_abduction_machine": {
+      "name": "Hip Abduction Machine",
+      "type": "isolation",
+      "pattern": "hold",
+      "primary": [
+        "Hip Abductors & TFL"
+      ],
+      "secondary": [
+        "Tensor Fasciae Latae (TFL)"
+      ]
+    },
+    "hip_adduction_machine": {
+      "name": "Hip Adduction Machine",
+      "type": "isolation",
+      "pattern": "hold",
+      "primary": [
+        "Adductor Complex"
+      ],
+      "secondary": []
+    },
+    "hip_huggers": {
+      "name": "Hip Huggers",
+      "type": "compound",
+      "pattern": "raise",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "hyperextension_rows": {
+      "name": "Hyperextension Rows",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)",
+        "Rhomboids (Major & Minor)",
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Latissimus Dorsi (Lats)",
+        "Hamstring Complex"
+      ]
+    },
+    "incline_close_grip_bench_press": {
+      "name": "Incline Close Grip Bench Press",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Triceps Long Head",
+        "Triceps Medial Head"
+      ],
+      "secondary": [
+        "Upper Chest (Clavicular Head)"
+      ]
+    },
+    "incline_dumbbell_curl": {
+      "name": "Incline Dumbbell Curls",
+      "type": "compound",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Long Head"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "incline_dumbbell_power_bomb": {
+      "name": "Incline Dumbbell Power Bombs",
+      "type": "compound",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "incline_dumbbell_power_bombs": {
+      "name": "Incline Dumbbell Power Bombs",
+      "type": "compound",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": []
+    },
+    "jm_press": {
+      "name": "JM Press",
+      "type": "compound",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head",
+        "Triceps Medial Head"
+      ],
+      "secondary": [
+        "Mid Chest (Sternocostal Head)",
+        "Triceps Medial Head"
+      ]
+    },
+    "kettlebell_toe_raises": {
+      "name": "Kettlebell Toe Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Tibialis Anterior"
+      ],
+      "secondary": []
+    },
+    "lateral_raises": {
+      "name": "Lateral Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": []
+    },
+    "leg_curls": {
+      "name": "Leg Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Femoris (Short Head)",
+        "Hamstring Complex"
+      ],
+      "secondary": []
+    },
+    "leg_extensions": {
+      "name": "Leg Extensions",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Vastus Intermedius",
+        "Vastus Medialis",
+        "Vastus Medialis Oblique (VMO)"
+      ],
+      "secondary": []
+    },
+    "lu_raises": {
+      "name": "LU Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)",
+        "Rotator Cuff"
+      ],
+      "secondary": []
+    },
+    "mid_delt_drop_set": {
+      "name": "Mid Delt Drop Set",
+      "type": "intensity_technique",
+      "pattern": "raise",
+      "primary": [
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": []
+    },
+    "mobility_wall_routine": {
+      "name": "Mobility Wall Routine",
+      "type": "mobility",
+      "pattern": "sequence",
+      "primary": [
+        "Scapular Control Complex",
+        "Rotator Cuff"
+      ],
+      "secondary": []
+    },
+    "modified_bradford_press": {
+      "name": "Modified Bradford Press",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)"
+      ]
+    },
+    "neck_bridges": {
+      "name": "Neck Bridges",
+      "type": "isolation",
+      "pattern": "bridge",
+      "primary": [
+        "Upper Traps"
+      ],
+      "secondary": []
+    },
+    "lat_pull_ins": {
+      "name": "Lat Pull Ins",
+      "type": "isolation",
+      "pattern": "pull_down",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Teres Major"
+      ]
+    },
+    "lat_pulldowns": {
+      "name": "Lat Pulldowns",
+      "type": "compound",
+      "pattern": "pull_down",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Teres Major",
+        "Teres Minor"
+      ]
+    },
+    "neutral_grip_barbell_rows": {
+      "name": "Neutral Grip Barbell Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Rhomboids (Major & Minor)"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "hindu_squats": {
+      "name": "Hindu Squats",
+      "type": "compound",
+      "pattern": "squat",
+      "primary": [
+        "Calves & Achilles Complex",
+        "Quadriceps"
+      ],
+      "secondary": []
+    },
+    "neutral_grip_dumbbell_rows": {
+      "name": "Neutral Grip Dumbbell Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "high_to_low_cable_rows": {
+      "name": "High to Low Cable Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Teres Major"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "inverted_raises": {
+      "name": "Inverted Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Trapezius (Traps)",
+        "Side Delts (Lateral Deltoid)",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)",
+        "Rear Delts (Posterior Deltoid)",
+        "Upper Traps"
+      ]
+    },
+    "neutral_grip_hammer_strength_row": {
+      "name": "Neutral Grip Hammer Strength Row",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Rhomboids (Major & Minor)"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "nordic_curls": {
+      "name": "Nordic Curls",
+      "type": "isolation",
+      "pattern": "hinge",
+      "primary": [
+        "Biceps Femoris (Long Head)",
+        "Semitendinosus",
+        "Semimembranosus"
+      ],
+      "secondary": []
+    },
+    "overhead_barbell_press_holds": {
+      "name": "Overhead Barbell Press Holds",
+      "type": "isolation",
+      "pattern": "press_hold",
+      "primary": [
+        "Rotator Cuff",
+        "Trapezius (Traps)"
+      ],
+      "secondary": []
+    },
+    "powell_raises": {
+      "name": "Powell Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)",
+        "Rotator Cuff"
+      ],
+      "secondary": []
+    },
+    "preacher_machine_hammer_curl": {
+      "name": "Preacher Machine Hammer Curl",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Brachioradialis",
+        "Biceps Short Head"
+      ]
+    },
+    "pvc_pipe_shoulder_sequence": {
+      "name": "PVC Pipe Shoulder Sequence",
+      "type": "mobility",
+      "pattern": "car",
+      "primary": [
+        "Lower Traps",
+        "Rotator Cuff"
+      ],
+      "secondary": []
+    },
+    "rack_pulls": {
+      "name": "Rack Pulls",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": [
+        "Latissimus Dorsi (Lats)"
+      ]
+    },
+    "reverse_barbell_curl": {
+      "name": "Reverse Barbell Curls",
+      "type": "compound",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Brachioradialis"
+      ],
+      "secondary": []
+    },
+    "reverse_barbell_curls": {
+      "name": "Reverse Barbell Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Brachioradialis"
+      ],
+      "secondary": []
+    },
+    "reverse_barbell_ez_bar_curls": {
+      "name": "Reverse Barbell/EZ Bar Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Brachioradialis"
+      ],
+      "secondary": []
+    },
+    "reverse_dumbbell_curl": {
+      "name": "Reverse Dumbbell Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Brachioradialis"
+      ],
+      "secondary": []
+    },
+    "reverse_grip_barbell_press": {
+      "name": "Reverse Grip Barbell Press",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": [
+        "Upper Traps"
+      ]
+    },
+    "reverse_grip_pushdown": {
+      "name": "Reverse Grip Pushdowns",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Medial Head"
+      ],
+      "secondary": []
+    },
+    "reverse_incline_flyes": {
+      "name": "Reverse Incline Flyes",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Middle Traps",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "reverse_lunges": {
+      "name": "Reverse Lunges",
+      "type": "compound",
+      "pattern": "lunge",
+      "primary": [
+        "Gluteus Maximus",
+        "Quadriceps"
+      ],
+      "secondary": [
+        "Hamstring Complex",
+        "Iliacus"
+      ]
+    },
+    "reverse_nordics": {
+      "name": "Reverse Nordics",
+      "type": "mobility",
+      "pattern": "squat",
+      "primary": [
+        "Rectus Femoris",
+        "Vastus Intermedius"
+      ],
+      "secondary": [
+        "Vastus Medialis Oblique (VMO)"
+      ]
+    },
+    "reverse_pec_dec_flyes": {
+      "name": "Reverse Pec Dec Flyes",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Middle Traps"
+      ]
+    },
+    "reverse_plate_curl": {
+      "name": "Reverse Plate Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Brachioradialis"
+      ],
+      "secondary": []
+    },
+    "reverse_plate_curls": {
+      "name": "Reverse Plate Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Brachioradialis"
+      ],
+      "secondary": []
+    },
+    "reverse_squats": {
+      "name": "Reverse Squats",
+      "type": "isolation",
+      "pattern": "leg_raise",
+      "primary": [
+        "Psoas"
+      ],
+      "secondary": [
+        "Iliacus",
+        "Rectus Femoris"
+      ]
+    },
+    "ring_around_the_rommy": {
+      "name": "Ring Around The Rommy’s",
+      "type": "mobility",
+      "pattern": "circle",
+      "primary": [
+        "Rotator Cuff",
+        "Trapezius (Traps)"
+      ],
+      "secondary": []
+    },
+    "regular_lat_pulldowns": {
+      "name": "Regular Lat Pulldowns",
+      "type": "compound",
+      "pattern": "pull_down",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Teres Minor"
+      ]
+    },
+    "preacher_curl_machine": {
+      "name": "Preacher Curl Machine",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Biceps Long Head"
+      ]
+    },
+    "overhead_squat_snatch_holds": {
+      "name": "Overhead Squat / Snatch Holds",
+      "type": "compound",
+      "pattern": "squat_hold",
+      "primary": [
+        "Trapezius (Traps)",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": [
+        "Rotator Cuff"
+      ]
+    },
+    "neutral_grip_pulldown": {
+      "name": "Neutral Grip Pulldown",
+      "type": "compound",
+      "pattern": "pull_down",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Teres Major",
+        "Teres Minor"
+      ]
+    },
+    "regular_pull_ups": {
+      "name": "Regular Pull Ups",
+      "type": "compound",
+      "pattern": "pull_up",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Teres Major",
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "preacher_bar_curl": {
+      "name": "Preacher Bar Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Biceps Long Head"
+      ]
+    },
+    "romanian_deadlift": {
+      "name": "Romanian Deadlift",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Biceps Femoris (Long Head)",
+        "Semitendinosus",
+        "Semimembranosus"
+      ],
+      "secondary": [
+        "Gluteus Maximus",
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "rope_attachment_tricep_superset": {
+      "name": "Rope Attachment Tricep Superset",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Lateral Head",
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head",
+        "Triceps Lateral Head"
+      ]
+    },
+    "seated_barbell_press": {
+      "name": "Seated Barbell Press",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)"
+      ]
+    },
+    "seated_dumbbell_press": {
+      "name": "Seated Dumbbell Press",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)"
+      ]
+    },
+    "seated_reverse_incline_flyes": {
+      "name": "Seated Reverse Incline Flyes",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Middle Traps",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "shoulder_21s": {
+      "name": "21’s (Shoulder)",
+      "type": "intensity_technique",
+      "pattern": "raise",
+      "primary": [
+        "Side Delts (Lateral Deltoid)",
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "side_lying_leg_lift": {
+      "name": "Side‑Lying Leg Lift",
+      "type": "isolation",
+      "pattern": "leg_raise",
+      "primary": [
+        "Gluteus Minimus",
+        "Gluteus Medius"
+      ],
+      "secondary": [
+        "Tensor Fasciae Latae (TFL)"
+      ]
+    },
+    "single_arm_brachialis_cable_curl": {
+      "name": "Single Arm Brachialis Cable Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis"
+      ],
+      "secondary": [
+        "Brachioradialis"
+      ]
+    },
+    "single_arm_brachialis_cable_curls": {
+      "name": "Single Arm Brachialis Cable Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis"
+      ],
+      "secondary": [
+        "Brachioradialis"
+      ]
+    },
+    "single_arm_dumbbell_press": {
+      "name": "Single Arm Dumbbell Press (Standing Overhead)",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)",
+        "Rotator Cuff"
+      ]
+    },
+    "single_arm_farmer_carry": {
+      "name": "Single Arm Farmer Carries",
+      "type": "compound",
+      "pattern": "carry",
+      "primary": [
+        "Brachioradialis"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "single_arm_hammer_curl": {
+      "name": "Single Arm Hammer Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis",
+        "Brachioradialis"
+      ],
+      "secondary": [
+        "Biceps Brachii"
+      ]
+    },
+    "single_arm_incline_lateral_raise": {
+      "name": "Single Arm Incline Lateral Raise",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": []
+    },
+    "single_arm_tricep_extensions": {
+      "name": "Single Arm Tricep Extensions (DB Overhead)",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "single_leg_db_rdls": {
+      "name": "Single‑Leg DB RDLs",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Hamstring Complex",
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Gluteus Medius"
+      ]
+    },
+    "sissy_squats": {
+      "name": "Sissy Squats",
+      "type": "isolation",
+      "pattern": "squat",
+      "primary": [
+        "Rectus Femoris",
+        "Vastus Intermedius",
+        "Vastus Medialis Oblique (VMO)"
+      ],
+      "secondary": []
+    },
+    "side_lying_leg_raises": {
+      "name": "Side-Lying Leg Raises",
+      "type": "isolation",
+      "pattern": "leg_raise",
+      "primary": [
+        "Tensor Fasciae Latae (TFL)",
+        "Gluteus Minimus"
+      ],
+      "secondary": [
+        "Gluteus Medius"
+      ]
+    },
+    "seated_dumbbell_good_mornings": {
+      "name": "Seated Dumbbell Good Mornings",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": []
+    },
+    "single_arm_db_extensions": {
+      "name": "Single Arm DB Extensions",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": []
+    },
+    "rope_attachment_upright_rows": {
+      "name": "Rope Attachment Upright Rows",
+      "type": "isolation",
+      "pattern": "shrug",
+      "primary": [
+        "Upper Traps",
+        "Middle Traps",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Rear Delts (Posterior Deltoid)"
+      ]
+    },
+    "single_arm_cable_rows": {
+      "name": "Single Arm Cable Row",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "single_arm_db_overhead_extensions": {
+      "name": "Single Arm DB Overhead Extensions",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": []
+    },
+    "single_arm_hammer_curls": {
+      "name": "Single Arm Hammer Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Brachialis"
+      ],
+      "secondary": [
+        "Brachioradialis"
+      ]
+    },
+    "shoulder_elixir_potion": {
+      "name": "Shoulder Elixir Potion",
+      "type": "mobility",
+      "pattern": "sequence",
+      "primary": [
+        "Rotator Cuff",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "skull_crushers": {
+      "name": "Skull Crushers",
+      "type": "compound",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "sledgehammer_forearm_sequence": {
+      "name": "Sledgehammer Forearm Sequence",
+      "type": "isolation",
+      "pattern": "forearm_circuit",
+      "primary": [
+        "Brachioradialis"
+      ],
+      "secondary": []
+    },
+    "standing_barbell_press": {
+      "name": "Standing Barbell Press",
+      "type": "compound",
+      "pattern": "overhead_press",
+      "primary": [
+        "Front Delts (Anterior Deltoid)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "secondary": [
+        "Trapezius (Traps)",
+        "Rotator Cuff"
+      ]
+    },
+    "standing_calf_raises": {
+      "name": "Standing Calf Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Gastrocnemius",
+        "Soleus"
+      ],
+      "secondary": []
+    },
+    "standing_reverse_incline_flyes": {
+      "name": "Standing Reverse Incline Flyes",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Middle Traps",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": []
+    },
+    "sumo_deadlift": {
+      "name": "Sumo Deadlift",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Gluteus Maximus",
+        "Gluteus Medius",
+        "Adductor Complex"
+      ],
+      "secondary": [
+        "Hamstring Complex",
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "super_wide_pulldowns": {
+      "name": "Super Wide Pulldowns",
+      "type": "compound",
+      "pattern": "pull_down",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Teres Minor"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "t_raises": {
+      "name": "T Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Middle Traps",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Lower Traps"
+      ]
+    },
+    "triangle_attachment_tricep_superset": {
+      "name": "Triangle Attachment Tricep Superset",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Lateral Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "uncle_rommy_curl": {
+      "name": "Uncle Rommy Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Long Head",
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "uncle_rommy_curls": {
+      "name": "Uncle Rommy Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Brachii"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "underhand_pulldown": {
+      "name": "Underhand Pulldown",
+      "type": "compound",
+      "pattern": "pull_down",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Teres Major"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "upright_dips_tricep": {
+      "name": "Upright Dips (Tricep Dips)",
+      "type": "compound",
+      "pattern": "dip",
+      "primary": [
+        "Triceps Long Head",
+        "Triceps Lateral Head"
+      ],
+      "secondary": [
+        "Mid Chest (Sternocostal Head)",
+        "Front Delts (Anterior Deltoid)"
+      ]
+    },
+    "upright_rows_ez_bar": {
+      "name": "Upright Rows (Straight Bar / EZ Bar)",
+      "type": "compound",
+      "pattern": "upright_row",
+      "primary": [
+        "Side Delts (Lateral Deltoid)",
+        "Upper Traps"
+      ],
+      "secondary": []
+    },
+    "waiter_curl": {
+      "name": "Waiter Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Brachii"
+      ],
+      "secondary": [
+        "Brachialis"
+      ]
+    },
+    "supinated_barbell_rows": {
+      "name": "Supinated Barbell Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Teres Major"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "t_bar_rows": {
+      "name": "T-Bar Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rhomboids (Major & Minor)",
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)",
+        "Middle Traps"
+      ]
+    },
+    "upper_back_dumbbell_rows": {
+      "name": "Upper Back Dumbbell Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rhomboids (Major & Minor)",
+        "Middle Traps"
+      ],
+      "secondary": [
+        "Rear Delts (Posterior Deltoid)"
+      ]
+    },
+    "triangle_pushdown": {
+      "name": "Triangle Attachment Pushdowns",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Triceps Lateral Head"
+      ],
+      "secondary": [
+        "Triceps Medial Head"
+      ]
+    },
+    "triple_rear_delt_delight": {
+      "name": "Triple Rear Delt Delight",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Middle Traps"
+      ]
+    },
+    "turtle_raises": {
+      "name": "Turtle Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Rhomboids (Major & Minor)"
+      ],
+      "secondary": [
+        "Lower Traps",
+        "Rear Delts (Posterior Deltoid)"
+      ]
+    },
+    "waiter_curls": {
+      "name": "Waiter Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Biceps Brachii"
+      ]
+    },
+    "supermans": {
+      "name": "Supermans",
+      "type": "isolation",
+      "pattern": "extension",
+      "primary": [
+        "Lower Traps",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "secondary": [
+        "Middle Traps"
+      ]
+    },
+    "standing_good_mornings": {
+      "name": "Standing Good Mornings",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)",
+        "Hamstring Complex",
+        "Gluteus Maximus"
+      ],
+      "secondary": []
+    },
+    "upright_rows_bar": {
+      "name": "Upright Rows (Straight Bar/EZ Bar)",
+      "type": "isolation",
+      "pattern": "shrug",
+      "primary": [
+        "Upper Traps",
+        "Middle Traps"
+      ],
+      "secondary": [
+        "Rear Delts (Posterior Deltoid)"
+      ]
+    },
+    "upper_back_barbell_rows": {
+      "name": "Upper Back Barbell Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rhomboids (Major & Minor)",
+        "Middle Traps"
+      ],
+      "secondary": [
+        "Rear Delts (Posterior Deltoid)"
+      ]
+    },
+    "wide_dumbbell_curl": {
+      "name": "Wide Dumbbell Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Biceps Brachii"
+      ]
+    },
+    "wide_grip_barbell_curl": {
+      "name": "Wide Grip Barbell Curl",
+      "type": "compound",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Short Head"
+      ],
+      "secondary": [
+        "Biceps Brachii"
+      ]
+    },
+    "weighted_dips_upright": {
+      "name": "Weighted Dips (Upright)",
+      "type": "compound",
+      "pattern": "dip",
+      "primary": [
+        "Triceps Lateral Head",
+        "Triceps Long Head"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Mid Chest (Sternocostal Head)"
+      ]
+    },
+    "incline_dumbbell_press": {
+      "name": "Incline Dumbbell Press",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "incline_barbell_press": {
+      "name": "Incline Barbell Press",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "incline_press_hammer_strength": {
+      "name": "Incline Press Hammer Strength",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "cable_upper_chest_flyes": {
+      "name": "Cable Upper Chest Flyes",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": []
+    },
+    "barbell_ezbar_pullovers": {
+      "name": "Barbell/EZ Bar Pullovers",
+      "type": "compound",
+      "pattern": "pullover",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Teres Major"
+      ]
+    },
+    "leg_press_machine": {
+      "name": "Leg Press Machine",
+      "type": "compound",
+      "pattern": "squat",
+      "primary": [
+        "Gluteus Maximus",
+        "Quadriceps"
+      ],
+      "secondary": [
+        "Hamstring Complex"
+      ]
+    },
+    "cossack_barbell_squats": {
+      "name": "Cossack Barbell Squats",
+      "type": "mobility",
+      "pattern": "squat",
+      "primary": [
+        "Adductor Complex",
+        "Quadriceps",
+        "Vastus Lateralis"
+      ],
+      "secondary": [
+        "Gluteus Medius",
+        "Gluteus Minimus"
+      ]
+    },
+    "full_rom_back_squats": {
+      "name": "Full ROM Back Squats",
+      "type": "compound",
+      "pattern": "squat",
+      "primary": [
+        "Gluteus Maximus",
+        "Quadriceps"
+      ],
+      "secondary": [
+        "Calves & Achilles Complex",
+        "Hamstring Complex"
+      ]
+    },
+    "reverse_hyperextensions": {
+      "name": "Reverse Hyperextensions",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)",
+        "Gluteus Maximus",
+        "Hamstring Complex"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "seated_barbell_good_mornings": {
+      "name": "Seated Barbell Good Mornings",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)",
+        "Semimembranosus",
+        "Semitendinosus"
+      ],
+      "secondary": [
+        "Gluteus Maximus"
+      ]
+    },
+    "wall_drags": {
+      "name": "Wall Drags",
+      "type": "mobility",
+      "pattern": "wall_slide",
+      "primary": [
+        "Lower Traps",
+        "Rotator Cuff"
+      ],
+      "secondary": []
+    },
+    "weighted_plate_mobility": {
+      "name": "Weighted Plate Mobility",
+      "type": "mobility",
+      "pattern": "sequence",
+      "primary": [
+        "Erector Spinae (Spinal Erectors)",
+        "Glute Complex",
+        "Hip Flexors (Psoas & Iliacus)",
+        "Quadriceps"
+      ],
+      "secondary": [
+        "Calves & Achilles Complex",
+        "Hamstring Complex"
+      ]
+    },
+    "wide_dumbbell_curls": {
+      "name": "Wide Dumbbell Curls",
+      "type": "isolation",
+      "pattern": "curl",
+      "primary": [
+        "Biceps Long Head"
+      ],
+      "secondary": [
+        "Biceps Brachii"
+      ]
+    },
+    "wide_grip_pull_ups": {
+      "name": "Wide Grip Pull Ups",
+      "type": "compound",
+      "pattern": "pull_up",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)",
+        "Teres Major"
+      ]
+    },
+    "wide_neutral_grip_pull_ups": {
+      "name": "Wide Neutral Grip Pull Ups",
+      "type": "compound",
+      "pattern": "pull_up",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Teres Major"
+      ],
+      "secondary": [
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "feet_elevated_push_ups": {
+      "name": "Feet Elevated Push-Ups",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "feet_elevated_plate_push_ups": {
+      "name": "Feet Elevated Plate Push-Ups",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "landmine_chest_press": {
+      "name": "Landmine Chest Press",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "zercher_rdls": {
+      "name": "Zercher RDLs",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Hamstring Complex",
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "wide_grip_hammer_strength_row": {
+      "name": "Wide Grip Hammer Strength Row",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rhomboids (Major & Minor)",
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Middle Traps"
+      ]
+    },
+    "wide_stance_box_squats": {
+      "name": "Wide Stance Box Squats",
+      "type": "compound",
+      "pattern": "squat",
+      "primary": [
+        "Gluteus Maximus",
+        "Hamstring Complex",
+        "Adductor Complex"
+      ],
+      "secondary": [
+        "Quadriceps"
+      ]
+    },
+    "y_raises": {
+      "name": "Y Raises",
+      "type": "isolation",
+      "pattern": "raise",
+      "primary": [
+        "Lower Traps",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "secondary": [
+        "Middle Traps"
+      ]
+    },
+    "zercher_squats": {
+      "name": "Zercher Squats",
+      "type": "compound",
+      "pattern": "squat",
+      "primary": [
+        "Quadriceps",
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)",
+        "Hip Flexors (Psoas & Iliacus)"
+      ]
+    },
+    "banded_incline_dumbbell_press": {
+      "name": "Banded INCLINE Dumbbell Presses",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "flat_dumbbell_press": {
+      "name": "Flat Dumbbell Press",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "flat_press_hammer_strength": {
+      "name": "Flat Press Hammer Strength",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "flat_cable_flyes": {
+      "name": "Flat Cable Flyes",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": []
+    },
+    "pec_deck_flyes": {
+      "name": "Pec Dec Flyes",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": []
+    },
+    "push_ups": {
+      "name": "Push-Ups",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "flat_plate_push_ups": {
+      "name": "Flat Plate Push-Ups",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "floor_flyes": {
+      "name": "Floor Flyes",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": []
+    },
+    "floor_press": {
+      "name": "Floor Press",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Triceps Brachii"
+      ]
+    },
+    "reverse_grip_bench": {
+      "name": "Reverse Grip Bench",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)",
+        "Upper Chest (Clavicular Head)"
+      ],
+      "secondary": [
+        "Triceps Brachii"
+      ]
+    },
+    "dumbbell_pullovers": {
+      "name": "Dumbbell Pullovers",
+      "type": "compound",
+      "pattern": "pullover",
+      "primary": [
+        "Pectoralis Minor",
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Lats & Lat Complex"
+      ]
+    },
+    "banded_flat_dumbbell_press": {
+      "name": "Banded FLAT Dumbbell Presses",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "push_up_circuit": {
+      "name": "Push-Up Circuit",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Lower Chest (Abdominal Head)",
+        "Triceps Brachii",
+        "Upper Chest (Clavicular Head)"
+      ]
+    },
+    "chest_dips": {
+      "name": "Chest Dips",
+      "type": "compound",
+      "pattern": "dip",
+      "primary": [
+        "Lower Chest (Abdominal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "weighted_dips": {
+      "name": "Weighted Dips",
+      "type": "compound",
+      "pattern": "dip",
+      "primary": [
+        "Lower Chest (Abdominal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "decline_dumbbell_press": {
+      "name": "Decline Dumbbell Press",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Lower Chest (Abdominal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "the_double_dip": {
+      "name": "The Double Dip",
+      "type": "compound",
+      "pattern": "dip",
+      "primary": [
+        "Lower Chest (Abdominal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "decline_cable_crossovers": {
+      "name": "Decline Cable Crossovers",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Lower Chest (Abdominal Head)"
+      ],
+      "secondary": []
+    },
+    "dog_pounds": {
+      "name": "Dog Pounds",
+      "type": "isolation",
+      "pattern": "fly",
+      "primary": [
+        "Lower Chest (Abdominal Head)"
+      ],
+      "secondary": []
+    },
+    "single_arm_decline_cable_press": {
+      "name": "Single Arm Decline Cable Presses",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Lower Chest (Abdominal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "banded_decline_dumbbell_press": {
+      "name": "Banded DECLINE Dumbbell Presses",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Lower Chest (Abdominal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "supinated_dumbbell_rows": {
+      "name": "Supinated Dumbbell Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Latissimus Dorsi (Lats)"
+      ],
+      "secondary": [
+        "Teres Major",
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "flat_barbell_bench": {
+      "name": "Flat Barbell Bench",
+      "type": "compound",
+      "pattern": "press",
+      "primary": [
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "secondary": [
+        "Front Delts (Anterior Deltoid)",
+        "Triceps Brachii"
+      ]
+    },
+    "zercher_deadlifts": {
+      "name": "Zercher Deadlifts",
+      "type": "compound",
+      "pattern": "hinge",
+      "primary": [
+        "Gluteus Maximus",
+        "Hamstring Complex",
+        "Quadriceps"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)"
+      ]
+    },
+    "pistol_squats": {
+      "name": "Pistol Squats",
+      "type": "compound",
+      "pattern": "squat",
+      "primary": [
+        "Quadriceps",
+        "Gluteus Maximus"
+      ],
+      "secondary": [
+        "Hamstring Complex",
+        "Hip Abductors & TFL"
+      ]
+    },
+    "weighted_pull_ups": {
+      "name": "Weighted Pull Ups",
+      "type": "compound",
+      "pattern": "pull_up",
+      "primary": [
+        "Latissimus Dorsi (Lats)",
+        "Teres Major"
+      ],
+      "secondary": [
+        "Erector Spinae (Spinal Erectors)",
+        "Rhomboids (Major & Minor)"
+      ]
+    },
+    "seated_cable_rows": {
+      "name": "Seated Cable Rows",
+      "type": "compound",
+      "pattern": "row",
+      "primary": [
+        "Rhomboids (Major & Minor)",
+        "Middle Traps"
+      ],
+      "secondary": [
+        "Lower Traps"
+      ]
+    }
+  },
+  "coactivation": [
+    {
+      "muscles": [
+        "Triceps Brachii",
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "regions": [
+        "Arms",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 19
+    },
+    {
+      "muscles": [
+        "Rear Delts (Posterior Deltoid)",
+        "Middle Traps"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 16
+    },
+    {
+      "muscles": [
+        "Gluteus Maximus",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 11
+    },
+    {
+      "muscles": [
+        "Rhomboids (Major & Minor)",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 10
+    },
+    {
+      "muscles": [
+        "Trapezius (Traps)",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 10
+    },
+    {
+      "muscles": [
+        "Upper Chest (Clavicular Head)",
+        "Triceps Brachii"
+      ],
+      "regions": [
+        "Chest",
+        "Arms"
+      ],
+      "count": 9
+    },
+    {
+      "muscles": [
+        "Triceps Brachii",
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "regions": [
+        "Arms",
+        "Chest"
+      ],
+      "count": 9
+    },
+    {
+      "muscles": [
+        "Front Delts (Anterior Deltoid)",
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Chest"
+      ],
+      "count": 8
+    },
+    {
+      "muscles": [
+        "Hamstring Complex",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 8
+    },
+    {
+      "muscles": [
+        "Trapezius (Traps)",
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 8
+    },
+    {
+      "muscles": [
+        "Trapezius (Traps)",
+        "Rotator Cuff"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 7
+    },
+    {
+      "muscles": [
+        "Upper Chest (Clavicular Head)",
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "regions": [
+        "Chest",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 7
+    },
+    {
+      "muscles": [
+        "Triceps Brachii",
+        "Lower Chest (Abdominal Head)"
+      ],
+      "regions": [
+        "Arms",
+        "Chest"
+      ],
+      "count": 7
+    },
+    {
+      "muscles": [
+        "Front Delts (Anterior Deltoid)",
+        "Lower Chest (Abdominal Head)"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Chest"
+      ],
+      "count": 6
+    },
+    {
+      "muscles": [
+        "Rear Delts (Posterior Deltoid)",
+        "Lower Traps"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 5
+    },
+    {
+      "muscles": [
+        "Teres Minor",
+        "Latissimus Dorsi (Lats)"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 5
+    },
+    {
+      "muscles": [
+        "Upper Traps",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 5
+    },
+    {
+      "muscles": [
+        "Upper Traps",
+        "Side Delts (Lateral Deltoid)"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 5
+    },
+    {
+      "muscles": [
+        "Triceps Long Head",
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "regions": [
+        "Arms",
+        "Chest"
+      ],
+      "count": 5
+    },
+    {
+      "muscles": [
+        "Quadriceps",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 4
+    },
+    {
+      "muscles": [
+        "Rotator Cuff",
+        "Lower Traps"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 3
+    },
+    {
+      "muscles": [
+        "Teres Minor",
+        "Teres Major"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 3
+    },
+    {
+      "muscles": [
+        "Trapezius (Traps)",
+        "Rear Delts (Posterior Deltoid)"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 3
+    },
+    {
+      "muscles": [
+        "Triceps Medial Head",
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "regions": [
+        "Arms",
+        "Chest"
+      ],
+      "count": 3
+    },
+    {
+      "muscles": [
+        "Triceps Lateral Head",
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "regions": [
+        "Arms",
+        "Chest"
+      ],
+      "count": 3
+    },
+    {
+      "muscles": [
+        "Hip Flexors (Psoas & Iliacus)",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 2
+    },
+    {
+      "muscles": [
+        "Rotator Cuff",
+        "Latissimus Dorsi (Lats)"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 2
+    },
+    {
+      "muscles": [
+        "Semimembranosus",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 2
+    },
+    {
+      "muscles": [
+        "Semitendinosus",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 2
+    },
+    {
+      "muscles": [
+        "Erector Spinae (Spinal Erectors)",
+        "Adductor Complex"
+      ],
+      "regions": [
+        "Back",
+        "Legs"
+      ],
+      "count": 2
+    },
+    {
+      "muscles": [
+        "Triceps Long Head",
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "regions": [
+        "Arms",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 2
+    },
+    {
+      "muscles": [
+        "Triceps Lateral Head",
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "regions": [
+        "Arms",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 2
+    },
+    {
+      "muscles": [
+        "Glute Complex",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Gluteus Medius",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Latissimus Dorsi (Lats)",
+        "Gluteus Maximus"
+      ],
+      "regions": [
+        "Back",
+        "Legs"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Latissimus Dorsi (Lats)",
+        "Hamstring Complex"
+      ],
+      "regions": [
+        "Back",
+        "Legs"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Lats & Lat Complex",
+        "Mid Chest (Sternocostal Head)"
+      ],
+      "regions": [
+        "Back",
+        "Chest"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Rear Delts (Posterior Deltoid)",
+        "Latissimus Dorsi (Lats)"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Rectus Femoris",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Rhomboids (Major & Minor)",
+        "Gluteus Maximus"
+      ],
+      "regions": [
+        "Back",
+        "Legs"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Rhomboids (Major & Minor)",
+        "Hamstring Complex"
+      ],
+      "regions": [
+        "Back",
+        "Legs"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Rotator Cuff",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Teres Minor",
+        "Rhomboids (Major & Minor)"
+      ],
+      "regions": [
+        "Shoulders (Deltoid & Cuff Complex)",
+        "Back"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Erector Spinae (Spinal Erectors)",
+        "Biceps Femoris (Long Head)"
+      ],
+      "regions": [
+        "Back",
+        "Legs"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Erector Spinae (Spinal Erectors)",
+        "Calves & Achilles Complex"
+      ],
+      "regions": [
+        "Back",
+        "Legs"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Upper Traps",
+        "Rotator Cuff"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Upper Traps",
+        "Front Delts (Anterior Deltoid)"
+      ],
+      "regions": [
+        "Back",
+        "Shoulders (Deltoid & Cuff Complex)"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Vastus Medialis Oblique (VMO)",
+        "Erector Spinae (Spinal Erectors)"
+      ],
+      "regions": [
+        "Legs",
+        "Back"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Upper Chest (Clavicular Head)",
+        "Triceps Medial Head"
+      ],
+      "regions": [
+        "Chest",
+        "Arms"
+      ],
+      "count": 1
+    },
+    {
+      "muscles": [
+        "Upper Chest (Clavicular Head)",
+        "Triceps Long Head"
+      ],
+      "regions": [
+        "Chest",
+        "Arms"
+      ],
+      "count": 1
+    }
+  ]
+}
