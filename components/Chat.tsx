@@ -300,8 +300,8 @@ export function Chat() {
           </div>
         )}
 
-        {/* Input area - sticky with safe area */}
-        <div className="border-t border-gray-800 bg-gray-900/95 backdrop-blur-sm p-3 sm:p-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] sm:pb-4">
+        {/* Input area - with bottom nav padding on mobile */}
+        <div className="border-t border-gray-800 bg-gray-900/95 backdrop-blur-sm p-3 sm:p-4 pb-20 md:pb-4">
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
             <div className="flex gap-2 sm:gap-3 items-center bg-gray-800 rounded-xl border border-gray-700 focus-within:border-blue-500/50 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all px-3 sm:px-4 py-2">
               <input
