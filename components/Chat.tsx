@@ -1,0 +1,340 @@
+"use client";
+
+import { useChat } from "@ai-sdk/react";
+import { TextStreamChatTransport, UIMessage } from "ai";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import { MentionDrawer } from "./MentionDrawer";
+
+const SUGGESTED_PROMPTS = [
+  { text: "What exercises target the long head of the triceps?", icon: "💪" },
+  { text: "How do I build bigger shoulders?", icon: "🎯" },
+  { text: "Give me a chest workout", icon: "🏋️" },
+  { text: "Explain compound vs isolation exercises", icon: "📚" },
+];
+
+function getMessageText(message: UIMessage): string {
+  return message.parts
+    .filter((part): part is { type: 'text'; text: string } => part.type === 'text')
+    .map(part => part.text)
+    .join('');
+}
+
+// Extract mentions from content and replace with placeholders for markdown processing
+function extractMentions(content: string): {
+  processedContent: string;
+  mentions: Map<string, { name: string; type: string; id: string }>;
+} {
+  const mentions = new Map<string, { name: string; type: string; id: string }>();
+  const mentionRegex = /@\[([^\]]+)\]\(([^:]+):([^)]+)\)/g;
+  let counter = 0;
+
+  const processedContent = content.replace(mentionRegex, (_, name, type, id) => {
+    const placeholder = `⟦MENTION${counter++}⟧`;
+    mentions.set(placeholder, { name, type, id });
+    return placeholder;
+  });
+
+  return { processedContent, mentions };
+}
+
+type MentionType = "exercise" | "anatomy" | "guide" | "section";
+
+function MessageContent({
+  content,
+  isUser,
+  onMentionClick,
+}: {
+  content: string;
+  isUser: boolean;
+  onMentionClick: (type: MentionType, id: string) => void;
+}) {
+  if (isUser) {
+    return <div className="whitespace-pre-wrap">{content}</div>;
+  }
+
+  const { processedContent, mentions } = extractMentions(content);
+
+  const replacePlaceholders = (text: string): React.ReactNode[] => {
+    const parts: React.ReactNode[] = [];
+    const placeholderRegex = /⟦MENTION(\d+)⟧/g;
+    let lastIndex = 0;
+    let match;
+
+    while ((match = placeholderRegex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(text.slice(lastIndex, match.index));
+      }
+
+      const placeholder = match[0];
+      const mention = mentions.get(placeholder);
+      if (mention) {
+        const styles: Record<string, { bg: string; text: string; icon: string }> = {
+          exercise: { bg: "bg-blue-500/15 hover:bg-blue-500/25 border-blue-500/30", text: "text-blue-400", icon: "🏋️" },
+          guide: { bg: "bg-emerald-500/15 hover:bg-emerald-500/25 border-emerald-500/30", text: "text-emerald-400", icon: "📖" },
+          section: { bg: "bg-amber-500/15 hover:bg-amber-500/25 border-amber-500/30", text: "text-amber-400", icon: "📄" },
+          anatomy: { bg: "bg-purple-500/15 hover:bg-purple-500/25 border-purple-500/30", text: "text-purple-400", icon: "🧬" },
+        };
+        const style = styles[mention.type] || styles.anatomy;
+        parts.push(
+          <button
+            key={placeholder}
+            onClick={() => onMentionClick(mention.type as MentionType, mention.id)}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-sm font-medium transition-all cursor-pointer border ${style.bg} ${style.text}`}
+          >
+            <span className="text-xs">{style.icon}</span>
+            {mention.name}
+          </button>
+        );
+      }
+
+      lastIndex = match.index + match[0].length;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push(text.slice(lastIndex));
+    }
+
+    return parts.length > 0 ? parts : [text];
+  };
+
+  const processChildrenWithMentions = (children: React.ReactNode): React.ReactNode => {
+    if (typeof children === "string") {
+      const replaced = replacePlaceholders(children);
+      return replaced.length === 1 ? replaced[0] : <>{replaced}</>;
+    }
+    if (Array.isArray(children)) {
+      return children.map((child, i) => {
+        if (typeof child === "string") {
+          const replaced = replacePlaceholders(child);
+          return replaced.length === 1 ? <span key={i}>{replaced[0]}</span> : <span key={i}>{replaced}</span>;
+        }
+        return child;
+      });
+    }
+    return children;
+  };
+
+  return (
+    <div className="prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-li:leading-relaxed">
+      <ReactMarkdown
+        components={{
+          h1: ({ children }) => <h1 className="text-lg font-bold mt-4 mb-2 first:mt-0 text-white">{processChildrenWithMentions(children)}</h1>,
+          h2: ({ children }) => <h2 className="text-base font-bold mt-4 mb-2 first:mt-0 text-white">{processChildrenWithMentions(children)}</h2>,
+          h3: ({ children }) => <h3 className="text-sm font-semibold mt-3 mb-1.5 first:mt-0 text-gray-100">{processChildrenWithMentions(children)}</h3>,
+          p: ({ children }) => (
+            <p className="mb-3 last:mb-0">{processChildrenWithMentions(children)}</p>
+          ),
+          ul: ({ children }) => <ul className="list-disc pl-5 mb-3 space-y-1.5">{children}</ul>,
+          ol: ({ children }) => <ol className="list-decimal pl-5 mb-3 space-y-1.5">{children}</ol>,
+          li: ({ children }) => (
+            <li>{processChildrenWithMentions(children)}</li>
+          ),
+          strong: ({ children }) => (
+            <strong className="font-semibold text-white">{processChildrenWithMentions(children)}</strong>
+          ),
+          em: ({ children }) => <em className="italic text-gray-300">{processChildrenWithMentions(children)}</em>,
+          code: ({ children, className }) => {
+            const isInline = !className;
+            if (isInline) {
+              return <code className="bg-gray-700/50 px-1.5 py-0.5 rounded text-xs font-mono text-gray-200">{children}</code>;
+            }
+            return <code className={className}>{children}</code>;
+          },
+          pre: ({ children }) => <pre className="bg-gray-800/50 p-3 rounded-lg text-xs overflow-x-auto mb-3 border border-gray-700/50">{children}</pre>,
+          hr: () => <hr className="my-4 border-gray-700/50" />,
+        }}
+      >
+        {processedContent}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
+export function Chat() {
+  const router = useRouter();
+  const transport = useMemo(() => new TextStreamChatTransport({
+    api: "/api/chat",
+  }), []);
+
+  const { messages, sendMessage, status, error } = useChat({
+    transport,
+  });
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [drawerState, setDrawerState] = useState<{
+    isOpen: boolean;
+    type: "exercise" | "anatomy" | null;
+    id: string | null;
+  }>({
+    isOpen: false,
+    type: null,
+    id: null,
+  });
+
+  const isLoading = status === "streaming" || status === "submitted";
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
+    sendMessage({ text: input });
+    setInput("");
+  };
+
+  const handleSuggestedPrompt = (prompt: string) => {
+    sendMessage({ text: prompt });
+  };
+
+  const handleMentionClick = (type: MentionType, id: string) => {
+    if (type === "guide") {
+      router.push(`/guides/${id}`);
+    } else if (type === "section") {
+      const [guideId, sectionId] = id.split('/');
+      router.push(`/guides/${guideId}?section=${sectionId}`);
+    } else {
+      setDrawerState({ isOpen: true, type, id });
+    }
+  };
+
+  return (
+    <>
+      <div className="flex flex-col h-full bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950">
+        {/* Messages area */}
+        <div className="flex-1 overflow-y-auto">
+          {messages.length === 0 ? (
+            // Empty state
+            <div className="flex flex-col items-center justify-center h-full text-center px-4 py-12">
+              <div className="relative mb-6">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/25">
+                  <span className="text-4xl">💪</span>
+                </div>
+                <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-green-500 border-2 border-gray-900 flex items-center justify-center">
+                  <span className="text-xs">✓</span>
+                </div>
+              </div>
+
+              <h2 className="text-2xl font-bold text-white mb-2">
+                Uncle Rommy
+              </h2>
+              <p className="text-gray-400 mb-8 max-w-sm">
+                Your AI training assistant. Ask about exercises, anatomy, or get a workout plan.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-xl">
+                {SUGGESTED_PROMPTS.map((prompt, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSuggestedPrompt(prompt.text)}
+                    className="group flex items-center gap-3 p-4 rounded-xl bg-gray-800/50 border border-gray-700/50 hover:border-blue-500/50 hover:bg-gray-800 transition-all text-left"
+                  >
+                    <span className="text-2xl group-hover:scale-110 transition-transform">{prompt.icon}</span>
+                    <span className="text-sm text-gray-300 group-hover:text-white transition-colors">{prompt.text}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            // Message list
+            <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
+              {messages.map((message) => (
+                <div
+                  key={message.id}
+                  className={`flex gap-3 ${message.role === "user" ? "flex-row-reverse" : ""}`}
+                >
+                  {/* Avatar */}
+                  <div className={`flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center ${
+                    message.role === "user"
+                      ? "bg-blue-600"
+                      : "bg-gradient-to-br from-blue-500 to-purple-600"
+                  }`}>
+                    <span className="text-sm">{message.role === "user" ? "👤" : "💪"}</span>
+                  </div>
+
+                  {/* Message bubble */}
+                  <div
+                    className={`flex-1 max-w-[85%] rounded-2xl px-4 py-3 ${
+                      message.role === "user"
+                        ? "bg-blue-600 text-white ml-auto"
+                        : "bg-gray-800/80 text-gray-100 border border-gray-700/50"
+                    }`}
+                  >
+                    <MessageContent
+                      content={getMessageText(message)}
+                      isUser={message.role === "user"}
+                      onMentionClick={handleMentionClick}
+                    />
+                  </div>
+                </div>
+              ))}
+
+              {/* Loading indicator */}
+              {isLoading && messages[messages.length - 1]?.role === "user" && (
+                <div className="flex gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                    <span className="text-sm">💪</span>
+                  </div>
+                  <div className="bg-gray-800/80 border border-gray-700/50 rounded-2xl px-4 py-3">
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div ref={messagesEndRef} />
+            </div>
+          )}
+        </div>
+
+        {/* Error display */}
+        {error && (
+          <div className="mx-4 mb-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
+            {error.message}
+          </div>
+        )}
+
+        {/* Input area */}
+        <div className="border-t border-gray-800 bg-gray-900/80 backdrop-blur-sm p-4">
+          <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
+            <div className="flex gap-3 items-center bg-gray-800 rounded-xl border border-gray-700 focus-within:border-blue-500/50 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all px-4 py-2">
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask Uncle Rommy anything..."
+                disabled={isLoading}
+                className="flex-1 bg-transparent text-white placeholder-gray-500 focus:outline-none disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                disabled={isLoading || !input.trim()}
+                className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {/* Mention Drawer */}
+      <MentionDrawer
+        isOpen={drawerState.isOpen}
+        onClose={() => setDrawerState({ isOpen: false, type: null, id: null })}
+        type={drawerState.type}
+        id={drawerState.id}
+      />
+    </>
+  );
+}

@@ -16,6 +16,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
     { href: "/learn2", icon: "🎓", label: "Learn" },
     { href: "/exercises", icon: "🏋️", label: "Exercises" },
     { href: "/anatomy", icon: "🦾", label: "Anatomy" },
+    { href: "/chat", icon: "💬", label: "Chat" },
   ];
 
   const isActive = (href: string) => {

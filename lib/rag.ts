@@ -11,13 +11,14 @@ export type SearchResult = {
   text: string;
   collection: 'Anatomy' | 'Exercise' | 'Section';
   similarity: number;
+  guideId?: string; // Only for Section
 };
 
 // Different collections have different fields
 const COLLECTION_FIELDS: Record<string, string> = {
   Anatomy: 'sourceId name text _additional { certainty }',
   Exercise: 'sourceId name text _additional { certainty }',
-  Section: 'sourceId title text _additional { certainty }',
+  Section: 'sourceId guideId title text _additional { certainty }',
 };
 
 export async function search(query: string, options?: SearchOptions): Promise<SearchResult[]> {
@@ -44,6 +45,7 @@ export async function search(query: string, options?: SearchOptions): Promise<Se
         text: item.text,
         collection: className as 'Anatomy' | 'Exercise' | 'Section',
         similarity: item._additional?.certainty ?? 0,
+        guideId: item.guideId, // Only present for Section
       }));
     })
   );

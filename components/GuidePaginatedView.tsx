@@ -52,10 +52,20 @@ export function GuidePaginatedView({ guide }: GuidePaginatedViewProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { theme, toggleTheme } = useTheme();
-  const initialPage = parseInt(searchParams.get("page") || "0", 10);
-  const [currentPage, setCurrentPage] = useState(
-    initialPage >= 0 && initialPage < guide.sections.length ? initialPage : 0
-  );
+
+  // Support both ?page= and ?section= params
+  const getInitialPage = () => {
+    const sectionId = searchParams.get("section");
+    if (sectionId) {
+      const sortedSections = guide.sections.sort((a, b) => a.order - b.order);
+      const index = sortedSections.findIndex(s => s.id === sectionId);
+      if (index >= 0) return index;
+    }
+    const pageParam = parseInt(searchParams.get("page") || "0", 10);
+    return pageParam >= 0 && pageParam < guide.sections.length ? pageParam : 0;
+  };
+
+  const [currentPage, setCurrentPage] = useState(getInitialPage());
   const [mobileSheetOpen, setMobileSheetOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [workoutData, setWorkoutData] = useState<any>(null);

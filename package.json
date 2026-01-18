@@ -23,11 +23,14 @@
     "seed": "bun run prisma/seed/seed-arms.ts"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.15",
+    "@ai-sdk/react": "^3.0.41",
     "@pothos/core": "^4.10.0",
     "@pothos/plugin-prisma": "^4.14.0",
     "@prisma/client": "6.8.0",
     "@tailwindcss/postcss": "^4.1.17",
     "@xyflow/react": "^12.4.4",
+    "ai": "^6.0.39",
     "basic-ftp": "^5.0.5",
     "graphql": "^16.12.0",
     "graphql-request": "^7.4.0",
@@ -35,6 +38,7 @@
     "next": "^15.5.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
     "vaul": "^1.1.2",
     "weaviate-ts-client": "^2.2.0"
   },
