@@ -239,8 +239,8 @@ export function Chat() {
               </div>
             </div>
           ) : (
-            // Message list
-            <div className="max-w-3xl mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-4 sm:space-y-6">
+            // Message list - pb-20 on mobile for fixed input
+            <div className="max-w-3xl mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-24 md:pb-6 space-y-4 sm:space-y-6">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -300,8 +300,8 @@ export function Chat() {
           </div>
         )}
 
-        {/* Input area - with bottom nav padding on mobile */}
-        <div className="border-t border-gray-800 bg-gray-900/95 backdrop-blur-sm p-3 sm:p-4 pb-20 md:pb-4">
+        {/* Input area - fixed on mobile above bottom nav */}
+        <div className="fixed bottom-16 left-0 right-0 md:static md:bottom-auto border-t border-gray-800 bg-gray-900/95 backdrop-blur-sm p-3 sm:p-4 z-30">
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
             <div className="flex gap-2 sm:gap-3 items-center bg-gray-800 rounded-xl border border-gray-700 focus-within:border-blue-500/50 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all px-3 sm:px-4 py-2">
               <input
