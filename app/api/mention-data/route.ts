@@ -62,6 +62,73 @@ const GET_ANATOMY = gql`
   }
 `;
 
+const GET_GUIDE = gql`
+  query GetGuide($id: String!) {
+    guide(id: $id) {
+      id
+      slug
+      title
+      author
+      primaryRegion {
+        id
+        name
+        kind
+      }
+      sections {
+        id
+        kind
+        title
+        order
+        parentId
+      }
+    }
+  }
+`;
+
+const GET_SECTION = gql`
+  query GetSection($id: String!) {
+    section(id: $id) {
+      id
+      kind
+      title
+      order
+      content
+      images
+      parentId
+      parent {
+        id
+        title
+      }
+      children {
+        id
+        title
+        order
+        kind
+      }
+      guide {
+        id
+        title
+      }
+      focusAnatomyLinks {
+        anatomy {
+          id
+          name
+          kind
+        }
+      }
+      exerciseLinks {
+        exercise {
+          id
+          name
+          type
+          videoUrl
+          cdnVideoUrl
+        }
+      }
+    }
+  }
+`;
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
@@ -81,6 +148,12 @@ export async function GET(request: NextRequest) {
     } else if (type === "anatomy") {
       const data = await graphqlQuery(GET_ANATOMY, { id });
       return NextResponse.json(data?.anatomyNode ?? null);
+    } else if (type === "guide") {
+      const data = await graphqlQuery(GET_GUIDE, { id });
+      return NextResponse.json(data?.guide ?? null);
+    } else if (type === "section") {
+      const data = await graphqlQuery(GET_SECTION, { id });
+      return NextResponse.json(data?.section ?? null);
     } else {
       return NextResponse.json(
         { error: "Invalid type parameter" },
