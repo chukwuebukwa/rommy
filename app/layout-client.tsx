@@ -24,7 +24,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
     return pathname.startsWith(href);
   };
 
-  const isFullWidth = pathname === "/anatomy-explorer";
+  const isFullWidth = pathname === "/anatomy-explorer" || pathname === "/chat";
 
   return (
     <div className="flex h-screen overflow-hidden">
