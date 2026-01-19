@@ -1,6 +1,16 @@
 import Link from "next/link";
 import { graphqlQuery } from "@/lib/graphql/client";
 import { gql } from "graphql-request";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Training Guides | Rommy's Workout Encyclopedia",
+  description: "Browse comprehensive training guides for arms, chest, back, shoulders, and legs. Each guide includes anatomy breakdowns, exercise selections, and workout programs.",
+  openGraph: {
+    title: "Training Guides",
+    description: "Comprehensive muscle-building guides with anatomy, exercises, and programs.",
+  },
+};
 
 const GET_ALL_GUIDES = gql`
   query GetAllGuides {

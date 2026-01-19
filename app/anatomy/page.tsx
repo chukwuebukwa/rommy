@@ -1,6 +1,16 @@
 import { prisma } from "@/lib/prisma";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Anatomy Browser | Rommy's Workout Encyclopedia",
+  description: "Explore muscle anatomy by body region. Understand muscle groups, their functions, and the best exercises to target each one.",
+  openGraph: {
+    title: "Anatomy Browser",
+    description: "Interactive muscle anatomy explorer with exercises for each muscle group.",
+  },
+};
 
 export default async function AnatomyPage() {
   const regions = await prisma.anatomyNode.findMany({

@@ -1,5 +1,15 @@
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Crusadia Codex| Home",
+  description: "Your complete guide to building muscle. Browse training programs, exercises, and anatomy breakdowns by Uncle Rommy.",
+  openGraph: {
+    title: "Crusadia CCodex",
+    description: "Complete muscle-building guides, exercises, and anatomy by Uncle Rommy.",
+  },
+};
 
 // Body part config
 const GUIDE_CONFIG: Record<string, { icon: string; color: string }> = {

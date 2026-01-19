@@ -2,6 +2,16 @@ import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { graphqlQuery } from "@/lib/graphql/client";
 import { GET_ANATOMY_REGIONS } from "@/lib/graphql/prepared-queries";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Learn | Rommy's Workout Encyclopedia",
+  description: "TikTok-style video grid for browsing exercises by body region. Watch demonstrations and learn proper form.",
+  openGraph: {
+    title: "Learn - Video Exercise Browser",
+    description: "Browse exercise videos in an engaging grid format.",
+  },
+};
 
 export const dynamic = "force-dynamic";
 
