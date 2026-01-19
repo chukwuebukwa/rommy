@@ -237,6 +237,8 @@ export function Chat() {
   });
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const shouldAutoScroll = useRef(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const [drawerState, setDrawerState] = useState<{
     isOpen: boolean;
@@ -318,10 +320,28 @@ export function Chat() {
     saveNewMessages();
   }, [deviceId, currentChatId, messages, isLoading, loadChatList]);
 
-  // Auto scroll to bottom
+  // Track if user has scrolled up
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      // Auto-scroll if within 150px of bottom
+      shouldAutoScroll.current = scrollHeight - scrollTop - clientHeight < 150;
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => container.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Auto scroll to bottom (only if user hasn't scrolled up)
+  useEffect(() => {
+    if (!shouldAutoScroll.current) return;
+    // Use instant scroll during streaming for smoother experience
+    const behavior = isLoading ? "instant" : "smooth";
+    messagesEndRef.current?.scrollIntoView({ behavior } as ScrollIntoViewOptions);
+  }, [messages, isLoading]);
 
   const handleNewChat = useCallback(async () => {
     if (!deviceId) return;
@@ -503,7 +523,7 @@ export function Chat() {
           </div>
 
           {/* Messages area */}
-          <div className="flex-1 overflow-y-auto overscroll-contain">
+          <div ref={messagesContainerRef} className="flex-1 overflow-y-auto overscroll-contain scroll-touch scrollbar-hide">
           {messages.length === 0 ? (
             // Empty state
             <div className="flex flex-col items-center justify-center min-h-full text-center px-4 py-8 sm:py-12">
@@ -528,7 +548,7 @@ export function Chat() {
                   <button
                     key={index}
                     onClick={() => handleSuggestedPrompt(prompt.text)}
-                    className="group flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl bg-gray-800/50 border border-gray-700/50 active:bg-gray-800 active:border-blue-500/50 transition-all text-left touch-manipulation"
+                    className="group flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl bg-gray-800/50 border border-gray-700/50 active:bg-gray-800 active:border-blue-500/50 active:scale-[0.98] transition-all duration-150 text-left touch-manipulation"
                   >
                     <span className="text-xl sm:text-2xl flex-shrink-0">{prompt.icon}</span>
                     <span className="text-xs sm:text-sm text-gray-300 line-clamp-2">{prompt.text}</span>
@@ -549,7 +569,7 @@ export function Chat() {
                 // User message - right-aligned subtle pill
                 if (message.role === "user") {
                   return (
-                    <div key={message.id} className="flex justify-end">
+                    <div key={message.id} className="flex justify-end animate-user-message-in">
                       <div className="max-w-[85%] px-4 py-2.5 rounded-3xl bg-gray-700/60 text-gray-100">
                         <div className="whitespace-pre-wrap text-[15px]">{messageText}</div>
                       </div>
@@ -559,7 +579,7 @@ export function Chat() {
 
                 // Assistant message - clean left-aligned, no bubble
                 return (
-                  <div key={message.id} className="text-gray-100">
+                  <div key={message.id} className="text-gray-100 animate-message-in">
                     {/* Tool status - show when active */}
                     {hasActiveTools && (
                       <div className="mb-3">
@@ -586,9 +606,9 @@ export function Chat() {
                     {/* Loading indicator - show when tools are running OR when tools finished but no text yet */}
                     {!hasText && (hasActiveTools || hasCompletedTools) && (
                       <div className="flex items-center gap-1.5 py-2">
-                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" />
-                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style={{ animationDelay: "150ms" }} />
-                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style={{ animationDelay: "300ms" }} />
+                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-typing" />
+                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-typing" style={{ animationDelay: "200ms" }} />
+                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-typing" style={{ animationDelay: "400ms" }} />
                       </div>
                     )}
                   </div>
@@ -598,9 +618,9 @@ export function Chat() {
               {/* Loading indicator for new response */}
               {isLoading && messages[messages.length - 1]?.role === "user" && (
                 <div className="flex items-center gap-1.5 py-2">
-                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" />
-                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style={{ animationDelay: "150ms" }} />
-                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style={{ animationDelay: "300ms" }} />
+                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-typing" />
+                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-typing" style={{ animationDelay: "200ms" }} />
+                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-typing" style={{ animationDelay: "400ms" }} />
                 </div>
               )}
 
@@ -617,7 +637,7 @@ export function Chat() {
         )}
 
         {/* Input area - fixed on mobile above bottom nav */}
-        <div className="fixed bottom-16 left-0 right-0 md:static md:bottom-auto border-t border-gray-800 bg-gray-900/95 backdrop-blur-sm p-3 sm:p-4 z-30">
+        <div className="fixed bottom-16 left-0 right-0 md:static md:bottom-auto border-t border-gray-800 bg-gray-900/95 backdrop-blur-sm p-3 sm:p-4 z-30 pb-safe">
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
             <div className="flex gap-2 sm:gap-3 items-center bg-gray-800 rounded-xl border border-gray-700 focus-within:border-blue-500/50 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all px-3 sm:px-4 py-2">
               <input
@@ -626,8 +646,12 @@ export function Chat() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask anything..."
-                disabled={isLoading}
-                className="flex-1 bg-transparent text-white text-sm sm:text-base placeholder-gray-500 focus:outline-none disabled:opacity-50"
+                enterKeyHint="send"
+                autoComplete="off"
+                autoCorrect="on"
+                autoCapitalize="sentences"
+                spellCheck="true"
+                className="flex-1 bg-transparent text-white text-sm sm:text-base placeholder-gray-500 focus:outline-none min-h-[44px]"
               />
               <button
                 type="submit"

@@ -15,14 +15,28 @@
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
-/* Ensure html/body work with safe areas */
+/* Base iOS optimizations */
 html {
   -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Prevent pull-to-refresh on iOS */
+body {
+  overscroll-behavior-y: none;
+}
+
+/* Remove 300ms tap delay, prevent double-tap zoom */
+* {
+  touch-action: manipulation;
+}
+
+/* Smooth scrolling - but not on iOS where it can cause issues */
+@media (hover: hover) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 /* Better touch targets on mobile */
@@ -30,6 +44,12 @@ html {
   button, a {
     -webkit-tap-highlight-color: transparent;
   }
+}
+
+/* iOS momentum scrolling */
+.scroll-touch {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -40,6 +60,70 @@ html {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Mobile input fixes */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="search"],
+  textarea {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+
+/* Message animations */
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-message-in {
+  animation: messageSlideIn 0.2s ease-out forwards;
+}
+
+/* User message slide from right */
+@keyframes userMessageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-user-message-in {
+  animation: userMessageSlideIn 0.2s ease-out forwards;
+}
+
+/* Typing indicator pulse */
+@keyframes typingPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.animate-typing {
+  animation: typingPulse 1s ease-in-out infinite;
+}
+
+/* iOS-style spring easing for modals/drawers */
+.transition-spring {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Toast animations */

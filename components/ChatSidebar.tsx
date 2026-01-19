@@ -58,16 +58,16 @@ export function ChatSidebar({
   return (
     <>
       {/* Backdrop for mobile */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-40 md:hidden"
-          onClick={onClose}
-        />
-      )}
+      <div
+        className={`fixed inset-0 bg-black/60 z-40 md:hidden transition-opacity duration-300 ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={onClose}
+      />
 
       {/* Sidebar */}
       <div
-        className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-gray-900 border-r border-gray-800 transform transition-transform duration-200 ease-in-out flex flex-col ${
+        className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-gray-900 border-r border-gray-800 transform transition-transform duration-300 ease-out flex flex-col ${
           isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         }`}
       >
@@ -96,7 +96,7 @@ export function ChatSidebar({
         </div>
 
         {/* Chat list */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto scroll-touch scrollbar-hide">
           {chats.length === 0 ? (
             <div className="p-4 text-center text-gray-500 text-sm">
               No chats yet. Start a new conversation!
@@ -110,10 +110,10 @@ export function ChatSidebar({
                     onSelectChat(chat.id);
                     onClose();
                   }}
-                  className={`group flex items-center gap-2 p-3 rounded-lg cursor-pointer transition-colors ${
+                  className={`group flex items-center gap-2 p-3 min-h-[52px] rounded-lg cursor-pointer transition-all duration-150 active:scale-[0.98] ${
                     currentChatId === chat.id
                       ? "bg-gray-700/70 text-white"
-                      : "text-gray-300 hover:bg-gray-800/70 hover:text-white"
+                      : "text-gray-300 hover:bg-gray-800/70 active:bg-gray-800 hover:text-white"
                   }`}
                 >
                   <svg className="w-4 h-4 flex-shrink-0 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
