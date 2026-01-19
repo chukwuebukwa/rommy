@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Crusadia Codex| Home",
   description: "Your complete guide to building muscle. Browse training programs, exercises, and anatomy breakdowns by Uncle Rommy.",
   openGraph: {
-    title: "Crusadia CCodex",
+    title: "Crusadia Codex",
     description: "Complete muscle-building guides, exercises, and anatomy by Uncle Rommy.",
   },
 };
