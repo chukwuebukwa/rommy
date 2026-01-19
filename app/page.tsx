@@ -50,7 +50,7 @@ export default async function Home() {
 
       {/* Guide List - Clean iOS Style */}
       <div className="space-y-3">
-        {guides.map((guide) => {
+        {guides.map((guide: typeof guides[0]) => {
           const config = GUIDE_CONFIG[guide.id] || { icon: "📖", color: "bg-gray-500" };
           const programSection = guide.sections[0];
           // Primary action: go to workout if available, otherwise guide start

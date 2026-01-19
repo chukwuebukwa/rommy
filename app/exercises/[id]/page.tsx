@@ -70,7 +70,7 @@ export default async function ExerciseDetailPage({
     orderBy: { name: "asc" },
   });
 
-  const currentIndex = allExercises.findIndex((ex) => ex.id === id);
+  const currentIndex = allExercises.findIndex((ex: typeof allExercises[0]) => ex.id === id);
   const prevExercise = currentIndex > 0 ? allExercises[currentIndex - 1] : null;
   const nextExercise = currentIndex < allExercises.length - 1 ? allExercises[currentIndex + 1] : null;
 

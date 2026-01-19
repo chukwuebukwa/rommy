@@ -34,7 +34,7 @@ export default async function FormulasPage() {
       </div>
 
       <div className="space-y-6">
-        {formulas.map((formula) => (
+        {formulas.map((formula: typeof formulas[0]) => (
           <Link
             key={formula.id}
             href={`/formulas/${formula.id}`}
@@ -58,7 +58,7 @@ export default async function FormulasPage() {
                   <div className="mb-4">
                     <div className="text-sm text-gray-500 mb-2">Targets:</div>
                     <div className="flex flex-wrap gap-2">
-                      {formula.targets.map((target) => (
+                      {formula.targets.map((target: typeof formula.targets[0]) => (
                         <span
                           key={target.anatomyNodeId}
                           className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm"
@@ -74,7 +74,7 @@ export default async function FormulasPage() {
                 <div>
                   <div className="text-sm text-gray-500 mb-2">Exercises:</div>
                   <div className="space-y-2">
-                    {formula.steps.map((step) => (
+                    {formula.steps.map((step: typeof formula.steps[0]) => (
                       <div
                         key={step.id}
                         className="flex items-center gap-3 text-sm"

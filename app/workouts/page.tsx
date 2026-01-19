@@ -31,7 +31,7 @@ export default async function WorkoutsPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {workouts.map((workout) => (
+        {workouts.map((workout: typeof workouts[0]) => (
           <Link
             key={workout.id}
             href={`/workouts/${workout.id}`}
@@ -57,7 +57,7 @@ export default async function WorkoutsPage() {
               </div>
               <div className="flex items-center gap-1">
                 <span className="font-semibold">
-                  {workout.blocks.reduce((sum, block) => sum + block.exercises.length, 0)}
+                  {workout.blocks.reduce((sum: number, block: typeof workout.blocks[0]) => sum + block.exercises.length, 0)}
                 </span>
                 <span>exercises</span>
               </div>

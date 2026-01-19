@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     if (existingGuide) {
       // Update existing guide
       // First, get all section IDs for this guide
-      const sectionIds = existingGuide.sections.map((s) => s.id);
+      const sectionIds = existingGuide.sections.map((s: typeof existingGuide.sections[0]) => s.id);
 
       // Delete related records first (in correct order)
       if (sectionIds.length > 0) {

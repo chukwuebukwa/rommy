@@ -16,7 +16,7 @@ async function computeCrossRegionConnections() {
   });
 
   const byId: Record<string, typeof nodes[0]> = {};
-  nodes.forEach(n => byId[n.id] = n);
+  nodes.forEach((n: typeof nodes[0]) => byId[n.id] = n);
 
   // Get root region for any node
   function getRegion(node: typeof nodes[0]): typeof nodes[0] {
@@ -30,22 +30,23 @@ async function computeCrossRegionConnections() {
   // Build cross-region connection map
   const connections: Record<string, { targetId: string; targetName: string; targetRegion: string; targetRegionName: string; sharedExercises: number }[]> = {};
 
-  nodes.forEach(n => {
+  type NodeType = typeof nodes[0];
+  nodes.forEach((n: NodeType) => {
     const myRegion = getRegion(n);
-    const myExerciseIds = new Set(n.exerciseLinks.map(l => l.exercise.id));
+    const myExerciseIds = new Set(n.exerciseLinks.map((l: NodeType["exerciseLinks"][0]) => l.exercise.id));
 
     if (myExerciseIds.size === 0) return;
 
     const myConnections: typeof connections[string] = [];
 
-    nodes.forEach(other => {
+    nodes.forEach((other: NodeType) => {
       if (other.id === n.id) return;
       const otherRegion = getRegion(other);
       if (otherRegion.id === myRegion.id) return; // Same region, skip
 
       // Count shared exercises
       let shared = 0;
-      other.exerciseLinks.forEach(link => {
+      other.exerciseLinks.forEach((link: NodeType["exerciseLinks"][0]) => {
         if (myExerciseIds.has(link.exercise.id)) shared++;
       });
 
@@ -71,7 +72,7 @@ async function computeCrossRegionConnections() {
 // Build tree structure from flat nodes
 function buildTree(nodes: Awaited<ReturnType<typeof computeCrossRegionConnections>>["nodes"]) {
   const byId: Record<string, typeof nodes[0]> = {};
-  nodes.forEach(n => byId[n.id] = n);
+  nodes.forEach((n: typeof nodes[0]) => byId[n.id] = n);
 
   interface TreeNode {
     id: string;
@@ -83,10 +84,11 @@ function buildTree(nodes: Awaited<ReturnType<typeof computeCrossRegionConnection
     children: TreeNode[];
   }
 
-  function buildNode(node: typeof nodes[0]): TreeNode {
-    const children = nodes.filter(n => n.parentId === node.id);
-    const childNodes = children.map(c => buildNode(c)).sort((a, b) => a.name.localeCompare(b.name));
-    const childrenTotal = childNodes.reduce((sum, c) => sum + c.totalExerciseCount, 0);
+  type NodeType = typeof nodes[0];
+  function buildNode(node: NodeType): TreeNode {
+    const children = nodes.filter((n: NodeType) => n.parentId === node.id);
+    const childNodes = children.map((c: NodeType) => buildNode(c)).sort((a: TreeNode, b: TreeNode) => a.name.localeCompare(b.name));
+    const childrenTotal = childNodes.reduce((sum: number, c: TreeNode) => sum + c.totalExerciseCount, 0);
     return {
       id: node.id,
       name: node.name,
@@ -98,8 +100,8 @@ function buildTree(nodes: Awaited<ReturnType<typeof computeCrossRegionConnection
     };
   }
 
-  const roots = nodes.filter(n => !n.parentId);
-  return roots.map(r => buildNode(r)).sort((a, b) => a.name.localeCompare(b.name));
+  const roots = nodes.filter((n: NodeType) => !n.parentId);
+  return roots.map((r: NodeType) => buildNode(r)).sort((a: TreeNode, b: TreeNode) => a.name.localeCompare(b.name));
 }
 
 export default async function AnatomyExplorerPage() {
@@ -141,7 +143,7 @@ export default async function AnatomyExplorerPage() {
   }> = {};
 
   const byId: Record<string, typeof nodes[0]> = {};
-  nodes.forEach(n => byId[n.id] = n);
+  nodes.forEach((n: typeof nodes[0]) => byId[n.id] = n);
 
   function getRegion(node: typeof nodes[0]): typeof nodes[0] {
     let current = node;
@@ -152,9 +154,10 @@ export default async function AnatomyExplorerPage() {
   }
 
   // Get all descendant IDs for a node (recursive)
+  type NodeType = typeof nodes[0];
   function getAllDescendantIds(nodeId: string): string[] {
     const descendants: string[] = [];
-    const children = nodes.filter(n => n.parentId === nodeId);
+    const children = nodes.filter((n: NodeType) => n.parentId === nodeId);
     for (const child of children) {
       descendants.push(child.id);
       descendants.push(...getAllDescendantIds(child.id));
@@ -162,7 +165,7 @@ export default async function AnatomyExplorerPage() {
     return descendants;
   }
 
-  nodes.forEach(n => {
+  nodes.forEach((n: NodeType) => {
     const region = getRegion(n);
     const descendantIds = getAllDescendantIds(n.id);
     const allNodeIds = [n.id, ...descendantIds];
@@ -210,7 +213,7 @@ export default async function AnatomyExplorerPage() {
       regionName: region.name,
       exerciseCount: n.exerciseLinks.length,
       totalExerciseCount: exerciseMap.size,
-      exercises: n.exerciseLinks.map(link => ({
+      exercises: n.exerciseLinks.map((link: NodeType["exerciseLinks"][0]) => ({
         id: link.exercise.id,
         name: link.exercise.name,
         type: link.exercise.type,

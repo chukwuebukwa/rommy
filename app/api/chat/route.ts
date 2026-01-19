@@ -53,7 +53,7 @@ async function prefetchContext(query: string): Promise<RAGContext> {
       where: { id: { in: ids } },
       select: { id: true, cdnVideoUrl: true, videoUrl: true },
     });
-    data.forEach(e => {
+    data.forEach((e: typeof data[0]) => {
       const url = e.cdnVideoUrl || e.videoUrl;
       if (url) videoMap.set(e.id, url);
     });
@@ -152,14 +152,16 @@ const tools = {
 
       if (!workout) return { error: `No workout for: ${region}` };
 
+      type BlockType = NonNullable<typeof workout>["blocks"][0];
+      type ExerciseType = BlockType["exercises"][0];
       return {
         name: workout.name,
         goal: workout.goal,
-        blocks: workout.blocks.map(b => ({
+        blocks: workout.blocks.map((b: BlockType) => ({
           label: b.label,
           scheme: b.schemeDesc,
           notes: b.notes,
-          exercises: b.exercises.map(e => ({
+          exercises: b.exercises.map((e: ExerciseType) => ({
             name: e.exercise.name,
             kind: e.kind,
             mentionFormat: `@[${e.exercise.name}](exercise:${e.exercise.id})`,
@@ -200,7 +202,7 @@ const tools = {
 
       return {
         guideId,
-        sections: sections.map(s => ({
+        sections: sections.map((s: typeof sections[0]) => ({
           title: s.title,
           kind: s.kind,
           content: s.content, // Full content, not truncated

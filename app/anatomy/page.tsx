@@ -48,7 +48,7 @@ export default async function AnatomyPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {regions.map((region) => (
+        {regions.map((region: typeof regions[0]) => (
           <Link
             key={region.id}
             href={`/anatomy/${region.id}`}
