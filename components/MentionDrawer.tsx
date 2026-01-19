@@ -7,7 +7,7 @@ import { Drawer } from "vaul";
 interface MentionDrawerProps {
   isOpen: boolean;
   onClose: () => void;
-  type: "exercise" | "anatomy" | null;
+  type: "exercise" | "anatomy" | "guide" | "section" | null;
   id: string | null;
 }
 
@@ -58,9 +58,13 @@ export function MentionDrawer({ isOpen, onClose, type, id }: MentionDrawerProps)
         <>
           {type === "exercise" ? (
             <ExerciseDetails exercise={data} />
-          ) : (
+          ) : type === "anatomy" ? (
             <AnatomyDetails anatomy={data} />
-          )}
+          ) : type === "guide" ? (
+            <GuideDetails guide={data} onClose={onClose} />
+          ) : type === "section" ? (
+            <SectionDetails section={data} onClose={onClose} />
+          ) : null}
         </>
       ) : (
         <div className="text-center py-12 text-gray-400">
@@ -85,18 +89,22 @@ export function MentionDrawer({ isOpen, onClose, type, id }: MentionDrawerProps)
             </div>
 
             {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4">
+            <div className={`text-white p-4 ${
+              type === "guide" ? "bg-gradient-to-r from-emerald-600 to-teal-600" :
+              type === "section" ? "bg-gradient-to-r from-amber-600 to-orange-600" :
+              "bg-gradient-to-r from-blue-600 to-purple-600"
+            }`}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">
-                    {type === "exercise" ? "🏋️" : "🦾"}
+                    {type === "exercise" ? "🏋️" : type === "anatomy" ? "🦾" : type === "guide" ? "📖" : "📄"}
                   </span>
                   <div>
                     <div className="text-xs opacity-90">
-                      {type === "exercise" ? "Exercise" : "Anatomy"}
+                      {type === "exercise" ? "Exercise" : type === "anatomy" ? "Anatomy" : type === "guide" ? "Guide" : "Section"}
                     </div>
                     <div className="text-lg font-bold">
-                      {loading ? "Loading..." : data?.name || "Details"}
+                      {loading ? "Loading..." : data?.name || data?.title || "Details"}
                     </div>
                   </div>
                 </div>
@@ -154,18 +162,22 @@ export function MentionDrawer({ isOpen, onClose, type, id }: MentionDrawerProps)
       {/* Drawer */}
       <div className="fixed right-0 top-0 bottom-0 w-[600px] bg-gray-900 shadow-2xl z-50 overflow-y-auto transition-transform duration-300 ease-in-out">
         {/* Header */}
-        <div className="sticky top-0 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 shadow-lg z-10">
+        <div className={`sticky top-0 text-white p-6 shadow-lg z-10 ${
+          type === "guide" ? "bg-gradient-to-r from-emerald-600 to-teal-600" :
+          type === "section" ? "bg-gradient-to-r from-amber-600 to-orange-600" :
+          "bg-gradient-to-r from-blue-600 to-purple-600"
+        }`}>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="text-3xl">
-                {type === "exercise" ? "🏋️" : "🦾"}
+                {type === "exercise" ? "🏋️" : type === "anatomy" ? "🦾" : type === "guide" ? "📖" : "📄"}
               </span>
               <div>
                 <div className="text-sm opacity-90">
-                  {type === "exercise" ? "Exercise" : "Anatomy"}
+                  {type === "exercise" ? "Exercise" : type === "anatomy" ? "Anatomy" : type === "guide" ? "Guide" : "Section"}
                 </div>
                 <div className="text-xl font-bold">
-                  {loading ? "Loading..." : data?.name || "Details"}
+                  {loading ? "Loading..." : data?.name || data?.title || "Details"}
                 </div>
               </div>
             </div>
@@ -537,6 +549,212 @@ function ExerciseVideoGrid({ exerciseLinks }: { exerciseLinks: any[] }) {
         </div>
       )}
     </>
+  );
+}
+
+function GuideDetails({ guide, onClose }: { guide: any; onClose: () => void }) {
+  // Build section hierarchy
+  const rootSections = guide.sections?.filter((s: any) => !s.parentId) || [];
+  const childrenByParent = guide.sections?.reduce((acc: any, s: any) => {
+    if (s.parentId) {
+      if (!acc[s.parentId]) acc[s.parentId] = [];
+      acc[s.parentId].push(s);
+    }
+    return acc;
+  }, {}) || {};
+
+  const sortedRoots = [...rootSections].sort((a: any, b: any) => a.order - b.order);
+
+  return (
+    <div className="space-y-6">
+      {/* Basic Info */}
+      <div className="bg-gradient-to-br from-emerald-900/30 to-teal-900/30 p-6 rounded-lg">
+        <div className="flex items-center gap-3 mb-4">
+          {guide.primaryRegion && (
+            <span className="px-3 py-1 bg-emerald-600 text-white rounded-full text-sm font-semibold">
+              {guide.primaryRegion.name}
+            </span>
+          )}
+          {guide.author && (
+            <span className="text-gray-400">by {guide.author}</span>
+          )}
+        </div>
+        <p className="text-gray-300">
+          {guide.sections?.length || 0} sections
+        </p>
+      </div>
+
+      {/* Table of Contents */}
+      {sortedRoots.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-gray-100 mb-3">📑 Table of Contents</h3>
+          <div className="space-y-2">
+            {sortedRoots.map((section: any) => {
+              const children = childrenByParent[section.id] || [];
+              const sortedChildren = [...children].sort((a: any, b: any) => a.order - b.order);
+
+              return (
+                <div key={section.id}>
+                  <div className="p-3 bg-gray-800 rounded-lg">
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium text-gray-100">{section.title}</span>
+                      <span className="text-xs px-2 py-0.5 bg-gray-700 text-gray-400 rounded">
+                        {section.kind}
+                      </span>
+                    </div>
+                  </div>
+                  {sortedChildren.length > 0 && (
+                    <div className="ml-4 mt-1 space-y-1">
+                      {sortedChildren.map((child: any) => (
+                        <div key={child.id} className="p-2 bg-gray-800/50 rounded text-sm text-gray-300">
+                          {child.title}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Link to full guide */}
+      <Link
+        href={`/guides/${guide.id}`}
+        onClick={onClose}
+        className="block w-full p-4 bg-emerald-600 hover:bg-emerald-700 text-white text-center rounded-lg font-semibold transition"
+      >
+        Open Full Guide →
+      </Link>
+    </div>
+  );
+}
+
+function SectionDetails({ section, onClose }: { section: any; onClose: () => void }) {
+  const getImageSrc = (path: string) => {
+    if (path.startsWith('guides:')) {
+      return `/guides/${path.replace('guides:', '')}`;
+    } else if (path.startsWith('anatomy:')) {
+      return `/anatomy/${path.replace('anatomy:', '')}`;
+    }
+    return `/guides/${path}`;
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Breadcrumb */}
+      {section.guide && (
+        <div className="flex items-center gap-2 text-sm text-gray-400">
+          <span>{section.guide.title}</span>
+          {section.parent && (
+            <>
+              <span>›</span>
+              <span>{section.parent.title}</span>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Section Info */}
+      <div className="bg-gradient-to-br from-amber-900/30 to-orange-900/30 p-6 rounded-lg">
+        <div className="flex items-center gap-3 mb-2">
+          <span className="px-3 py-1 bg-amber-600 text-white rounded-full text-sm font-semibold">
+            {section.kind}
+          </span>
+        </div>
+      </div>
+
+      {/* Images */}
+      {section.images && section.images.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-gray-100 mb-3">🖼️ Images ({section.images.length})</h3>
+          <div className="grid grid-cols-2 gap-2">
+            {section.images.slice(0, 4).map((imagePath: string, i: number) => (
+              <img
+                key={i}
+                src={getImageSrc(imagePath)}
+                alt={`${section.title} image ${i + 1}`}
+                className="w-full h-24 object-cover rounded-lg"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Content Preview */}
+      {section.content && (
+        <div>
+          <h3 className="font-semibold text-gray-100 mb-3">📝 Content Preview</h3>
+          <div className="bg-gray-800 p-4 rounded-lg text-gray-300 text-sm max-h-48 overflow-y-auto">
+            {section.content.slice(0, 500)}
+            {section.content.length > 500 && "..."}
+          </div>
+        </div>
+      )}
+
+      {/* Focus Anatomy */}
+      {section.focusAnatomyLinks && section.focusAnatomyLinks.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-gray-100 mb-2">🎯 Focus Areas</h3>
+          <div className="flex flex-wrap gap-2">
+            {section.focusAnatomyLinks.map((link: any) => (
+              <span
+                key={link.anatomy.id}
+                className="px-3 py-1 bg-purple-900/50 text-purple-300 rounded-full text-sm"
+              >
+                {link.anatomy.name}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Linked Exercises */}
+      {section.exerciseLinks && section.exerciseLinks.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-gray-100 mb-2">🏋️ Exercises ({section.exerciseLinks.length})</h3>
+          <div className="grid grid-cols-2 gap-2">
+            {section.exerciseLinks.slice(0, 6).map((link: any) => (
+              <div
+                key={link.exercise.id}
+                className="p-2 bg-blue-900/30 rounded-lg text-sm text-gray-300"
+              >
+                {link.exercise.name}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Children Sections */}
+      {section.children && section.children.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-gray-100 mb-2">📁 Subsections ({section.children.length})</h3>
+          <div className="space-y-1">
+            {section.children.map((child: any) => (
+              <div
+                key={child.id}
+                className="p-2 bg-gray-800 rounded text-sm text-gray-300"
+              >
+                {child.title}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Link to section in guide */}
+      {section.guide && (
+        <Link
+          href={`/guides/${section.guide.id}?section=${section.id}`}
+          onClick={onClose}
+          className="block w-full p-4 bg-amber-600 hover:bg-amber-700 text-white text-center rounded-lg font-semibold transition"
+        >
+          Read in Guide →
+        </Link>
+      )}
+    </div>
   );
 }
 

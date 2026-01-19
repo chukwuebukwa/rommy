@@ -75,7 +75,7 @@ export default async function FormulaDetailPage({
             Target Muscles ({formula.targets.length})
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {formula.targets.map((target) => (
+            {formula.targets.map((target: typeof formula.targets[0]) => (
               <Link
                 key={target.anatomyNodeId}
                 href={`/anatomy/${target.anatomy.id}`}
@@ -104,9 +104,9 @@ export default async function FormulaDetailPage({
           Exercise Sequence ({formula.steps.length} steps)
         </h2>
         <div className="space-y-6">
-          {formula.steps.map((step, index) => {
+          {formula.steps.map((step: typeof formula.steps[0], index: number) => {
             const primaryMuscles = step.exercise.anatomyLinks.filter(
-              (link) => link.role === "primary"
+              (link: typeof step.exercise.anatomyLinks[0]) => link.role === "primary"
             );
 
             return (
@@ -146,7 +146,7 @@ export default async function FormulaDetailPage({
                     {primaryMuscles.length > 0 && (
                       <div>
                         <span className="text-gray-500 mr-2">Hits:</span>
-                        {primaryMuscles.map((link) => (
+                        {primaryMuscles.map((link: typeof step.exercise.anatomyLinks[0]) => (
                           <span
                             key={link.anatomyNodeId}
                             className="inline-block px-2 py-1 bg-green-100 text-green-700 rounded text-xs mr-2"

@@ -51,7 +51,8 @@ export async function GET(
     }
 
     // Sort blocks by the number in their label (e.g., "1. Triceps..." -> 1)
-    workout.blocks.sort((a, b) => {
+    type BlockType = typeof workout.blocks[0];
+    workout.blocks.sort((a: BlockType, b: BlockType) => {
       const numA = parseInt(a.label.match(/^(\d+)/)?.[1] || "999");
       const numB = parseInt(b.label.match(/^(\d+)/)?.[1] || "999");
       return numA - numB;

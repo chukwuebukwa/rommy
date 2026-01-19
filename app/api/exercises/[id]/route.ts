@@ -39,7 +39,7 @@ export async function PATCH(
     const { name, type, movementPattern, videoUrl, cdnVideoUrl, equipment, cueSummary, anatomyLinks } = body;
 
     // Start a transaction to update the exercise and its anatomy links
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: typeof prisma) => {
       // Update the exercise basic info
       const exercise = await tx.exercise.update({
         where: { id },

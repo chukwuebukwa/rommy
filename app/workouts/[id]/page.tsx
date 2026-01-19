@@ -97,7 +97,7 @@ export default async function WorkoutDetailPage({
 
       {/* Workout Blocks */}
       <div className="space-y-6">
-        {workout.blocks.map((block, blockIndex) => (
+        {workout.blocks.map((block: typeof workout.blocks[0], blockIndex: number) => (
           <div
             key={block.id}
             id={block.id}
@@ -118,7 +118,7 @@ export default async function WorkoutDetailPage({
                 <div className="mb-4">
                   <div className="text-sm text-gray-500 mb-2">Targets:</div>
                   <div className="flex flex-wrap gap-2">
-                    {block.targets.map((target) => (
+                    {block.targets.map((target: typeof block.targets[0]) => (
                       <Link
                         key={target.anatomyNodeId}
                         href={`/anatomy/${target.anatomy.id}`}
@@ -147,7 +147,7 @@ export default async function WorkoutDetailPage({
             {/* Exercise Options */}
             <WorkoutExerciseGrid
               exercises={block.exercises}
-              pickLabel={block.exercises.filter((e) => e.kind === "option").length > 0 ? "1" : "All"}
+              pickLabel={block.exercises.filter((e: typeof block.exercises[0]) => e.kind === "option").length > 0 ? "1" : "All"}
             />
           </div>
         ))}

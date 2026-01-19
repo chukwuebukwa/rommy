@@ -231,7 +231,7 @@ export function Chat() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [drawerState, setDrawerState] = useState<{
     isOpen: boolean;
-    type: "exercise" | "anatomy" | null;
+    type: "exercise" | "anatomy" | "guide" | "section" | null;
     id: string | null;
   }>({
     isOpen: false,
@@ -257,14 +257,9 @@ export function Chat() {
   };
 
   const handleMentionClick = (type: MentionType, id: string) => {
-    if (type === "guide") {
-      router.push(`/guides/${id}`);
-    } else if (type === "section") {
-      const [guideId, sectionId] = id.split('/');
-      router.push(`/guides/${guideId}?section=${sectionId}`);
-    } else {
-      setDrawerState({ isOpen: true, type, id });
-    }
+    // For sections, the id format might be "guideId/sectionId" - extract just the sectionId
+    const actualId = type === "section" && id.includes('/') ? id.split('/')[1] : id;
+    setDrawerState({ isOpen: true, type, id: actualId });
   };
 
   return (
