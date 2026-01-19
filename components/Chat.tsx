@@ -8,6 +8,7 @@ import ReactMarkdown from "react-markdown";
 import { MentionDrawer } from "./MentionDrawer";
 import { ToolStatusIndicator, CompletedTools } from "./ToolStatusIndicator";
 import { InlineChatVideo } from "./InlineChatVideo";
+import { useVoiceInput } from "@/hooks/useVoiceInput";
 
 const SUGGESTED_PROMPTS = [
   { text: "Exercises for tricep long head?", icon: "💪" },
@@ -239,6 +240,21 @@ export function Chat() {
     id: null,
   });
 
+  // Voice input
+  const {
+    isListening,
+    isSupported: isVoiceSupported,
+    transcript,
+    interimTranscript,
+    toggleListening,
+    stopListening,
+    error: voiceError,
+  } = useVoiceInput({
+    onTranscript: (text) => {
+      setInput(text);
+    },
+  });
+
   const isLoading = status === "streaming" || status === "submitted";
 
   useEffect(() => {
@@ -381,17 +397,88 @@ export function Chat() {
 
         {/* Input area - fixed on mobile above bottom nav */}
         <div className="fixed bottom-16 left-0 right-0 md:static md:bottom-auto border-t border-gray-800 bg-gray-900/95 backdrop-blur-sm p-3 sm:p-4 z-30">
+          {/* Voice error message */}
+          {voiceError && (
+            <div className="max-w-3xl mx-auto mb-2 px-3 py-1.5 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-xs">
+              {voiceError}
+            </div>
+          )}
+
+          {/* Listening indicator */}
+          {isListening && (
+            <div className="max-w-3xl mx-auto mb-2 flex items-center justify-center gap-2">
+              <div className="flex items-center gap-1.5">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+                <span className="text-sm text-gray-400">Listening...</span>
+              </div>
+              {interimTranscript && (
+                <span className="text-sm text-gray-500 italic truncate max-w-[200px]">
+                  {interimTranscript}
+                </span>
+              )}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="max-w-3xl mx-auto">
-            <div className="flex gap-2 sm:gap-3 items-center bg-gray-800 rounded-xl border border-gray-700 focus-within:border-blue-500/50 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all px-3 sm:px-4 py-2">
+            <div className={`flex gap-2 sm:gap-3 items-center bg-gray-800 rounded-xl border transition-all px-3 sm:px-4 py-2 ${
+              isListening
+                ? "border-red-500/50 ring-2 ring-red-500/20"
+                : "border-gray-700 focus-within:border-blue-500/50 focus-within:ring-2 focus-within:ring-blue-500/20"
+            }`}>
               <input
                 ref={inputRef}
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask anything..."
+                placeholder={isListening ? "Speak now..." : "Ask anything..."}
                 disabled={isLoading}
                 className="flex-1 bg-transparent text-white text-sm sm:text-base placeholder-gray-500 focus:outline-none disabled:opacity-50"
               />
+
+              {/* Voice input button */}
+              {isVoiceSupported && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (isListening) {
+                      stopListening();
+                      // Auto-submit if there's text
+                      if (input.trim() && !isLoading) {
+                        setTimeout(() => {
+                          sendMessage({ text: input });
+                          setInput("");
+                        }, 100);
+                      }
+                    } else {
+                      toggleListening();
+                    }
+                  }}
+                  disabled={isLoading}
+                  className={`p-2 sm:p-2.5 rounded-lg focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all touch-manipulation ${
+                    isListening
+                      ? "bg-red-500 text-white animate-pulse"
+                      : "bg-gray-700 text-gray-400 hover:bg-gray-600 hover:text-white active:bg-gray-600"
+                  }`}
+                  title={isListening ? "Stop & send" : "Voice input"}
+                >
+                  {isListening ? (
+                    // Stop icon when listening
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24">
+                      <rect x="6" y="6" width="12" height="12" rx="2" />
+                    </svg>
+                  ) : (
+                    // Microphone icon
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    </svg>
+                  )}
+                </button>
+              )}
+
+              {/* Send button */}
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
