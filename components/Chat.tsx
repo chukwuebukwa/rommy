@@ -1,11 +1,13 @@
 "use client";
 
 import { useChat } from "@ai-sdk/react";
-import { TextStreamChatTransport, UIMessage } from "ai";
+import { DefaultChatTransport, UIMessage, isToolUIPart } from "ai";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { MentionDrawer } from "./MentionDrawer";
+import { ToolStatusIndicator, CompletedTools } from "./ToolStatusIndicator";
+import { InlineChatVideo } from "./InlineChatVideo";
 
 const SUGGESTED_PROMPTS = [
   { text: "Exercises for tricep long head?", icon: "💪" },
@@ -21,21 +23,34 @@ function getMessageText(message: UIMessage): string {
     .join('');
 }
 
-function extractMentions(content: string): {
+type VideoEmbed = { exerciseId: string; exerciseName: string; videoUrl: string };
+
+function extractMentionsAndVideos(content: string): {
   processedContent: string;
   mentions: Map<string, { name: string; type: string; id: string }>;
+  videos: Map<string, VideoEmbed>;
 } {
   const mentions = new Map<string, { name: string; type: string; id: string }>();
-  const mentionRegex = /@\[([^\]]+)\]\(([^:]+):([^)]+)\)/g;
+  const videos = new Map<string, VideoEmbed>();
   let counter = 0;
 
-  const processedContent = content.replace(mentionRegex, (_, name, type, id) => {
+  // Extract video embeds first: !video[Name](id|url)
+  const videoRegex = /!video\[([^\]]+)\]\(([^|]+)\|([^)]+)\)/g;
+  let processedContent = content.replace(videoRegex, (_, name, id, url) => {
+    const placeholder = `⟦VIDEO${counter++}⟧`;
+    videos.set(placeholder, { exerciseId: id, exerciseName: name, videoUrl: url });
+    return placeholder;
+  });
+
+  // Extract mentions: @[Name](type:id)
+  const mentionRegex = /@\[([^\]]+)\]\(([^:]+):([^)]+)\)/g;
+  processedContent = processedContent.replace(mentionRegex, (_, name, type, id) => {
     const placeholder = `⟦MENTION${counter++}⟧`;
     mentions.set(placeholder, { name, type, id });
     return placeholder;
   });
 
-  return { processedContent, mentions };
+  return { processedContent, mentions, videos };
 }
 
 type MentionType = "exercise" | "anatomy" | "guide" | "section";
@@ -53,11 +68,12 @@ function MessageContent({
     return <div className="whitespace-pre-wrap">{content}</div>;
   }
 
-  const { processedContent, mentions } = extractMentions(content);
+  const { processedContent, mentions, videos } = extractMentionsAndVideos(content);
 
   const replacePlaceholders = (text: string): React.ReactNode[] => {
     const parts: React.ReactNode[] = [];
-    const placeholderRegex = /⟦MENTION(\d+)⟧/g;
+    // Match both mention and video placeholders
+    const placeholderRegex = /⟦(MENTION|VIDEO)(\d+)⟧/g;
     let lastIndex = 0;
     let match;
 
@@ -67,25 +83,41 @@ function MessageContent({
       }
 
       const placeholder = match[0];
-      const mention = mentions.get(placeholder);
-      if (mention) {
-        const styles: Record<string, { bg: string; text: string; icon: string }> = {
-          exercise: { bg: "bg-blue-500/15 active:bg-blue-500/30 border-blue-500/30", text: "text-blue-400", icon: "🏋️" },
-          guide: { bg: "bg-emerald-500/15 active:bg-emerald-500/30 border-emerald-500/30", text: "text-emerald-400", icon: "📖" },
-          section: { bg: "bg-amber-500/15 active:bg-amber-500/30 border-amber-500/30", text: "text-amber-400", icon: "📄" },
-          anatomy: { bg: "bg-purple-500/15 active:bg-purple-500/30 border-purple-500/30", text: "text-purple-400", icon: "🧬" },
-        };
-        const style = styles[mention.type] || styles.anatomy;
-        parts.push(
-          <button
-            key={placeholder}
-            onClick={() => onMentionClick(mention.type as MentionType, mention.id)}
-            className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs sm:text-sm font-medium transition-all cursor-pointer border touch-manipulation ${style.bg} ${style.text}`}
-          >
-            <span className="text-[10px] sm:text-xs">{style.icon}</span>
-            <span className="truncate max-w-[150px] sm:max-w-none">{mention.name}</span>
-          </button>
-        );
+      const placeholderType = match[1];
+
+      if (placeholderType === 'VIDEO') {
+        const video = videos.get(placeholder);
+        if (video) {
+          parts.push(
+            <InlineChatVideo
+              key={placeholder}
+              exerciseId={video.exerciseId}
+              exerciseName={video.exerciseName}
+              videoUrl={video.videoUrl}
+            />
+          );
+        }
+      } else {
+        const mention = mentions.get(placeholder);
+        if (mention) {
+          const styles: Record<string, { bg: string; text: string; icon: string }> = {
+            exercise: { bg: "bg-blue-500/15 active:bg-blue-500/30 border-blue-500/30", text: "text-blue-400", icon: "🏋️" },
+            guide: { bg: "bg-emerald-500/15 active:bg-emerald-500/30 border-emerald-500/30", text: "text-emerald-400", icon: "📖" },
+            section: { bg: "bg-amber-500/15 active:bg-amber-500/30 border-amber-500/30", text: "text-amber-400", icon: "📄" },
+            anatomy: { bg: "bg-purple-500/15 active:bg-purple-500/30 border-purple-500/30", text: "text-purple-400", icon: "🧬" },
+          };
+          const style = styles[mention.type] || styles.anatomy;
+          parts.push(
+            <button
+              key={placeholder}
+              onClick={() => onMentionClick(mention.type as MentionType, mention.id)}
+              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-xs sm:text-sm font-medium transition-all cursor-pointer border touch-manipulation ${style.bg} ${style.text}`}
+            >
+              <span className="text-[10px] sm:text-xs">{style.icon}</span>
+              <span className="truncate max-w-[150px] sm:max-w-none">{mention.name}</span>
+            </button>
+          );
+        }
       }
 
       lastIndex = match.index + match[0].length;
@@ -151,9 +183,43 @@ function MessageContent({
   );
 }
 
+// Helper to extract tool invocations from message parts
+// AI SDK v6 uses different tool part structure with type like "tool-searchExercises"
+function getToolInvocations(message: UIMessage) {
+  return message.parts
+    .filter(part => isToolUIPart(part))
+    .map(part => {
+      // isToolUIPart confirms this is a tool part, access via any to get properties
+      const toolPart = part as any;
+
+      // Extract tool name from type (e.g., "tool-searchExercises" -> "searchExercises")
+      // or from toolName property for dynamic tools
+      const toolName = toolPart.type === 'dynamic-tool'
+        ? toolPart.toolName
+        : toolPart.type.replace('tool-', '');
+
+      // Map v6 states to our simplified states
+      let mappedState: 'partial-call' | 'call' | 'result' = 'call';
+      if (toolPart.state === 'input-streaming') {
+        mappedState = 'partial-call';
+      } else if (toolPart.state === 'input-available') {
+        mappedState = 'call';
+      } else if (toolPart.state === 'output-available' || toolPart.state === 'output-error') {
+        mappedState = 'result';
+      }
+
+      return {
+        toolCallId: toolPart.toolCallId as string,
+        toolName,
+        state: mappedState,
+        args: toolPart.input as Record<string, unknown> | undefined,
+      };
+    });
+}
+
 export function Chat() {
   const router = useRouter();
-  const transport = useMemo(() => new TextStreamChatTransport({
+  const transport = useMemo(() => new DefaultChatTransport({
     api: "/api/chat",
   }), []);
 
@@ -239,52 +305,70 @@ export function Chat() {
               </div>
             </div>
           ) : (
-            // Message list - pb-20 on mobile for fixed input
-            <div className="max-w-3xl mx-auto px-3 sm:px-4 py-4 sm:py-6 pb-24 md:pb-6 space-y-4 sm:space-y-6">
-              {messages.map((message) => (
-                <div
-                  key={message.id}
-                  className={`flex gap-2 sm:gap-3 ${message.role === "user" ? "flex-row-reverse" : ""}`}
-                >
-                  {/* Avatar - hidden on mobile for user messages */}
-                  <div className={`flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center ${
-                    message.role === "user"
-                      ? "bg-blue-600 hidden sm:flex"
-                      : "bg-gradient-to-br from-blue-500 to-purple-600"
-                  }`}>
-                    <span className="text-xs sm:text-sm">{message.role === "user" ? "👤" : "💪"}</span>
-                  </div>
+            // Message list - clean GPT-style layout
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 pb-24 md:pb-6 space-y-6">
+              {messages.map((message) => {
+                const toolInvocations = message.role === "assistant" ? getToolInvocations(message) : [];
+                const messageText = getMessageText(message);
+                const hasText = messageText.trim().length > 0;
+                const hasActiveTools = toolInvocations.some(t => t.state === 'call' || t.state === 'partial-call');
+                const hasCompletedTools = toolInvocations.some(t => t.state === 'result');
 
-                  {/* Message bubble */}
-                  <div
-                    className={`flex-1 rounded-2xl px-3 sm:px-4 py-2 sm:py-3 ${
-                      message.role === "user"
-                        ? "bg-blue-600 text-white ml-auto max-w-[90%] sm:max-w-[85%]"
-                        : "bg-gray-800/80 text-gray-100 border border-gray-700/50 max-w-[95%] sm:max-w-[85%]"
-                    }`}
-                  >
-                    <MessageContent
-                      content={getMessageText(message)}
-                      isUser={message.role === "user"}
-                      onMentionClick={handleMentionClick}
-                    />
-                  </div>
-                </div>
-              ))}
-
-              {/* Loading indicator */}
-              {isLoading && messages[messages.length - 1]?.role === "user" && (
-                <div className="flex gap-2 sm:gap-3">
-                  <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                    <span className="text-xs sm:text-sm">💪</span>
-                  </div>
-                  <div className="bg-gray-800/80 border border-gray-700/50 rounded-2xl px-3 sm:px-4 py-2 sm:py-3">
-                    <div className="flex items-center gap-1">
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                      <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                // User message - right-aligned subtle pill
+                if (message.role === "user") {
+                  return (
+                    <div key={message.id} className="flex justify-end">
+                      <div className="max-w-[85%] px-4 py-2.5 rounded-3xl bg-gray-700/60 text-gray-100">
+                        <div className="whitespace-pre-wrap text-[15px]">{messageText}</div>
+                      </div>
                     </div>
+                  );
+                }
+
+                // Assistant message - clean left-aligned, no bubble
+                return (
+                  <div key={message.id} className="text-gray-100">
+                    {/* Tool status - show when active */}
+                    {hasActiveTools && (
+                      <div className="mb-3">
+                        <ToolStatusIndicator toolCalls={toolInvocations} />
+                      </div>
+                    )}
+
+                    {/* Show completed tools indicator */}
+                    {hasCompletedTools && (
+                      <div className={hasText ? "mb-3" : "mb-2"}>
+                        <CompletedTools toolCalls={toolInvocations} />
+                      </div>
+                    )}
+
+                    {/* Message content */}
+                    {hasText && (
+                      <MessageContent
+                        content={messageText}
+                        isUser={false}
+                        onMentionClick={handleMentionClick}
+                      />
+                    )}
+
+                    {/* Loading indicator - show when tools are running OR when tools finished but no text yet */}
+                    {!hasText && (hasActiveTools || hasCompletedTools) && (
+                      <div className="flex items-center gap-1.5 py-2">
+                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" />
+                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style={{ animationDelay: "150ms" }} />
+                        <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style={{ animationDelay: "300ms" }} />
+                      </div>
+                    )}
                   </div>
+                );
+              })}
+
+              {/* Loading indicator for new response */}
+              {isLoading && messages[messages.length - 1]?.role === "user" && (
+                <div className="flex items-center gap-1.5 py-2">
+                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" />
+                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style={{ animationDelay: "150ms" }} />
+                  <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse" style={{ animationDelay: "300ms" }} />
                 </div>
               )}
 
