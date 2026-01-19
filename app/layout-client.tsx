@@ -161,7 +161,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Content - add bottom padding on mobile for bottom nav */}
         <main className="flex-1 overflow-y-auto pb-20 md:pb-0">
-          <div className={isFullWidth ? "w-full" : "max-w-7xl mx-auto"}>
+          <div className={`h-full ${isFullWidth ? "w-full" : "max-w-7xl mx-auto"}`}>
             {children}
           </div>
         </main>
