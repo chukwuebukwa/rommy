@@ -2,12 +2,14 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, UIMessage, isToolUIPart } from "ai";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import { MentionDrawer } from "./MentionDrawer";
 import { ToolStatusIndicator, CompletedTools } from "./ToolStatusIndicator";
 import { InlineChatVideo } from "./InlineChatVideo";
+import { ChatSidebar } from "./ChatSidebar";
+import { getDeviceId } from "@/lib/device-id";
 
 const SUGGESTED_PROMPTS = [
   { text: "Exercises for tricep long head?", icon: "💪" },
@@ -217,13 +219,20 @@ function getToolInvocations(message: UIMessage) {
     });
 }
 
+type ChatListItem = {
+  id: string;
+  title: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export function Chat() {
   const router = useRouter();
   const transport = useMemo(() => new DefaultChatTransport({
     api: "/api/chat",
   }), []);
 
-  const { messages, sendMessage, status, error } = useChat({
+  const { messages, sendMessage, setMessages, status, error } = useChat({
     transport,
   });
   const [input, setInput] = useState("");
@@ -239,20 +248,209 @@ export function Chat() {
     id: null,
   });
 
+  // Chat history state
+  const [deviceId, setDeviceId] = useState<string>("");
+  const [chatList, setChatList] = useState<ChatListItem[]>([]);
+  const [currentChatId, setCurrentChatId] = useState<string | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoadingChat, setIsLoadingChat] = useState(false);
+  const lastSavedMessageCount = useRef(0);
+
   const isLoading = status === "streaming" || status === "submitted";
 
+  // Initialize device ID
+  useEffect(() => {
+    const id = getDeviceId();
+    setDeviceId(id);
+  }, []);
+
+  // Load chat list when device ID is available
+  useEffect(() => {
+    if (!deviceId) return;
+    loadChatList();
+  }, [deviceId]);
+
+  const loadChatList = useCallback(async () => {
+    if (!deviceId) return;
+    try {
+      const res = await fetch("/api/chats", {
+        headers: { "x-device-id": deviceId },
+      });
+      if (res.ok) {
+        const chats = await res.json();
+        setChatList(chats);
+      }
+    } catch (err) {
+      console.error("Failed to load chats:", err);
+    }
+  }, [deviceId]);
+
+  // Save messages when they change (after streaming completes)
+  useEffect(() => {
+    if (!deviceId || !currentChatId || isLoading) return;
+    if (messages.length === 0) return;
+    if (messages.length <= lastSavedMessageCount.current) return;
+
+    // Save new messages
+    const saveNewMessages = async () => {
+      for (let i = lastSavedMessageCount.current; i < messages.length; i++) {
+        const msg = messages[i];
+        const textContent = getMessageText(msg);
+        if (!textContent.trim()) continue;
+
+        await fetch(`/api/chats/${currentChatId}/messages`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-device-id": deviceId,
+          },
+          body: JSON.stringify({
+            role: msg.role,
+            content: textContent,
+          }),
+        });
+      }
+      lastSavedMessageCount.current = messages.length;
+      // Refresh chat list to update titles/timestamps
+      loadChatList();
+    };
+
+    saveNewMessages();
+  }, [deviceId, currentChatId, messages, isLoading, loadChatList]);
+
+  // Auto scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleNewChat = useCallback(async () => {
+    if (!deviceId) return;
+
+    try {
+      const res = await fetch("/api/chats", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-id": deviceId,
+        },
+      });
+
+      if (res.ok) {
+        const newChat = await res.json();
+        setCurrentChatId(newChat.id);
+        setMessages([]);
+        lastSavedMessageCount.current = 0;
+        loadChatList();
+      }
+    } catch (err) {
+      console.error("Failed to create chat:", err);
+    }
+  }, [deviceId, setMessages, loadChatList]);
+
+  const handleSelectChat = useCallback(async (chatId: string) => {
+    if (!deviceId || chatId === currentChatId) return;
+
+    setIsLoadingChat(true);
+    try {
+      const res = await fetch(`/api/chats/${chatId}`, {
+        headers: { "x-device-id": deviceId },
+      });
+
+      if (res.ok) {
+        const chat = await res.json();
+        setCurrentChatId(chatId);
+
+        // Convert stored messages to UIMessage format
+        const uiMessages: UIMessage[] = chat.messages.map((msg: { id: string; role: string; content: string; createdAt: string }) => ({
+          id: msg.id,
+          role: msg.role as "user" | "assistant",
+          content: msg.content,
+          parts: [{ type: "text", text: msg.content }],
+          createdAt: new Date(msg.createdAt),
+        }));
+
+        setMessages(uiMessages);
+        lastSavedMessageCount.current = uiMessages.length;
+      }
+    } catch (err) {
+      console.error("Failed to load chat:", err);
+    } finally {
+      setIsLoadingChat(false);
+    }
+  }, [deviceId, currentChatId, setMessages]);
+
+  const handleDeleteChat = useCallback(async (chatId: string) => {
+    if (!deviceId) return;
+
+    try {
+      const res = await fetch(`/api/chats/${chatId}`, {
+        method: "DELETE",
+        headers: { "x-device-id": deviceId },
+      });
+
+      if (res.ok) {
+        // If deleting current chat, clear it
+        if (chatId === currentChatId) {
+          setCurrentChatId(null);
+          setMessages([]);
+          lastSavedMessageCount.current = 0;
+        }
+        loadChatList();
+      }
+    } catch (err) {
+      console.error("Failed to delete chat:", err);
+    }
+  }, [deviceId, currentChatId, setMessages, loadChatList]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
+
+    // Create a new chat if we don't have one
+    if (!currentChatId && deviceId) {
+      try {
+        const res = await fetch("/api/chats", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-device-id": deviceId,
+          },
+        });
+        if (res.ok) {
+          const newChat = await res.json();
+          setCurrentChatId(newChat.id);
+          loadChatList();
+        }
+      } catch (err) {
+        console.error("Failed to create chat:", err);
+      }
+    }
+
     sendMessage({ text: input });
     setInput("");
   };
 
-  const handleSuggestedPrompt = (prompt: string) => {
+  const handleSuggestedPrompt = async (prompt: string) => {
+    // Create a new chat if we don't have one
+    if (!currentChatId && deviceId) {
+      try {
+        const res = await fetch("/api/chats", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-device-id": deviceId,
+          },
+        });
+        if (res.ok) {
+          const newChat = await res.json();
+          setCurrentChatId(newChat.id);
+          loadChatList();
+        }
+      } catch (err) {
+        console.error("Failed to create chat:", err);
+      }
+    }
+
     sendMessage({ text: prompt });
   };
 
@@ -262,11 +460,50 @@ export function Chat() {
     setDrawerState({ isOpen: true, type, id: actualId });
   };
 
+  const currentChatTitle = chatList.find(c => c.id === currentChatId)?.title || "New Chat";
+
   return (
     <>
-      <div className="flex flex-col h-full bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950">
-        {/* Messages area */}
-        <div className="flex-1 overflow-y-auto overscroll-contain">
+      <div className="flex h-full bg-gradient-to-b from-gray-900 via-gray-900 to-gray-950">
+        {/* Sidebar */}
+        <ChatSidebar
+          chats={chatList}
+          currentChatId={currentChatId}
+          onSelectChat={handleSelectChat}
+          onNewChat={handleNewChat}
+          onDeleteChat={handleDeleteChat}
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+        />
+
+        {/* Main chat area */}
+        <div className="flex-1 flex flex-col min-w-0">
+          {/* Header */}
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-800 bg-gray-900/95">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors md:hidden"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <h1 className="flex-1 text-white font-medium truncate">
+              {currentChatId ? currentChatTitle : "Uncle Rommy"}
+            </h1>
+            <button
+              onClick={handleNewChat}
+              className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-colors"
+              title="New Chat"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Messages area */}
+          <div className="flex-1 overflow-y-auto overscroll-contain">
           {messages.length === 0 ? (
             // Empty state
             <div className="flex flex-col items-center justify-center min-h-full text-center px-4 py-8 sm:py-12">
@@ -403,6 +640,7 @@ export function Chat() {
               </button>
             </div>
           </form>
+        </div>
         </div>
       </div>
 

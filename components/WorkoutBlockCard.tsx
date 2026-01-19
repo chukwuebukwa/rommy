@@ -47,9 +47,9 @@ interface WorkoutBlockCardProps {
 }
 
 const schemeStyleLabels: Record<string, { label: string; color: string }> = {
-  drop_set: { label: "Drop Set", color: "bg-red-800/60 text-red-200" },
-  superset: { label: "Superset", color: "bg-purple-800/60 text-purple-200" },
-  straight_sets: { label: "Straight Sets", color: "bg-blue-800/60 text-blue-200" },
+  drop_set: { label: "Drop Set", color: "bg-red-100 text-red-700 dark:bg-red-800/60 dark:text-red-200" },
+  superset: { label: "Superset", color: "bg-purple-100 text-purple-700 dark:bg-purple-800/60 dark:text-purple-200" },
+  straight_sets: { label: "Straight Sets", color: "bg-blue-100 text-blue-700 dark:bg-blue-800/60 dark:text-blue-200" },
 };
 
 export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) {
@@ -73,7 +73,7 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
   // Get scheme style info
   const schemeInfo = schemeStyleLabels[block.schemeStyle] || {
     label: block.schemeStyle,
-    color: "bg-gray-700 text-gray-300 border-gray-600"
+    color: "bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-300"
   };
 
   // Get unique anatomy targets from all exercises
@@ -111,16 +111,16 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
   // Render a single exercise button
   const renderExerciseButton = (wbe: WorkoutBlockExercise) => {
     const typeBadgeColors = wbe.exercise.type === "isolation"
-      ? "bg-purple-700/70 text-purple-200"
-      : "bg-orange-700/70 text-orange-200";
+      ? "bg-purple-100 text-purple-700 dark:bg-purple-700/70 dark:text-purple-200"
+      : "bg-orange-100 text-orange-700 dark:bg-orange-700/70 dark:text-orange-200";
 
     return (
       <button
         key={wbe.exercise.id}
         onClick={() => openExerciseDrawer(wbe.exercise)}
-        className="w-full text-left px-3 py-2.5 rounded-xl bg-gray-700/40 hover:bg-gray-600/50 active:scale-[0.98] transition-all flex items-center justify-between gap-2"
+        className="w-full text-left px-3 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-700/40 dark:hover:bg-gray-600/50 active:scale-[0.98] transition-all flex items-center justify-between gap-2"
       >
-        <span className="font-medium text-gray-100 text-sm">
+        <span className="font-medium text-gray-800 dark:text-gray-100 text-sm">
           {wbe.exercise.name}
         </span>
         <span className={`px-2 py-0.5 rounded text-xs ${typeBadgeColors}`}>
@@ -138,13 +138,13 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
         onClose={closeExerciseDrawer}
       />
 
-      <div className="bg-gray-800/80 rounded-2xl overflow-hidden">
+      <div className="bg-white dark:bg-gray-800/80 rounded-2xl overflow-hidden border border-gray-200 dark:border-transparent shadow-sm">
         {/* Block Header */}
-        <div className="px-4 py-3 border-b border-gray-700/50">
+        <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700/50">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-xl font-bold text-gray-300">{blockNumber}</span>
-              <h3 className="text-base font-semibold text-gray-100">
+              <span className="text-xl font-bold text-gray-400 dark:text-gray-300">{blockNumber}</span>
+              <h3 className="text-base font-semibold text-gray-800 dark:text-gray-100">
                 {blockTitle}
               </h3>
             </div>
@@ -155,8 +155,8 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
         </div>
 
         {/* Scheme Description */}
-        <div className="px-4 py-3 bg-amber-900/20">
-          <p className="text-sm text-amber-200/80 leading-relaxed">
+        <div className="px-4 py-3 bg-amber-50 dark:bg-amber-900/20">
+          <p className="text-sm text-amber-700 dark:text-amber-200/80 leading-relaxed">
             {block.schemeDesc}
           </p>
         </div>
@@ -167,11 +167,11 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
             // SUPERSET LAYOUT: Show Set A and Set B grouped
             <div className="space-y-4">
               {/* Set A */}
-              <div className="border-l-2 border-orange-500/60 pl-4">
+              <div className="border-l-2 border-orange-400 dark:border-orange-500/60 pl-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-semibold text-orange-400/90 uppercase tracking-wider">Set A</span>
+                  <span className="text-xs font-semibold text-orange-600 dark:text-orange-400/90 uppercase tracking-wider">Set A</span>
                   {repRanges.setA && (
-                    <span className="px-2 py-0.5 bg-orange-700/50 text-orange-200 rounded text-xs">
+                    <span className="px-2 py-0.5 bg-orange-100 text-orange-700 dark:bg-orange-700/50 dark:text-orange-200 rounded text-xs">
                       {repRanges.setA} reps
                     </span>
                   )}
@@ -184,15 +184,15 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
 
               {/* Superset divider */}
               <div className="flex items-center justify-center">
-                <span className="text-xs text-purple-400/70 font-medium">+ superset with</span>
+                <span className="text-xs text-purple-500 dark:text-purple-400/70 font-medium">+ superset with</span>
               </div>
 
               {/* Set B */}
-              <div className="border-l-2 border-purple-500/60 pl-4">
+              <div className="border-l-2 border-purple-400 dark:border-purple-500/60 pl-4">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-xs font-semibold text-purple-400/90 uppercase tracking-wider">Set B</span>
+                  <span className="text-xs font-semibold text-purple-600 dark:text-purple-400/90 uppercase tracking-wider">Set B</span>
                   {repRanges.setB && (
-                    <span className="px-2 py-0.5 bg-purple-700/50 text-purple-200 rounded text-xs">
+                    <span className="px-2 py-0.5 bg-purple-100 text-purple-700 dark:bg-purple-700/50 dark:text-purple-200 rounded text-xs">
                       {repRanges.setB} reps
                     </span>
                   )}
@@ -207,7 +207,7 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
             // REGULAR LAYOUT: Flat grid
             <>
               {block.exercises.length > 1 && (
-                <p className="text-sm text-gray-400 mb-3 font-medium">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 font-medium">
                   Pick 1 from {block.exercises.length} options:
                 </p>
               )}
@@ -220,8 +220,8 @@ export function WorkoutBlockCard({ block, blockNumber }: WorkoutBlockCardProps) 
 
         {/* Notes (if any) */}
         {block.notes && (
-          <div className="px-4 py-3 border-t border-gray-700/30">
-            <p className="text-xs text-gray-400 italic">{block.notes}</p>
+          <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700/30">
+            <p className="text-xs text-gray-500 dark:text-gray-400 italic">{block.notes}</p>
           </div>
         )}
       </div>

@@ -74,21 +74,21 @@ export function WorkoutProgramView({ workout, introContent }: WorkoutProgramView
     <div className="w-full space-y-4">
       {/* Collapsible Intro Section */}
       {introText && (
-        <div className="bg-gray-800 rounded-xl border border-gray-700 shadow-sm overflow-hidden">
+        <div className="bg-gray-100 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
           <button
             onClick={() => setIntroExpanded(!introExpanded)}
-            className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-700 transition"
+            className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-200 dark:hover:bg-gray-700 transition"
           >
             <div className="flex items-center gap-3">
               <svg
-                className={`w-5 h-5 text-gray-400 transition-transform ${introExpanded ? "rotate-90" : ""}`}
+                className={`w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform ${introExpanded ? "rotate-90" : ""}`}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
-              <span className="font-medium text-gray-200">
+              <span className="font-medium text-gray-700 dark:text-gray-200">
                 {introExpanded ? "Hide" : "Show"} intro from Uncle Rommy
               </span>
             </div>
@@ -98,12 +98,12 @@ export function WorkoutProgramView({ workout, introContent }: WorkoutProgramView
           </button>
 
           {introExpanded && (
-            <div className="px-4 pb-4 border-t border-gray-700">
-              <div className="pt-4 prose prose-sm prose-invert max-w-none">
+            <div className="px-4 pb-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="pt-4 prose prose-sm dark:prose-invert max-w-none">
                 <MentionRenderer content={introText} />
               </div>
               {workout.goal && (
-                <p className="mt-4 text-sm text-gray-400 italic">{workout.goal}</p>
+                <p className="mt-4 text-sm text-gray-500 dark:text-gray-400 italic">{workout.goal}</p>
               )}
             </div>
           )}

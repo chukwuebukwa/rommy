@@ -214,3 +214,27 @@ model WorkoutBlockExercise {
 
   @@id([blockId, exerciseId])
 }
+
+// ---- CHAT HISTORY ----
+
+model Chat {
+  id        String    @id @default(cuid())
+  deviceId  String                                  // Anonymous device identifier
+  title     String?                                 // Auto-generated or user-set
+  messages  ChatMessage[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([deviceId])
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  chatId    String
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  role      String                                  // "user" | "assistant"
+  content   String                                  // JSON serialized message parts
+  createdAt DateTime @default(now())
+
+  @@index([chatId])
+}
